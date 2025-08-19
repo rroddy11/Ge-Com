@@ -17,7 +17,11 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent {
-  @Output() submitForm = new EventEmitter<any>();
+  @Output() submitForm = new EventEmitter<{
+    username: string;
+    password: string;
+  }>();
+
   loginForm: FormGroup;
   showPassword = false;
   faEye = faEye;
@@ -25,7 +29,7 @@ export class LoginFormComponent {
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.email]], // email obligatoire
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -37,6 +41,8 @@ export class LoginFormComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.submitForm.emit(this.loginForm.value);
+    } else {
+      this.loginForm.markAllAsTouched();
     }
   }
 }
