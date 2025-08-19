@@ -1,17 +1,36 @@
 name: SonarCloud Scan
 on:
   push:
-    branches: [develop]
+    branches: [main, develop]
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
+    branches: [main, develop]
 
 jobs:
-  sonarcloud:
+  sonarcloud-scan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular application
+        run: npm run build -- --configuration production
+
+      - name: Run tests with coverage
+        run: npm run test -- --code-coverage --watch=false
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v5.0.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Nécessaire pour les PRs
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
