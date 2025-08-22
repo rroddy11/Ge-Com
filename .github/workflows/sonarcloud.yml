@@ -1,4 +1,4 @@
-name: SonarCloud
+name: SonarCloud + Build Angular
 
 on:
   push:
@@ -9,13 +9,28 @@ on:
 
 jobs:
   build:
-    name: Build and Analyze
+    name: Build, Test and Analyze
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with coverage
+        run: npm run test -- --watch=false --code-coverage
+
+      - name: Build Angular app
+        run: npm run build -- --configuration production
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
