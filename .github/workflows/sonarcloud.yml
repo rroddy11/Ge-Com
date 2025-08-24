@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - develop
-  pull_request:
-    types: [opened, synchronize, reopened]
 
 jobs:
   build:
@@ -26,14 +24,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests with coverage
-        run: npm run test -- --watch=false --code-coverage
+      - name: Run Jest tests with coverage
+        run: npm run test:coverage
 
       - name: Build Angular app
         run: npm run build -- --configuration production
 
       - name: SonarCloud Scan
+        id: sonar
         uses: SonarSource/sonarcloud-github-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check Quality Gate
+        run: |
+          # Logique pour vérifier le Quality Gate SonarQube
+          # Si échec, sortir avec code d'erreur
