@@ -3,7 +3,7 @@ name: SonarCloud + Build Angular
 on:
   push:
     branches:
-      - develop
+      - feature/OCAPI-1-feat-amelioration-workflow
 
 jobs:
   build:
