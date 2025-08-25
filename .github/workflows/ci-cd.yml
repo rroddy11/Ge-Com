@@ -2,7 +2,7 @@ name: CI/CD - Develop Branch
 
 on:
   push:
-    branches: [develop] # Seulement sur push vers develop
+    branches: [develop]
 
 jobs:
   test:
@@ -16,6 +16,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: "npm"
+
+      - name: Set npm registry (fix E429)
+        run: npm config set registry https://registry.npmmirror.com
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
@@ -25,18 +29,22 @@ jobs:
 
   sonar-scan:
     name: SonarCloud Scan
-    needs: test # Dépend du job test
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Important pour SonarCloud
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: "npm"
+
+      - name: Set npm registry (fix E429)
+        run: npm config set registry https://registry.npmmirror.com
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
@@ -52,7 +60,7 @@ jobs:
 
   deploy:
     name: Deploy to Vercel
-    needs: [test, sonar-scan] # Dépend des deux jobs précédents
+    needs: [test, sonar-scan]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -62,6 +70,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: "npm"
+
+      - name: Set npm registry (fix E429)
+        run: npm config set registry https://registry.npmmirror.com
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
@@ -70,11 +82,4 @@ jobs:
         run: npm run build -- --configuration production
 
       - name: Deploy to Vercel
-
-        run: |
-          DEPLOYMENT_URL=$(npx vercel --prod --confirm --token=${{ secrets.VERCEL_TOKEN }} | grep -o 'https://[^ ]*')
-          echo "Deployment URL: $DEPLOYMENT_URL"
-          echo "DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
-      - name: Show Deployment URL
-        run: |
-          echo "🎉 Votre application est déployée ici: $DEPLOYMENT_URL"
+        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
