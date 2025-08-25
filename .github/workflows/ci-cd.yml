@@ -70,6 +70,7 @@ jobs:
         run: npm run build -- --configuration production
 
       - name: Deploy to Vercel
+
         run: |
           DEPLOYMENT_URL=$(npx vercel --prod --confirm --token=${{ secrets.VERCEL_TOKEN }} | grep -o 'https://[^ ]*')
           echo "Deployment URL: $DEPLOYMENT_URL"
