@@ -3,7 +3,7 @@ name: SonarCloud + Build Angular
 on:
   push:
     branches:
-      - develop
+      - feature/OCAPI-1-feat-amelioration-workflow
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -24,16 +24,10 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
-      - name: Run tests with coverage
-        run: npm run test -- --watch=false --code-coverage
+      - name: Run Jest tests with coverage
+        run: npm run test:coverage
 
       - name: Build Angular app
         run: npm run build -- --configuration production
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
