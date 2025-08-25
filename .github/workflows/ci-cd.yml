@@ -16,13 +16,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-
-      - name: Set npm registry (fix E429)
-        run: npm config set registry https://registry.npmmirror.com
+          cache: "npm" # ✅ Cache npm activé
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          sleep $((RANDOM % 30))  # ✅ Attente aléatoire
+          npm install --legacy-peer-deps
 
       - name: Run Jest tests with coverage
         run: npm run test:coverage
@@ -41,13 +40,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-
-      - name: Set npm registry (fix E429)
-        run: npm config set registry https://registry.npmmirror.com
+          cache: "npm" # ✅ Cache npm activé
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          sleep $((RANDOM % 30))  # ✅ Attente aléatoire
+          npm install --legacy-peer-deps
 
       - name: Build Angular app
         run: npm run build -- --configuration production
@@ -70,16 +68,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-
-      - name: Set npm registry (fix E429)
-        run: npm config set registry https://registry.npmmirror.com
+          cache: "npm" # ✅ Cache npm activé
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          sleep $((RANDOM % 30))  # ✅ Attente aléatoire
+          npm install --legacy-peer-deps
 
       - name: Build Angular app
         run: npm run build -- --configuration production
 
       - name: Deploy to Vercel
-        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes # ✅ Option simple
