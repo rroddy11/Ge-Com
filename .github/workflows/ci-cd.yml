@@ -70,10 +70,11 @@ jobs:
         run: npm run build -- --configuration production
 
       - name: Deploy to Vercel
-        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --name=ge-com-app
 
-      - name: Get Deployment Info
         run: |
-          echo "✅ Déploiement réussi !"
-          echo "🌐 Vérifie ton dashboard Vercel : https://vercel.com/"
-          echo "📦 URL probable : https://ge-com-app.vercel.app"
+          DEPLOYMENT_URL=$(npx vercel --prod --confirm --token=${{ secrets.VERCEL_TOKEN }} | grep -o 'https://[^ ]*')
+          echo "Deployment URL: $DEPLOYMENT_URL"
+          echo "DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
+      - name: Show Deployment URL
+        run: |
+          echo "🎉 Votre application est déployée ici: $DEPLOYMENT_URL"
