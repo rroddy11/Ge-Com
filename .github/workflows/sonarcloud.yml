@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - feature/OCAPI-1-feat-amelioration-workflow
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
@@ -22,7 +24,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Run Jest tests with coverage
         run: npm run test:coverage
@@ -36,8 +38,20 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectBaseDir: .
 
-      - name: Check Quality Gate
+      - name: Check SonarCloud Quality Gate
         run: |
-          # Logique pour vérifier le Quality Gate SonarQube
-          # Si échec, sortir avec code d'erreur
+          echo "Vérification du Quality Gate..."
+          STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }}: \
+            "https://sonarcloud.io/api/qualitygates/project_status?projectKey=rroddy11_Ge-Com" | jq -r '.projectStatus.status')
+          echo "Quality Gate status: $STATUS"
+          if [ "$STATUS" != "OK" ]; then
+            echo "⛔ Quality Gate échoué ! Blocage du déploiement."
+            exit 1
+          fi
+
+      - name: Deploy to Vercel (Staging)
+        if: success() # ne se déclenche que si tous les tests + Quality Gate sont OK
+        run: npx vercel --prod --confirm

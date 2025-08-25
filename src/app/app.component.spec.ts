@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
-describe('AppComponent (Jest)', () => {
+describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent], // ✅ standalone → importer, pas déclarer
     }).compileComponents();
   });
 
