@@ -9,10 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/dist/gestion-commercial/browser/$1",
-      "headers": {
-        "Cache-Control": "s-maxage=31536000, stale-while-revalidate"
-      }
+      "dest": "/dist/gestion-commercial/browser/$1"
     }
   ]
 }
