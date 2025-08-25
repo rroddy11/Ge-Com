@@ -1,0 +1,33 @@
+name: SonarCloud + Build Angular
+
+on:
+  push:
+    branches:
+      - feature/OCAPI-1-feat-amelioration-workflow
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Build, Test and Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Run Jest tests with coverage
+        run: npm run test:coverage
+
+      - name: Build Angular app
+        run: npm run build -- --configuration production
