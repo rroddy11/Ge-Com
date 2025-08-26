@@ -63,8 +63,11 @@ jobs:
     steps:
       - name: Deploy to Vercel
         run: |
-          # Installer Vercel CLI
-          npm install --global vercel@latest
+          # SUPPRIMER le fichier vercel.json qui cause des problèmes
+          rm -f vercel.json
 
-          # Déployer
-          vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm
+          # Déployer avec des paramètres EXPLICITES
+          npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes \
+            --name=gecom-app \
+            --build-command "npm run build" \
+            --output-directory "dist/gestion-commercial/browser"
