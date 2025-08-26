@@ -72,7 +72,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sleep $((RANDOM % 60))  # ✅ ATTENTE ALÉATOIRE
+          npm config set registry https://registry.npmmirror.com
           npm install --legacy-peer-deps
 
       - name: Build Angular app
