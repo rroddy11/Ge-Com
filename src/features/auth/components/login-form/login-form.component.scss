@@ -29,19 +29,16 @@
   line-height: 22px;
   font-weight: 500;
 }
-/* hover */
 .textbox input:hover {
   color: #565d6dff;
   background: #ffffffff;
   border-color: #dee1e6ff;
 }
-/* focused */
 .textbox input:focused {
   color: #565d6dff;
   background: #ffffffff;
   border-color: #dee1e6ff;
 }
-/* disabled */
 .textbox input:disabled {
   color: #565d6dff;
   background: #ffffffff;
@@ -73,7 +70,6 @@
   color: #565d6dff;
 }
 
-/* Button */
 .button {
   position: absolute;
   top: 25px;
