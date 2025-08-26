@@ -81,7 +81,7 @@ jobs:
 
       - name: Deploy to Vercel
         run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --name=gecom-app
-
+        
       - name: Show success message
         run: |
           echo "✅ Déploiement réussi !"
