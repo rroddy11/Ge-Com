@@ -22,9 +22,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: "npm" # ✅ AJOUTER LE CACHE
+
+      - name: Clean npm cache
+        run: npm cache clean --force # ✅ NETTOYER LE CACHE
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          sleep 10  # ✅ ATTENDRE
+          npm install --legacy-peer-deps
 
       - name: Run Jest tests with coverage
         run: npm run test:coverage
