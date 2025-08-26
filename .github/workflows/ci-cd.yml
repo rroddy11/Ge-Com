@@ -79,6 +79,9 @@ jobs:
         run: npm run build -- --configuration production
 
       - name: Deploy to Vercel
+        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+
+      - name: Show success message
         run: |
-          # Déployer en spécifiant le framework Angular explicitement
-          npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --framework=angular
+          echo "✅ Déploiement réussi !"
+          echo "🌐 Ton site est live : https://gecom-8eivh12qb-razaiary-lala-rodrigues-projects.vercel.app/"
