@@ -70,10 +70,11 @@ jobs:
           node-version: 20
           cache: "npm" # ✅ CACHE ACTIVÉ
 
-      - name: Install dependencies
+      - name: Install dependencies with npm mirror
         run: |
+          # Utiliser le registry mirror Chinois (très fiable)
           npm config set registry https://registry.npmmirror.com
-          npm install --legacy-peer-deps
+          npm install --legacy-peer-deps --prefer-offline
 
       - name: Build Angular app
         run: npm run build -- --configuration production
