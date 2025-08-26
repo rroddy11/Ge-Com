@@ -68,7 +68,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm" # ✅ CACHE ACTIVÉ
+          cache: "npm"
 
       - name: Install dependencies with npm mirror
         run: |
@@ -80,8 +80,13 @@ jobs:
         run: npm run build -- --configuration production
 
       - name: Deploy to Vercel
-        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --name=gecom-app
-        
+        run: |
+          # Supprimer l'ancienne config
+          rm -rf .vercel vercel.json
+
+          # Déployer avec un nom simple
+          npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --name=gecom-app
+
       - name: Show success message
         run: |
           echo "✅ Déploiement réussi !"
