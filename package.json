@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:docker": "docker build -t razaiary/gecom-angular .",
+    "push:docker": "docker push razaiary/gecom-angular:latest",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "test:watch": "jest --watch",

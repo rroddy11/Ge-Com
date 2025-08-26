@@ -1,0 +1,12 @@
+.git
+.gitignore
+node_modules
+dist
+.vercel
+.env
+*.log
+Dockerfile
+docker-compose.yml
+#nginx.conf
+coverage
+.angular
