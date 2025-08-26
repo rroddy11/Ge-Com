@@ -72,8 +72,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g yarn
-          yarn install --ignore-engines
+          sleep $((RANDOM % 60))  # ✅ ATTENTE ALÉATOIRE
+          npm install --legacy-peer-deps
 
       - name: Build Angular app
         run: npm run build -- --configuration production
