@@ -3,7 +3,7 @@ name: SonarCloud + Build Angular
 on:
   push:
     branches:
-      - feature/OCAPI-1-feat-amelioration-workflow
+      - feature/CG-2-fix-connexion-button-login-color
   pull_request:
     types: [opened, synchronize, reopened]
 
