@@ -68,17 +68,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm" # ✅ Cache npm activé
+          cache: "npm" # ✅ CACHE ACTIVÉ
 
-      - name: Install dependencies
+      - name: Install dependencies with npm mirror
         run: |
-          sleep $((RANDOM % 30))  # ✅ Attente aléatoire
-          npm install --legacy-peer-deps
+          # Utiliser le registry mirror Chinois (très fiable)
+          npm config set registry https://registry.npmmirror.com
+          npm install --legacy-peer-deps --prefer-offline
 
       - name: Build Angular app
         run: npm run build -- --configuration production
 
       - name: Deploy to Vercel
+        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+
+      - name: Show success message
         run: |
-          # Déployer en spécifiant le framework Angular explicitement
-          npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --framework=angular
+          echo "✅ Déploiement réussi !"
+          echo "🌐 Ton site est live : https://gecom-8eivh12qb-razaiary-lala-rodrigues-projects.vercel.app/"
