@@ -80,7 +80,12 @@ jobs:
         run: npm run build -- --configuration production
 
       - name: Deploy to Vercel
-        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --name=gecom-app
+        run: |
+          # Supprimer l'ancienne config
+          rm -rf .vercel vercel.json
+
+          # Déployer avec un nom simple
+          npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --name=gecom-app
 
       - name: Show success message
         run: |
