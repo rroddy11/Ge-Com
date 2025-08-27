@@ -1,93 +1,93 @@
-name: CI/CD - Develop Branch
+# name: CI/CD - Develop Branch
 
-on:
-  push:
-    branches: [develop]
+# on:
+#   push:
+#     branches: [develop]
 
-jobs:
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+# jobs:
+#   test:
+#     name: Run Tests
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm" # ✅ Cache npm activé
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           cache: "npm" # ✅ Cache npm activé
 
-      - name: Install dependencies
-        run: |
-          sleep $((RANDOM % 30))  # ✅ Attente aléatoire
-          npm install --legacy-peer-deps
+#       - name: Install dependencies
+#         run: |
+#           sleep $((RANDOM % 30))  # ✅ Attente aléatoire
+#           npm install --legacy-peer-deps
 
-      - name: Run Jest tests with coverage
-        run: npm run test:coverage
+#       - name: Run Jest tests with coverage
+#         run: npm run test:coverage
 
-  sonar-scan:
-    name: SonarCloud Scan
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+#   sonar-scan:
+#     name: SonarCloud Scan
+#     needs: test
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm" # ✅ Cache npm activé
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           cache: "npm"
 
-      - name: Install dependencies
-        run: |
-          sleep $((RANDOM % 30))  # ✅ Attente aléatoire
-          npm install --legacy-peer-deps
+#       - name: Install dependencies
+#         run: |
+#           sleep $((RANDOM % 30))  # ✅ Attente aléatoire
+#           npm install --legacy-peer-deps
 
-      - name: Build Angular app
-        run: npm run build -- --configuration production
+#       - name: Build Angular app
+#         run: npm run build -- --configuration production
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: SonarCloud Scan
+#         uses: SonarSource/sonarcloud-github-action@v2
+#         env:
+#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy:
-    name: Deploy to Vercel
-    needs: [test, sonar-scan]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#   deploy:
+#     name: Deploy to Vercel
+#     needs: [test, sonar-scan]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm"
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           cache: "npm"
 
-      - name: Install dependencies with npm mirror
-        run: |
-          # Utiliser le registry mirror Chinois (très fiable)
-          npm config set registry https://registry.npmmirror.com
-          npm install --legacy-peer-deps --prefer-offline
+#       - name: Install dependencies with npm mirror
+#         run: |
+#           # Utiliser le registry mirror Chinois (très fiable)
+#           npm config set registry https://registry.npmmirror.com
+#           npm install --legacy-peer-deps --prefer-offline
 
-      - name: Build Angular app
-        run: npm run build -- --configuration production
+#       - name: Build Angular app
+#         run: npm run build -- --configuration production
 
-      - name: Deploy to Vercel
-        run: |
-          # Supprimer l'ancienne config
-          rm -rf .vercel vercel.json
+#       - name: Deploy to Vercel
+#         run: |
+#           # Supprimer l'ancienne config
+#           rm -rf .vercel vercel.json
 
-          # Déployer avec un nom simple
-          npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --name=gecom-app
+#           # Déployer avec un nom simple
+#           npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --name=gecom-app
 
-      - name: Show success message
-        run: |
-          echo "✅ Déploiement réussi !"
-          echo "🌐 Ton site est live : https://gecom-8eivh12qb-razaiary-lala-rodrigues-projects.vercel.app/"
+#       - name: Show success message
+#         run: |
+#           echo "✅ Déploiement réussi !"
+#           echo "🌐 Ton site est live : https://gecom-8eivh12qb-razaiary-lala-rodrigues-projects.vercel.app/"

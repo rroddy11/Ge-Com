@@ -1,7 +1,15 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/gestion-commercial/browser",
+  "name": "gecom-app",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/gestion-commercial/browser"
+      }
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",

@@ -62,9 +62,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Vercel
-        run: |
-          # Installer Vercel CLI
-          npm install --global vercel@latest
-
-          # Déployer
-          vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm
+        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
