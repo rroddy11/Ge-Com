@@ -62,4 +62,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Vercel
-        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-args: "--prod --force"
+          working-directory: ./
