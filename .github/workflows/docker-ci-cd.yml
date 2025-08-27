@@ -62,4 +62,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Vercel
-        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
+        run: |
+          # Nettoyage complet
+          echo "🧹 Nettoyage de l'ancienne configuration..."
+          rm -rf .vercel vercel.json .now
+
+          # Création configuration propre
+          echo "📝 Création vercel.json..."
+          cat > vercel.json << 'EOF'
+          {
+            "version": 2,
+            "name": "gecom-app",
+            "builds": [
+              {
+                "src": "package.json",
+                "use": "@vercel/static-build",
+                "config": {
+                  "distDir": "dist/gestion-commercial/browser"
+                }
+              }
+            ],
+            "routes": [
+              {
+                "src": "/(.*)",
+                "dest": "/$1"
+              }
+            ]
+          }
+          EOF
+
+          # Déploiement forcé
+          echo "🚀 Déploiement en cours..."
+          npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --force
