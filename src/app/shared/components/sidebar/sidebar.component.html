@@ -1,0 +1,19 @@
+<div class="flex items-center justify-left w-72">
+  <ul class="sidebar-nav px-5 mt-10 w-full">
+    <li
+      *ngFor="let item of navItems"
+      class="nav-item"
+      [class.active]="isActiveRoute(item.url)"
+    >
+      <a
+        [routerLink]="item.url"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link px-5 py-2 flex items-center gap-4 rounded-md mb-4 hover:bg-primary/10 hover:text-secondary transition-colors duration-200"
+      >
+        <fa-icon [icon]="item.icon" class="nav-icon"></fa-icon>
+        <span class="nav-text">{{ item.text }}</span>
+      </a>
+    </li>
+  </ul>
+</div>
