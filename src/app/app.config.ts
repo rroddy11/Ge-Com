@@ -12,6 +12,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { NavigationService } from './core/services/navigation.service';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,5 +28,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideClientHydration(withEventReplay()),
     NavigationService, // Ajout explicite du service
+    provideCharts(withDefaultRegisterables()),
   ],
 };
