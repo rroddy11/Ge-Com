@@ -1,5 +1,80 @@
-<div class="dashboard-container">
-  <h1>Bienvenue, {{ username }} !</h1>
-  <p>Ceci est votre tableau de bord.</p>
-  <button (click)="logout()">Se déconnecter</button>
-</div>
+<section class="homepage text-gray-500">
+  <div class="flex title">
+    <h1 class="flex font-bold text-4xl text-tertiary">
+      FarmShop Gestion Commercialle
+    </h1>
+  </div>
+  <div class="flex mt-8 w-full">
+    <div
+      class="flex flex-col w-1/4 cursor-pointer bg-white shadow-xl rounded-lg px-4 py-3 h-auto mr-5 hover:shadow-lg hover:scale-105 transition-all duration-300"
+      *ngFor="let item of salesStatus"
+    >
+      <div class="flex justify-between items-center">
+        <span class="text-lg text-justify">{{ item.name }}</span>
+        <div class="flex">
+          <fa-icon [icon]="item.icon" class="text-md text-primary"></fa-icon>
+        </div>
+      </div>
+      <div class="flex justify-between items-center mt-4">
+        <span class="text-3xl font-bold text-justify">{{ item.price }}</span>
+        <div class="flex">
+          <span
+            class="text-lg font-semibold"
+            [ngClass]="{
+              'text-secondary': isPositive(item.progress),
+              'text-red-500': isNegative(item.progress)
+            }"
+          >
+            {{ item.progress }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full mt-7">
+    <div class="dashboard-grid w-3/4">
+      <app-revenue-chart
+        [data]="revenueData"
+        [labels]="revenueLabels"
+        title="Évolution du Chiffre d'Affaires"
+      >
+      </app-revenue-chart>
+    </div>
+    <!-- Graphique des produits les plus vendus -->
+    <div class="w-1/3">
+      <app-top-products-chart
+        [products]="topProducts"
+        [sales]="productSales"
+        title="Produits les Plus Vendus"
+      >
+      </app-top-products-chart>
+    </div>
+  </div>
+  <div
+    class="flex flex-col gap-10 mt-10 bg-white shadow-xl rounded-lg px-4 py-3 h-auto hover:shadow-lg transition-all duration-300"
+  >
+    <div class="flex">
+      <span class="text-2xl font-semibold text-black">Activités récentes</span>
+    </div>
+    <div
+      class="flex justify-between items-center"
+      *ngFor="let items of recentActivity"
+    >
+      <div class="flex flex-col gap-[0.1px] items-start justify-start">
+        <span class="text-[16px] font-semibold">{{ items.activity }}</span>
+        <span class="text-[14px] font-medium text-gray-300">{{
+          items.temp
+        }}</span>
+      </div>
+      <div class="flex">
+        <span
+          class="text-[16px] font-semibold"
+          [class.text-green-500]="isPositives(items.price)"
+          [class.text-red-500]="isNegatives(items.price)"
+        >
+          {{ items.price }}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

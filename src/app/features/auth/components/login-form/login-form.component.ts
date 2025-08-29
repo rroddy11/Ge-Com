@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import {
   FormBuilder,
@@ -12,7 +13,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule, FontAwesomeModule],
+  imports: [RouterModule, ReactiveFormsModule, FontAwesomeModule, CommonModule],
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
 })
