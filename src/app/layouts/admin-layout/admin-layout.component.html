@@ -1,14 +1,16 @@
 <div class="flex flex-col h-screen">
   <!-- Navbar -->
-  <app-navbar></app-navbar>
+  <app-navbar class="fixed w-full z-10"></app-navbar>
 
   <!-- Contenu principal avec Sidebar et Main Content -->
   <div class="flex flex-1">
     <!-- Sidebar -->
-    <app-sidebar></app-sidebar>
+    <app-sidebar
+      class="fixed top-20 w-72 bg-white z-10 h-[100vh]"
+    ></app-sidebar>
 
     <!-- Main Content (avec router-outlet pour les sous-routes) -->
-    <main class="flex-1 p-6 bg-gray-100">
+    <main class="flex-1 p-6 bg-gray-100 ml-72 mt-20">
       <router-outlet></router-outlet>
     </main>
   </div>

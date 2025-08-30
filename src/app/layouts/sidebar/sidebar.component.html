@@ -1,5 +1,9 @@
-<div class="flex items-center justify-left w-72">
-  <ul class="sidebar-nav px-5 mt-7 w-full">
+<div class="flex flex-col items-start justify-start w-72 gap-7">
+  <div class="flex justify-between items-center mt-10 px-7 w-full">
+    <span class="text-2xl text-black font-bold">Menu</span>
+    <fa-icon [icon]="faMenu" class="text-xl text-black"></fa-icon>
+  </div>
+  <ul class="sidebar-nav px-5 w-full">
     <li
       *ngFor="let item of navItems"
       class="nav-item"

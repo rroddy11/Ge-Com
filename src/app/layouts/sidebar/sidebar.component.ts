@@ -1,9 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NavigationService } from '../../../core/services/navigation.service';
+import { NavigationService } from '../../core/services/navigation.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NavItem } from '../../../core/models/navigation.service.interface';
+import { NavItem } from '../../core/models/navigation.service.interface';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,8 +15,7 @@ import { NavItem } from '../../../core/models/navigation.service.interface';
 })
 export class SidebarComponent implements OnInit {
   navItems: NavItem[] = [];
-
-  // Injection du service
+  faMenu = faBars;
   private readonly navigationService = inject(NavigationService);
 
   ngOnInit(): void {
