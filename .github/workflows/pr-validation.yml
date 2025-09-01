@@ -3,7 +3,7 @@ name: SonarCloud + Build Angular
 on:
   push:
     branches:
-      - feature/CG-3-feat-dashboard-view-page
+      - feature/CG-4-feat-product-view-page
   pull_request:
     types: [opened, synchronize, reopened]
 

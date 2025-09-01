@@ -1,0 +1,48 @@
+// products.component.scss
+.product-page {
+  .product-image {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // Style pour les images par défaut
+  .default-product-image {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+      content: "📦";
+      font-size: 1.5rem;
+    }
+  }
+
+  // Responsive images
+  @media (max-width: 768px) {
+    .product-image {
+      height: 10rem;
+      width: 10rem;
+    }
+  }
+}
+
+// Animation pour le chargement des images
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.loading-image {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}

@@ -1,11 +1,11 @@
 // app.config.ts
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import {
   provideRouter,
   withInMemoryScrolling,
   withComponentInputBinding,
 } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, HttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
 import {
   provideClientHydration,
@@ -14,9 +14,24 @@ import {
 import { NavigationService } from './core/services/navigation.service';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
+import {
+  TranslateModule,
+  TranslateService,
+  TranslateLoader,
+} from '@ngx-translate/core';
+import { Observable } from 'rxjs';
+
+// 🔑 Loader HTTP correct pour ngx-translate
+export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
+  return {
+    getTranslation: (lang: string): Observable<Record<string, any>> => {
+      return http.get<Record<string, any>>(`assets/i18n/${lang}.json`);
+    },
+  };
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,
       withInMemoryScrolling({
@@ -27,7 +42,19 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(),
     provideClientHydration(withEventReplay()),
-    NavigationService, // Ajout explicite du service
+    NavigationService,
     provideCharts(withDefaultRegisterables()),
+
+    importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient],
+        },
+        defaultLanguage: 'fr',
+      })
+    ),
+    TranslateService,
   ],
 };

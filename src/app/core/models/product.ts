@@ -1,8 +1,9 @@
-// src/app/core/models/product.ts
 export interface Product {
+  id: number;
   name: string;
   category: string;
-  purchasePrice: string; // ou number selon votre besoin
-  salePrice: string; // ou number selon votre besoin
+  purchasePrice: string;
+  salePrice: string;
   stock: number;
+  imageUrl?: string;
 }

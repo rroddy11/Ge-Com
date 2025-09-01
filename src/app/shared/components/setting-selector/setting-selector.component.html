@@ -1,0 +1,94 @@
+<div class="relative inline-block text-left">
+  <!-- Bouton Paramètres -->
+  <button
+    type="button"
+    class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
+    (click)="toggleDropdown($event)"
+    [attr.aria-expanded]="isDropdownOpen"
+    aria-haspopup="true"
+  >
+    <fa-icon
+      [icon]="faCog"
+      class="text-gray-400 text-lg hover:text-gray-800"
+    ></fa-icon>
+  </button>
+
+  <!-- Menu Dropdown -->
+  <div
+    *ngIf="isDropdownOpen"
+    class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50 divide-y divide-gray-100"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Section Profil -->
+    <div class="py-2 px-4 border-b border-gray-100">
+      <div class="text-sm font-medium text-gray-900">
+        {{ "SETTINGS.USER" | translate }}
+      </div>
+      <div class="text-sm text-gray-500">admin@example.com</div>
+    </div>
+
+    <!-- Section Préférences -->
+    <div class="py-1">
+      <a
+        routerLink="/profile"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faUser" class="mr-3 text-gray-400"></fa-icon>
+        {{ "SETTINGS.PROFILE" | translate }}
+      </a>
+
+      <button
+        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="toggleTheme()"
+      >
+        <fa-icon
+          [icon]="isDarkTheme ? faSun : faMoon"
+          class="mr-3 text-gray-400"
+        ></fa-icon>
+        {{
+          isDarkTheme
+            ? ("SETTINGS.LIGHT_MODE" | translate)
+            : ("SETTINGS.DARK_MODE" | translate)
+        }}
+      </button>
+
+      <a
+        routerLink="/appearance"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faPalette" class="mr-3 text-gray-400"></fa-icon>
+        {{ "SETTINGS.APPEARANCE" | translate }}
+      </a>
+    </div>
+
+    <!-- Section Support -->
+    <div class="py-1">
+      <a
+        routerLink="/privacy"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faShieldAlt" class="mr-3 text-gray-400"></fa-icon>
+        {{ "SETTINGS.PRIVACY" | translate }}
+      </a>
+
+      <a
+        routerLink="/help"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faQuestionCircle" class="mr-3 text-gray-400"></fa-icon>
+        {{ "SETTINGS.HELP" | translate }}
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay pour fermer le dropdown -->
+<div
+  *ngIf="isDropdownOpen"
+  class="fixed inset-0 z-40"
+  (click)="closeDropdown()"
+></div>
