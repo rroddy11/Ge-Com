@@ -1,0 +1,137 @@
+<div class="relative inline-block text-left">
+  <!-- Photo de profil cliquable -->
+  <div
+    class="flex items-center cursor-pointer"
+    (click)="toggleDropdown($event)"
+  >
+    <img
+      src="/assets/images/img/nv/possin.png"
+      class="h-12 w-12 rounded-full object-cover p-1 border-[1px] border-solid border-gray-300 hover:border-indigo-400 transition-colors"
+      alt="Photo de profil"
+      [attr.aria-expanded]="isDropdownOpen()"
+      aria-haspopup="true"
+    />
+  </div>
+
+  <!-- Menu Dropdown Utilisateur -->
+  <div
+    *ngIf="isDropdownOpen()"
+    class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50 divide-y divide-gray-100"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- En-tête avec infos utilisateur -->
+    <div class="px-4 py-3">
+      <div class="text-sm font-medium text-gray-900">Marie Possin</div>
+      <div class="text-sm text-gray-500">marie.possin@example.com</div>
+      <div class="text-xs text-indigo-600 font-medium mt-1">Administrateur</div>
+    </div>
+
+    <!-- Section Profil -->
+    <div class="py-1">
+      <a
+        routerLink="/profile"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faUser" class="mr-3 text-gray-400 w-4"></fa-icon>
+        {{ "USER_DROPDOWN.PROFILE" | translate }}
+      </a>
+
+      <a
+        routerLink="/settings"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faCog" class="mr-3 text-gray-400 w-4"></fa-icon>
+        {{ "USER_DROPDOWN.SETTINGS" | translate }}
+      </a>
+
+      <a
+        routerLink="/billing"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faCreditCard" class="mr-3 text-gray-400 w-4"></fa-icon>
+        {{ "USER_DROPDOWN.BILLING" | translate }}
+      </a>
+    </div>
+
+    <!-- Section Préférences -->
+    <div class="py-1">
+      <button
+        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="toggleTheme()"
+      >
+        <fa-icon
+          [icon]="isDarkTheme() ? faSun : faMoon"
+          class="mr-3 text-gray-400 w-4"
+        ></fa-icon>
+        {{
+          isDarkTheme()
+            ? ("USER_DROPDOWN.LIGHT_MODE" | translate)
+            : ("USER_DROPDOWN.DARK_MODE" | translate)
+        }}
+      </button>
+
+      <a
+        routerLink="/appearance"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faPalette" class="mr-3 text-gray-400 w-4"></fa-icon>
+        {{ "USER_DROPDOWN.APPEARANCE" | translate }}
+      </a>
+    </div>
+
+    <!-- Section Support -->
+    <div class="py-1">
+      <a
+        routerLink="/help"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon
+          [icon]="faQuestionCircle"
+          class="mr-3 text-gray-400 w-4"
+        ></fa-icon>
+        {{ "USER_DROPDOWN.HELP" | translate }}
+      </a>
+
+      <a
+        routerLink="/privacy"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faShieldAlt" class="mr-3 text-gray-400 w-4"></fa-icon>
+        {{ "USER_DROPDOWN.PRIVACY" | translate }}
+      </a>
+
+      <a
+        routerLink="/feedback"
+        class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="closeDropdown()"
+      >
+        <fa-icon [icon]="faStar" class="mr-3 text-gray-400 w-4"></fa-icon>
+        {{ "USER_DROPDOWN.FEEDBACK" | translate }}
+      </a>
+    </div>
+
+    <!-- Section Déconnexion -->
+    <div class="py-1">
+      <button
+        class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+        (click)="logout()"
+      >
+        <fa-icon [icon]="faSignOutAlt" class="mr-3 w-4"></fa-icon>
+        {{ "USER_DROPDOWN.LOGOUT" | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay pour fermer le dropdown -->
+<div
+  *ngIf="isDropdownOpen()"
+  class="fixed inset-0 z-40"
+  (click)="closeDropdown()"
+></div>

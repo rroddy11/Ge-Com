@@ -1,0 +1,139 @@
+<div
+  class="navbar flex justify-between items-center border-b-[1px] border-solid border-gray-300 px-5 h-20 bg-white"
+>
+  <!-- Logo -->
+  <div class="flex">
+    <img
+      src="/assets/images/logo/logo.png"
+      class="h-16 w-32 object-cover"
+      alt="Logo AppGestion Commerciale"
+    />
+  </div>
+  <div class="flex justify-center items-center gap-10">
+    <!-- Barre de recherche -->
+    <div class="research-nav relative flex items-center">
+      <form (submit)="onSearchSubmit($event)" class="relative">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (input)="onSearchInput()"
+          (focus)="onSearchFocus()"
+          (blur)="onSearchBlur()"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="Rechercher un produit, catégorie, prix..."
+          class="border-2 border-solid border-gray-300 rounded-lg w-80 px-10 py-2 text-lg text-gray-700 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 transition-colors"
+        />
+        <button
+          type="button"
+          class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        >
+          <fa-icon [icon]="faSearch" class="text-xl"></fa-icon>
+        </button>
+
+        <!-- Bouton effacer -->
+        <button
+          *ngIf="searchQuery"
+          type="button"
+          class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          (click)="clearSearch()"
+        >
+          <fa-icon [icon]="faTimes" class="text-lg"></fa-icon>
+        </button>
+      </form>
+
+      <!-- Résultats de recherche -->
+      <div
+        *ngIf="showSearchResults && searchResults.length > 0"
+        class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-50 max-h-96 overflow-y-auto"
+      >
+        <div class="p-2">
+          <div class="text-xs font-semibold text-gray-500 px-2 py-1">
+            Résultats ({{ searchResults.length }})
+          </div>
+
+          <div
+            *ngFor="let product of searchResults"
+            (mousedown)="goToProduct(product)"
+            class="flex items-center p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+          >
+            <div class="flex-1 min-w-0">
+              <div class="font-medium text-gray-900 truncate">
+                {{ product.name }}
+              </div>
+              <div class="text-sm text-gray-500">
+                {{ product.category }}
+              </div>
+              <div class="text-sm">
+                <span class="text-gray-600"
+                  >Achat: {{ product.purchasePrice }}</span
+                >
+                <span class="mx-2">•</span>
+                <span class="text-green-600 font-semibold"
+                  >Vente: {{ product.salePrice }}</span
+                >
+              </div>
+            </div>
+            <div
+              class="text-xs px-2 py-1 rounded-full whitespace-nowrap"
+              [class.bg-green-100]="product.stock > 10"
+              [class.text-green-800]="product.stock > 10"
+              [class.bg-yellow-100]="product.stock > 0 && product.stock <= 10"
+              [class.text-yellow-800]="product.stock > 0 && product.stock <= 10"
+              [class.bg-red-100]="product.stock === 0"
+              [class.text-red-800]="product.stock === 0"
+            >
+              {{ product.stock }} stock
+            </div>
+          </div>
+
+          <!-- Voir tous les résultats -->
+          <div
+            class="p-3 text-center border-t border-gray-100 hover:bg-gray-50 cursor-pointer"
+            (mousedown)="onSearchSubmit($event)"
+          >
+            <span class="text-indigo-600 font-medium">
+              Voir tous les résultats pour "{{ searchQuery }}"
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aucun résultat -->
+      <div
+        *ngIf="
+          showSearchResults &&
+          searchResults.length === 0 &&
+          searchQuery.length > 0
+        "
+        class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-4"
+      >
+        <div class="text-center text-gray-500">
+          <fa-icon
+            [icon]="faSearch"
+            class="text-2xl mb-2 text-gray-300"
+          ></fa-icon>
+          <p>Aucun résultat trouvé pour "{{ searchQuery }}"</p>
+          <p class="text-sm mt-1">Essayez avec d'autres termes</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex-items-center">
+      <button class="flex">
+        <app-language-selector></app-language-selector>
+      </button>
+    </div>
+    <div class="flex-items-center">
+      <button class="flex">
+        <app-settings-dropdown></app-settings-dropdown>
+      </button>
+    </div>
+    <div class="flex-items-center">
+      <button class="flex">
+        <app-notifications-dropdown></app-notifications-dropdown>
+      </button>
+    </div>
+    <div class="flex-items-center cursor-pointer">
+      <app-user-selector></app-user-selector>
+    </div>
+  </div>
+</div>

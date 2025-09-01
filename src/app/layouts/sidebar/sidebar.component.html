@@ -1,0 +1,61 @@
+<!-- sidebar.component.html -->
+<div
+  [class]="isCollapsed ? 'w-20' : 'w-72'"
+  class="flex flex-col items-start justify-start h-full gap-7 bg-white border-r border-gray-200 transition-all duration-300 ease-in-out"
+>
+  <!-- En-tête du sidebar -->
+  <div class="flex justify-between items-center mt-[30px] px-4 w-full">
+    <span
+      *ngIf="!isCollapsed"
+      class="text-2xl text-black font-bold transition-opacity duration-200"
+    >
+      Menu
+    </span>
+    <span *ngIf="isCollapsed"></span>
+    <!-- Espaceur pour garder l'alignement -->
+
+    <fa-icon
+      [icon]="isCollapsed ? faClose : faMenu"
+      (click)="onToggleSidebar()"
+      class="text-2xl text-black cursor-pointer hover:text-primary transition-colors"
+      [class.mr-3]="isCollapsed"
+    ></fa-icon>
+  </div>
+
+  <!-- Navigation -->
+  <ul class="sidebar-nav px-3 w-full">
+    <li
+      *ngFor="let item of navItems"
+      class="nav-item"
+      [class.active]="isActiveRoute(item.url)"
+    >
+      <a
+        [routerLink]="item.url"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link px-4 py-3 flex items-center gap-4 rounded-md mb-2 hover:bg-blue-50 hover:text-primary transition-colors duration-200 group"
+        [title]="isCollapsed ? item.text : ''"
+      >
+        <fa-icon
+          [icon]="item.icon"
+          class="nav-icon text-xl min-w-[24px] text-center"
+        ></fa-icon>
+
+        <span
+          *ngIf="!isCollapsed"
+          class="nav-text text-sm transition-opacity duration-200"
+        >
+          {{ item.text }}
+        </span>
+
+        <!-- Tooltip pour le mode collapsed -->
+        <div
+          *ngIf="isCollapsed"
+          class="absolute left-full ml-3 px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50"
+        >
+          {{ item.text }}
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

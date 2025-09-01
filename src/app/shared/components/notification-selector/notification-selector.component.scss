@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+.tooltip-container {
+  position: relative;
+
+  .tooltip {
+    display: none;
+    position: absolute;
+    background-color: #1f2937;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  &:hover .tooltip {
+    display: block;
+  }
+}

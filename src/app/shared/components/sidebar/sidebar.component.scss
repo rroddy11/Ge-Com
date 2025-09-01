@@ -1,7 +1,0 @@
-.nav-link {
-  @apply rounded-md transition-colors duration-200;
-
-  &.active {
-    @apply bg-gray-100 text-secondary font-semibold text-nowrap; // exemple
-  }
-}

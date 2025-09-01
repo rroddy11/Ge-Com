@@ -1,0 +1,65 @@
+<div class="relative inline-block text-center">
+  <!-- Bouton trois points -->
+  <button
+    type="button"
+    class="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors"
+    (click)="toggleDropdown($event)"
+    [attr.aria-expanded]="isDropdownOpen"
+    aria-haspopup="true"
+  >
+    <fa-icon [icon]="faEllipsisVertical" class="text-lg"></fa-icon>
+  </button>
+
+  <!-- Menu Dropdown -->
+  <div
+    *ngIf="isDropdownOpen"
+    class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-1"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Voir détails -->
+    <button
+      (click)="onViewDetails()"
+      class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+    >
+      <fa-icon [icon]="faEye" class="mr-3 text-blue-500"></fa-icon>
+      {{ "ACTIONS.VIEW_DETAILS" | translate }}
+    </button>
+
+    <!-- Modifier -->
+    <button
+      (click)="onEdit()"
+      class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+    >
+      <fa-icon [icon]="faEdit" class="mr-3 text-indigo-500"></fa-icon>
+      {{ "ACTIONS.EDIT" | translate }}
+    </button>
+
+    <!-- Voir historique -->
+    <button
+      (click)="onViewHistory()"
+      class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+    >
+      <fa-icon [icon]="faFileAlt" class="mr-3 text-purple-500"></fa-icon>
+      {{ "ACTIONS.VIEW_HISTORY" | translate }}
+    </button>
+
+    <!-- Séparateur -->
+    <div class="border-t border-gray-100 my-1"></div>
+
+    <!-- Supprimer -->
+    <button
+      (click)="onDelete()"
+      class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+    >
+      <fa-icon [icon]="faTrash" class="mr-3"></fa-icon>
+      {{ "ACTIONS.DELETE" | translate }}
+    </button>
+  </div>
+</div>
+
+<!-- Overlay pour fermer le dropdown -->
+<div
+  *ngIf="isDropdownOpen"
+  class="fixed inset-0 z-40"
+  (click)="closeDropdown()"
+></div>

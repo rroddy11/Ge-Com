@@ -1,0 +1,59 @@
+<!-- language-selector.component.html -->
+<div class="relative inline-block text-left">
+  <button
+    type="button"
+    class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
+    (click)="toggleDropdown($event)"
+    [attr.aria-expanded]="isDropdownOpen"
+    aria-haspopup="true"
+  >
+    <span class="text-2xl">{{ getCurrentFlag() }}</span>
+  </button>
+
+  <div
+    *ngIf="isDropdownOpen"
+    class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="py-1">
+      <button
+        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="changeLanguage('fr')"
+      >
+        <span class="text-xl mr-3">🇫🇷</span>
+        <span>Français</span>
+        <span *ngIf="currentLang === 'fr'" class="ml-auto text-indigo-600"
+          >✓</span
+        >
+      </button>
+
+      <button
+        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="changeLanguage('en')"
+      >
+        <span class="text-xl mr-3">🇬🇧</span>
+        <span>English</span>
+        <span *ngIf="currentLang === 'en'" class="ml-auto text-indigo-600"
+          >✓</span
+        >
+      </button>
+
+      <button
+        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        (click)="changeLanguage('de')"
+      >
+        <span class="text-xl mr-3">🇩🇪</span>
+        <span>Deutsch</span>
+        <span *ngIf="currentLang === 'de'" class="ml-auto text-indigo-600"
+          >✓</span
+        >
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="isDropdownOpen"
+  class="fixed inset-0 z-40"
+  (click)="closeDropdown()"
+></div>

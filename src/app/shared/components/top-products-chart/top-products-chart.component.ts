@@ -65,7 +65,6 @@ export class TopProductsChartComponent implements OnInit {
   };
 
   ngOnInit() {
-    // Utiliser les données d'entrée ou des données par défaut
     this.barChartData.labels = this.products.length
       ? this.products
       : [

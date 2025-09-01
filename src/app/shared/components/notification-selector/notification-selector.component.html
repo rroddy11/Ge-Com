@@ -1,0 +1,149 @@
+<div class="relative inline-block text-left">
+  <!-- Bouton Notifications avec badge -->
+  <button
+    type="button"
+    class="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
+    (click)="toggleDropdown($event)"
+    [attr.aria-expanded]="isDropdownOpen()"
+    aria-haspopup="true"
+  >
+    <fa-icon
+      [icon]="faBell"
+      class="text-gray-600 hover:text-gray-800 text-lg"
+    ></fa-icon>
+
+    <!-- Badge de notifications non lues -->
+    <span
+      *ngIf="notificationService.unreadCount() > 0"
+      class="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full"
+    >
+      {{
+        notificationService.unreadCount() > 9
+          ? "9+"
+          : notificationService.unreadCount()
+      }}
+    </span>
+  </button>
+
+  <!-- Menu Dropdown Notifications -->
+  <div
+    *ngIf="isDropdownOpen()"
+    class="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- En-tête -->
+    <div
+      class="flex items-center justify-between px-4 py-3 border-b border-gray-100"
+    >
+      <h3 class="text-lg font-semibold text-gray-900">
+        {{ "NOTIFICATIONS.TITLE" | translate }}
+      </h3>
+      <button (click)="markAllAsRead()" class="text-sm text-secondary">
+        <!-- Bouton Marquer tout comme lu -->
+        <div class="tooltip-container">
+          <button class="btn btn-secondary">
+            <fa-icon [icon]="faEye"></fa-icon>
+          </button>
+          <span class="tooltip">
+            {{ "NOTIFICATIONS.MARK_ALL_READ" | translate }}
+          </span>
+        </div>
+      </button>
+      <div class="relative group">
+        <button
+          (click)="clearAll()"
+          class="flex items-center space-x-1 text-sm text-primary"
+        >
+          <fa-icon [icon]="faTrashAlt"></fa-icon>
+        </button>
+        <span
+          class="absolute hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap"
+        >
+          {{ "NOTIFICATIONS.CLEAR_ALL" | translate }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Liste des notifications -->
+    <div class="max-h-96 overflow-y-auto">
+      <div
+        *ngFor="let notification of notificationService.notifications()"
+        [class.bg-gray-50]="!notification.read"
+        class="border-b border-gray-100 last:border-b-0"
+      >
+        <div class="flex items-start px-4 py-3 hover:bg-gray-50">
+          <!-- Icône de type de notification -->
+          <div
+            [class]="getNotificationIconClass(notification.type)"
+            class="flex-shrink-0 mt-1 mr-3"
+          >
+            <fa-icon [icon]="notification.icon" class="text-sm"></fa-icon>
+          </div>
+
+          <!-- Contenu de la notification -->
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900">
+              {{ notification.title }}
+            </p>
+            <p class="text-sm text-gray-500 mt-1">
+              {{ notification.message }}
+            </p>
+            <p class="text-xs text-gray-400 mt-2">
+              {{ notification.time }}
+            </p>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex flex-col items-end space-y-1 ml-2">
+            <button
+              *ngIf="!notification.read"
+              (click)="markAsRead(notification.id)"
+              class="text-xs text-indigo-600 hover:text-indigo-800"
+              [title]="'NOTIFICATIONS.MARK_READ' | translate"
+            >
+              <fa-icon [icon]="faCheckCircle"></fa-icon>
+            </button>
+            <button
+              (click)="deleteNotification(notification.id)"
+              class="text-xs text-gray-400 hover:text-red-600"
+              [title]="'NOTIFICATIONS.DELETE' | translate"
+            >
+              <fa-icon [icon]="faTrashAlt"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aucune notification -->
+      <div
+        *ngIf="notificationService.notifications().length === 0"
+        class="px-4 py-8 text-center"
+      >
+        <fa-icon [icon]="faBell" class="text-gray-300 text-4xl mb-2"></fa-icon>
+        <p class="text-sm text-gray-500">
+          {{ "NOTIFICATIONS.EMPTY" | translate }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Pied de page -->
+    <div
+      *ngIf="notificationService.notifications().length > 0"
+      class="px-4 py-3 bg-gray-50 border-t border-gray-100"
+    >
+      <a
+        href="/notifications"
+        class="block text-center text-sm font-medium text-indigo-600 hover:text-indigo-800"
+      >
+        {{ "NOTIFICATIONS.VIEW_ALL" | translate }}
+      </a>
+    </div>
+  </div>
+
+  <!-- Overlay pour fermer le dropdown -->
+  <div
+    *ngIf="isDropdownOpen()"
+    class="fixed inset-0 z-40"
+    (click)="closeDropdown()"
+  ></div>
+</div>

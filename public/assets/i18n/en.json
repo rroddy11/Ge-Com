@@ -1,0 +1,83 @@
+{
+  "NAVIGATION": {
+    "HOME": "Home",
+    "PRODUCTS": "Products",
+    "CATEGORIES": "Categories",
+    "DASHBOARD": "Dashboard"
+  },
+  "PRODUCTS": {
+    "MANAGEMENT": "Product Management",
+    "LIST_TITLE": "Product List",
+    "IMAGE": "Image",
+    "ADD_BUTTON": "Add Product",
+    "SEARCH_PLACEHOLDER": "Search for a product...",
+    "ALL_CATEGORIES": "All categories",
+    "PRODUCT_NAME": "Product Name",
+    "CATEGORY": "Category",
+    "PURCHASE_PRICE": "Purchase Price",
+    "SALE_PRICE": "Sale Price",
+    "STOCK": "Available Stock",
+    "ACTIONS": "Actions",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next",
+    "SHOWING": "Showing",
+    "TO": "to",
+    "OF": "of",
+    "RESULTS": "results",
+    "NO_PRODUCTS": "No products found",
+    "LOW_STOCK": "Low stock"
+  },
+  "CATEGORIES": {
+    "FRUITS_VEGETABLES": "Fruits & Vegetables",
+    "DAIRY": "Dairy Products",
+    "MEATS": "Meats",
+    "BAKERY": "Bakery"
+  },
+  "SETTINGS": {
+    "USER": "User",
+    "PROFILE": "My Profile",
+    "NOTIFICATIONS": "Notifications",
+    "DARK_MODE": "Dark Mode",
+    "LIGHT_MODE": "Light Mode",
+    "APPEARANCE": "Appearance",
+    "LANGUAGE": "Language",
+    "PRIVACY": "Privacy",
+    "HELP": "Help & Support",
+    "LOGOUT": "Logout"
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Notifications",
+    "MARK_ALL_READ": "Mark all as read",
+    "CLEAR_ALL": "Clear all",
+    "MARK_READ": "Mark as read",
+    "DELETE": "Delete",
+    "VIEW_ALL": "View all notifications",
+    "EMPTY": "No notifications",
+    "TYPES": {
+      "SUCCESS": "Success",
+      "WARNING": "Warning",
+      "ERROR": "Error",
+      "INFO": "Information"
+    }
+  },
+  "USER_DROPDOWN": {
+    "PROFILE": "My Profile",
+    "SETTINGS": "Settings",
+    "BILLING": "Billing",
+    "DARK_MODE": "Dark Mode",
+    "LIGHT_MODE": "Light Mode",
+    "APPEARANCE": "Appearance",
+    "HELP": "Help & Support",
+    "PRIVACY": "Privacy",
+    "FEEDBACK": "Give Feedback",
+    "LOGOUT": "Logout"
+  },
+  "ACTIONS": {
+    "VIEW_DETAILS": "View Details",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "VIEW_HISTORY": "View History"
+  }
+}
