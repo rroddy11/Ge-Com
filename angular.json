@@ -39,7 +39,6 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "prerender": false,
             "outputPath": "dist/gestion-commercial",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -53,12 +52,7 @@
               }
             ],
             "styles": ["src/styles.scss"],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {
