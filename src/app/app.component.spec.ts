@@ -7,13 +7,11 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     // Mock du TranslateService
     const translateServiceMock = {
-      get: jasmine.createSpy('get').and.returnValue(of('mocked translation')),
-      instant: jasmine
-        .createSpy('instant')
-        .and.returnValue('mocked translation'),
-      use: jasmine.createSpy('use').and.returnValue(of({})),
-      setDefaultLang: jasmine.createSpy('setDefaultLang'),
-      getBrowserLang: jasmine.createSpy('getBrowserLang').and.returnValue('en'),
+      get: jest.fn().mockReturnValue(of('mocked translation')),
+      instant: jest.fn().mockReturnValue('mocked translation'),
+      use: jest.fn().mockReturnValue(of({})),
+      setDefaultLang: jest.fn(),
+      getBrowserLang: jest.fn().mockReturnValue('en'),
       onLangChange: of({ lang: 'en', translations: {} }),
       onTranslationChange: of({ lang: 'en', translations: {} }),
       onDefaultLangChange: of({ lang: 'en', translations: {} }),
