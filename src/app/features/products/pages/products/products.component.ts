@@ -6,11 +6,20 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { Product } from '../../../../core/models/product';
 import { ProductService } from '../../../../core/services/product.service';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ActionSelectorComponent } from '../../../../shared/components/action-selector/action-selector.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    FormsModule,
+    TranslateModule,
+    ActionSelectorComponent,
+  ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -33,7 +42,11 @@ export class ProductsComponent implements OnInit {
   currentPage = 0;
   itemsPerPage = 5;
 
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    public translate: TranslateService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     // Récupération des produits depuis le service
@@ -169,5 +182,36 @@ export class ProductsComponent implements OnInit {
     return this.currentPage === pageIndex
       ? `${baseClasses} bg-indigo-50 border-indigo-500 text-indigo-600`
       : `${baseClasses} bg-white border-gray-300 text-gray-500 hover:bg-gray-50`;
+  }
+
+  onViewDetails(product: Product): void {
+    console.log('Voir détails:', product);
+    this.router.navigate(['/products', product.id, 'details']);
+  }
+
+  // Gérer l'édition
+  onEdit(product: Product): void {
+    console.log('Modifier:', product);
+    this.router.navigate(['/products', product.id, 'edit']);
+  }
+
+  // Gérer la suppression
+  onDelete(product: Product): void {
+    console.log('Supprimer:', product);
+    if (confirm(this.translate.instant('PRODUCTS.CONFIRM_DELETE'))) {
+      // Logique de suppression ici
+      this.productService.deleteProduct(product.id);
+      this.updateFilteredProducts(); // Rafraîchir la liste
+    }
+  }
+
+  // Gérer l'historique
+  onViewHistory(product: Product): void {
+    console.log('Voir historique:', product);
+    this.router.navigate(['/products', product.id, 'history']);
+  }
+  handleImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = '/assets/images/products/default.png';
   }
 }

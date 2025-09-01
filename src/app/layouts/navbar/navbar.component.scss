@@ -1,0 +1,26 @@
+// Mode sombre
+.dark {
+  --bg-color: #1f2937;
+  --text-color: #f9fafb;
+  --border-color: #374151;
+
+  .bg-white {
+    background-color: var(--bg-color);
+  }
+
+  .text-gray-600,
+  .text-gray-700,
+  .text-gray-900 {
+    color: var(--text-color);
+  }
+
+  .ring-black,
+  .border-gray-100,
+  .divide-gray-100 {
+    border-color: var(--border-color);
+  }
+
+  .hover\:bg-gray-100:hover {
+    background-color: #374151;
+  }
+}

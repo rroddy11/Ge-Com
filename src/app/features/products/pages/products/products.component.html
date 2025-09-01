@@ -1,14 +1,17 @@
-<div class="product-page mt-3">
+<!-- products.component.html -->
+<div class="product-page mt-0">
   <div class="flex justify-between items-center">
     <div class="flex">
-      <span class="text-4xl text-tertiary font-bold">Liste des produits</span>
+      <span class="text-4xl text-tertiary font-bold">
+        {{ "PRODUCTS.LIST_TITLE" | translate }}
+      </span>
     </div>
     <div class="flex">
       <button
-        class="flex text-xl text-text-black gap-5 bg-primary border border-primary px-5 py-2 rounded-lg hover:bg-tertiary hover:text-white transition-all duration-300"
+        class="flex text-lg text-text-black gap-5 bg-primary border border-primary px-5 py-2 rounded-lg hover:bg-tertiary hover:text-white transition-all duration-300"
       >
         <fa-icon [icon]="faPlus"></fa-icon>
-        <span>Ajouter Produit</span>
+        <span>{{ "PRODUCTS.ADD_BUTTON" | translate }}</span>
       </button>
     </div>
   </div>
@@ -23,7 +26,7 @@
             [(ngModel)]="searchText"
             (input)="updateFilteredProducts()"
             class="border-[1px] border-solid block w-full pl-3 pr-10 py-2 sm:text-lg border-gray-300 rounded-md"
-            placeholder="Nom du produit, catégorie..."
+            [placeholder]="'PRODUCTS.SEARCH_PLACEHOLDER' | translate"
           />
         </div>
       </div>
@@ -34,10 +37,16 @@
           id="category"
           [(ngModel)]="selectedCategory"
           (change)="updateFilteredProducts()"
-          placeholder="Catégorie de projet"
-          class="block w-full px-10 py-2 bg-transparent border-[1px] border-solid border-gray-300 focus:outline-none sm:text-lg rounded-md"
+          class="block w-full px-10 py-2 bg-transparent border-[1px] border-solid border-gray-300 text-gray-400 focus:outline-none sm:text-lg rounded-md"
         >
-          <option *ngFor="let category of categories" [value]="category">
+          <option value="" class="text-gray-400">
+            {{ "PRODUCTS.ALL_CATEGORIES" | translate }}
+          </option>
+          <option
+            *ngFor="let category of categories"
+            [value]="category"
+            class="text-gray-400"
+          >
             {{ category }}
           </option>
         </select>
@@ -51,59 +60,65 @@
           <tr>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+              class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "PRODUCTS.IMAGE" | translate }}
+            </th>
+            <th
+              scope="col"
+              class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
               (click)="sortBy('name')"
             >
-              Nom du Produit
+              {{ "PRODUCTS.PRODUCT_NAME" | translate }}
               <span *ngIf="sortField === 'name'">{{
                 reverse ? "▼" : "▲"
               }}</span>
             </th>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+              class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
               (click)="sortBy('category')"
             >
-              Catégorie
+              {{ "PRODUCTS.CATEGORY" | translate }}
               <span *ngIf="sortField === 'category'">{{
                 reverse ? "▼" : "▲"
               }}</span>
             </th>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+              class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
               (click)="sortBy('purchasePrice')"
             >
-              Prix d'Achat
+              {{ "PRODUCTS.PURCHASE_PRICE" | translate }}
               <span *ngIf="sortField === 'purchasePrice'">{{
                 reverse ? "▼" : "▲"
               }}</span>
             </th>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+              class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
               (click)="sortBy('salePrice')"
             >
-              Prix de Vente
+              {{ "PRODUCTS.SALE_PRICE" | translate }}
               <span *ngIf="sortField === 'salePrice'">{{
                 reverse ? "▼" : "▲"
               }}</span>
             </th>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+              class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
               (click)="sortBy('stock')"
             >
-              Stock Disponible
+              {{ "PRODUCTS.STOCK" | translate }}
               <span *ngIf="sortField === 'stock'">{{
                 reverse ? "▼" : "▲"
               }}</span>
             </th>
             <th
               scope="col"
-              class="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+              class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider"
             >
-              Actions
+              {{ "PRODUCTS.ACTIONS" | translate }}
             </th>
           </tr>
         </thead>
@@ -112,6 +127,20 @@
             *ngFor="let product of paginatedProducts()"
             [class.bg-red-50]="product.stock < 10"
           >
+            <!-- Colonne Image -->
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <img
+                  [src]="
+                    product.imageUrl || '/assets/images/products/default.png'
+                  "
+                  [alt]="product.name"
+                  (error)="handleImageError($event)"
+                  class="h-12 w-12 rounded-full object-cover border-2 border-gray-200 shadow-sm"
+                />
+              </div>
+            </td>
+
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="font-bold text-gray-900">{{ product.name }}</div>
             </td>
@@ -131,23 +160,37 @@
             <td
               class="px-6 py-4 whitespace-nowrap text-center text-[16px] text-gray-500"
             >
-              {{ product.stock }}
+              <span
+                class="font-semibold"
+                [class.text-red-600]="product.stock < 10"
+              >
+                {{ product.stock }}
+              </span>
+              <span
+                *ngIf="product.stock < 10"
+                class="ml-1 text-xs text-red-600"
+              >
+                ({{ "PRODUCTS.LOW_STOCK" | translate }})
+              </span>
             </td>
             <td
-              class="px-6 py-4 whitespace-nowrap text-[16px] text-center font-medium"
+              class="px-6 py-2 whitespace-nowrap text-[16px] text-center font-medium"
             >
-              <button class="text-indigo-600 hover:text-indigo-900 mr-3">
-                Modifier
-              </button>
-              <button class="text-red-600 hover:text-red-900">Supprimer</button>
+              <app-actions-dropdown
+                [product]="product"
+                (viewDetails)="onViewDetails($event)"
+                (edit)="onEdit($event)"
+                (delete)="onDelete($event)"
+                (viewHistory)="onViewHistory($event)"
+              ></app-actions-dropdown>
             </td>
           </tr>
           <tr *ngIf="filteredProducts().length === 0">
             <td
-              colspan="6"
+              colspan="7"
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"
             >
-              Aucun produit trouvé
+              {{ "PRODUCTS.NO_PRODUCTS" | translate }}
             </td>
           </tr>
         </tbody>
@@ -164,28 +207,28 @@
           [disabled]="currentPage === 0"
           class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Précédent
+          {{ "PRODUCTS.PREVIOUS" | translate }}
         </button>
         <button
           (click)="nextPage()"
           [disabled]="currentPage >= numberOfPages() - 1"
           class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Suivant
+          {{ "PRODUCTS.NEXT" | translate }}
         </button>
       </div>
       <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
           <p class="text-sm text-gray-700">
-            Affichage de
+            {{ "PRODUCTS.SHOWING" | translate }}
             <span class="font-medium">{{
               currentPage * itemsPerPage + 1
             }}</span>
-            à
+            {{ "PRODUCTS.TO" | translate }}
             <span class="font-medium">{{ getEndIndex() }}</span>
-            sur
+            {{ "PRODUCTS.OF" | translate }}
             <span class="font-medium">{{ filteredProducts().length }}</span>
-            résultats
+            {{ "PRODUCTS.RESULTS" | translate }}
           </p>
         </div>
         <div>
@@ -198,8 +241,8 @@
               [disabled]="currentPage === 0"
               class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span class="sr-only">Précédent</span>
-              Précédent
+              <span class="sr-only">{{ "PRODUCTS.PREVIOUS" | translate }}</span>
+              {{ "PRODUCTS.PREVIOUS" | translate }}
             </button>
             <button
               *ngFor="let page of getPagesArray(); let i = index"
@@ -214,8 +257,8 @@
               [disabled]="currentPage >= numberOfPages() - 1"
               class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span class="sr-only">Suivant</span>
-              Suivant
+              <span class="sr-only">{{ "PRODUCTS.NEXT" | translate }}</span>
+              {{ "PRODUCTS.NEXT" | translate }}
             </button>
           </nav>
         </div>

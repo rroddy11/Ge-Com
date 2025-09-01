@@ -1,4 +1,62 @@
+// layout.component.scss
 :host {
   display: block;
   height: 100vh;
+}
+
+// Transition smooth pour le main content
+main {
+  transition: margin-left 0.3s ease-in-out;
+}
+
+// Ajustements responsive
+@media (max-width: 1024px) {
+  app-sidebar {
+    width: 16rem !important;
+
+    &.collapsed {
+      width: 4rem !important;
+    }
+  }
+
+  main {
+    margin-left: 16rem !important;
+
+    &.collapsed {
+      margin-left: 4rem !important;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  // Cacher le sidebar sur mobile et utiliser un overlay
+  app-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+
+    &.mobile-open {
+      transform: translateX(0);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // Overlay pour mobile
+  .sidebar-overlay {
+    display: none;
+
+    &.mobile-open {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 15;
+    }
+  }
+
+  main {
+    margin-left: 0 !important;
+  }
 }

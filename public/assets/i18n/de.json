@@ -1,0 +1,83 @@
+{
+  "NAVIGATION": {
+    "HOME": "Startseite",
+    "PRODUCTS": "Produkte",
+    "CATEGORIES": "Kategorien",
+    "DASHBOARD": "Dashboard"
+  },
+  "PRODUCTS": {
+    "MANAGEMENT": "Produktverwaltung",
+    "LIST_TITLE": "Produktliste",
+    "SEARCH_PLACEHOLDER": "Nach einem Produkt suchen...",
+    "IMAGE": "Bild",
+    "ADD_BUTTON": "Produkt hinzufügen",
+    "ALL_CATEGORIES": "Alle Kategorien",
+    "PRODUCT_NAME": "Produktname",
+    "CATEGORY": "Kategorie",
+    "PURCHASE_PRICE": "Einkaufspreis",
+    "SALE_PRICE": "Verkaufspreis",
+    "STOCK": "Verfügbarer Bestand",
+    "ACTIONS": "Aktionen",
+    "EDIT": "Bearbeiten",
+    "DELETE": "Löschen",
+    "PREVIOUS": "Vorherige",
+    "NEXT": "Nächste",
+    "SHOWING": "Zeige",
+    "TO": "bis",
+    "OF": "von",
+    "RESULTS": "Ergebnisse",
+    "NO_PRODUCTS": "Keine Produkte gefunden",
+    "LOW_STOCK": "Geringer Bestand"
+  },
+  "CATEGORIES": {
+    "FRUITS_VEGETABLES": "Obst & Gemüse",
+    "DAIRY": "Milchprodukte",
+    "MEATS": "Fleisch",
+    "BAKERY": "Bäckerei"
+  },
+  "SETTINGS": {
+    "USER": "Benutzer",
+    "PROFILE": "Mein Profil",
+    "NOTIFICATIONS": "Benachrichtigungen",
+    "DARK_MODE": "Dunkler Modus",
+    "LIGHT_MODE": "Lichtmodus",
+    "APPEARANCE": "Erscheinungsbild",
+    "LANGUAGE": "Sprache",
+    "PRIVACY": "Datenschutz",
+    "HELP": "Hilfe & Support",
+    "LOGOUT": "Abmelden"
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Benachrichtigungen",
+    "MARK_ALL_READ": "Alle als gelesen markieren",
+    "CLEAR_ALL": "Alle löschen",
+    "MARK_READ": "Als gelesen markieren",
+    "DELETE": "Löschen",
+    "VIEW_ALL": "Alle Benachrichtigungen anzeigen",
+    "EMPTY": "Keine Benachrichtigungen",
+    "TYPES": {
+      "SUCCESS": "Erfolg",
+      "WARNING": "Warnung",
+      "ERROR": "Fehler",
+      "INFO": "Information"
+    }
+  },
+  "USER_DROPDOWN": {
+    "PROFILE": "Mein Profil",
+    "SETTINGS": "Einstellungen",
+    "BILLING": "Abrechnung",
+    "DARK_MODE": "Dunkler Modus",
+    "LIGHT_MODE": "Lichtmodus",
+    "APPEARANCE": "Erscheinungsbild",
+    "HELP": "Hilfe & Support",
+    "PRIVACY": "Datenschutz",
+    "FEEDBACK": "Feedback geben",
+    "LOGOUT": "Abmelden"
+  },
+  "ACTIONS": {
+    "VIEW_DETAILS": "Details anzeigen",
+    "EDIT": "Bearbeiten",
+    "DELETE": "Löschen",
+    "VIEW_HISTORY": "Verlauf anzeigen"
+  }
+}

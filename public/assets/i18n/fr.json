@@ -1,0 +1,83 @@
+{
+  "NAVIGATION": {
+    "HOME": "Accueil",
+    "PRODUCTS": "Produits",
+    "CATEGORIES": "Catégories",
+    "DASHBOARD": "Tableau de bord"
+  },
+  "PRODUCTS": {
+    "MANAGEMENT": "Gestion des Produits",
+    "LIST_TITLE": "Liste des Produits",
+    "IMAGE": "Image",
+    "ADD_BUTTON": "Ajouter un Produit",
+    "SEARCH_PLACEHOLDER": "Rechercher un produit...",
+    "ALL_CATEGORIES": "Toutes les catégories",
+    "PRODUCT_NAME": "Nom du Produit",
+    "CATEGORY": "Catégorie",
+    "PURCHASE_PRICE": "Prix d'Achat",
+    "SALE_PRICE": "Prix de Vente",
+    "STOCK": "Stock Disponible",
+    "ACTIONS": "Actions",
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer",
+    "PREVIOUS": "Précédent",
+    "NEXT": "Suivant",
+    "SHOWING": "Affichage de",
+    "TO": "à",
+    "OF": "sur",
+    "RESULTS": "résultats",
+    "NO_PRODUCTS": "Aucun produit trouvé",
+    "LOW_STOCK": "Stock faible"
+  },
+  "CATEGORIES": {
+    "FRUITS_VEGETABLES": "Fruits & Légumes",
+    "DAIRY": "Produits Laitiers",
+    "MEATS": "Viandes",
+    "BAKERY": "Boulangerie"
+  },
+  "SETTINGS": {
+    "USER": "Utilisateur",
+    "PROFILE": "Mon profil",
+    "NOTIFICATIONS": "Notifications",
+    "DARK_MODE": "Mode sombre",
+    "LIGHT_MODE": "Mode clair",
+    "APPEARANCE": "Apparence",
+    "LANGUAGE": "Langue",
+    "PRIVACY": "Confidentialité",
+    "HELP": "Aide & Support",
+    "LOGOUT": "Déconnexion"
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "Notifications",
+    "MARK_ALL_READ": "Tout marquer comme lu",
+    "CLEAR_ALL": "Tout effacer",
+    "MARK_READ": "Marquer comme lu",
+    "DELETE": "Supprimer",
+    "VIEW_ALL": "Voir toutes les notifications",
+    "EMPTY": "Aucune notification",
+    "TYPES": {
+      "SUCCESS": "Succès",
+      "WARNING": "Avertissement",
+      "ERROR": "Erreur",
+      "INFO": "Information"
+    }
+  },
+  "USER_DROPDOWN": {
+    "PROFILE": "Mon profil",
+    "SETTINGS": "Paramètres",
+    "BILLING": "Facturation",
+    "DARK_MODE": "Mode sombre",
+    "LIGHT_MODE": "Mode clair",
+    "APPEARANCE": "Apparence",
+    "HELP": "Aide & Support",
+    "PRIVACY": "Confidentialité",
+    "FEEDBACK": "Donner son avis",
+    "LOGOUT": "Déconnexion"
+  },
+  "ACTIONS": {
+    "VIEW_DETAILS": "Voir détails",
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer",
+    "VIEW_HISTORY": "Voir historique"
+  }
+}
