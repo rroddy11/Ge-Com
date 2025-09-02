@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ProductKpisComponent } from '../../../../../shared/components/product-kpis/product-kpis.component';
 import { ProductChartsComponent } from '../../../../../shared/components/product-charts/product-charts.component';
 
+
 @Component({
   selector: 'app-products',
   standalone: true,
@@ -22,6 +23,7 @@ import { ProductChartsComponent } from '../../../../../shared/components/product
     ActionSelectorComponent,
     ProductKpisComponent,
     ProductChartsComponent,
+
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
