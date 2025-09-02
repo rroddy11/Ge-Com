@@ -1,0 +1,19 @@
+.tab-active {
+  background-color: #8ea223;
+  color: white;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.tab-inactive {
+  background-color: #7c614f;
+  color: #6b7280;
+  color: white;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.tab-inactive:hover {
+  color: #ffffff;
+  border-bottom-color: #d1d5db;
+}

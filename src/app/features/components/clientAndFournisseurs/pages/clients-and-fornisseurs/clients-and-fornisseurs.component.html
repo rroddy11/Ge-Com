@@ -1,1 +1,25 @@
-<p>clients-and-fornisseurs works!</p>
+<div class="">
+  <!-- Navigation par onglets -->
+  <div class="flex border-b border-gray-200 mb-6">
+    <button
+      (click)="activeTab = 'clients'"
+      [class]="getTabClass('clients')"
+      class="w-1/2 py-4 px-6 text-center font-medium text-sm rounded-tl-md rounded-bl-md"
+    >
+      {{ "CLIENTS_SUPPLIERS.CLIENTS" | translate }}
+    </button>
+    <button
+      (click)="activeTab = 'suppliers'"
+      [class]="getTabClass('suppliers')"
+      class="w-1/2 py-4 px-6 text-center font-medium text-sm rounded-tr-md rounded-br-md"
+    >
+      {{ "CLIENTS_SUPPLIERS.SUPPLIERS" | translate }}
+    </button>
+  </div>
+
+  <!-- Contenu des onglets -->
+  <div [ngSwitch]="activeTab">
+    <app-clients *ngSwitchCase="'clients'"></app-clients>
+    <app-suppliers *ngSwitchCase="'suppliers'"></app-suppliers>
+  </div>
+</div>

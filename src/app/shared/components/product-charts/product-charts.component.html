@@ -1,0 +1,19 @@
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">
+      {{ "PRODUCTS.CATEGORY_DISTRIBUTION" | translate }}
+    </h3>
+    <div class="chart-container">
+      <canvas #categoryChart></canvas>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">
+      {{ "PRODUCTS.STOCK_LEVELS" | translate }}
+    </h3>
+    <div class="chart-container">
+      <canvas #stockChart></canvas>
+    </div>
+  </div>
+</div>

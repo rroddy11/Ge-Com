@@ -1,0 +1,99 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+  <!-- Carte 1 -->
+  <div class="bg-white rounded-lg shadow-sm px-5 py-4 flex flex-col gap-5">
+    <div class="flex justify-between items-center w-full">
+      <p class="text-lg text-gray-500">
+        {{ "CLIENTS.TOTAL_CLIENTS" | translate }}
+      </p>
+      <div class="rounded-full">
+        <fa-icon [icon]="cards[0].icon" [class]="cards[0].iconColor"></fa-icon>
+      </div>
+    </div>
+    <div class="flex justify-between items-center w-full">
+      <h3 class="text-2xl font-bold text-gray-800 mt-1">
+        {{ cards[0].value }}
+      </h3>
+      <p
+        class="text-xs mt-1"
+        [class]="cards[0].trendColor"
+        *ngIf="cards[0].trend"
+      >
+        <fa-icon [icon]="cards[0].trendIcon"></fa-icon> {{ cards[0].trend }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Carte 2 -->
+  <div class="bg-white rounded-lg shadow-sm px-5 py-4 flex flex-col gap-5">
+    <div class="flex justify-between items-center w-full">
+      <p class="text-lg text-gray-500">
+        {{ "CLIENTS.ACTIVE_CLIENTS" | translate }}
+      </p>
+      <div class="rounded-full">
+        <fa-icon [icon]="cards[1].icon" [class]="cards[1].iconColor"></fa-icon>
+      </div>
+    </div>
+    <div class="flex justify-between items-center w-full">
+      <h3 class="text-2xl font-bold text-gray-800 mt-1">
+        {{ cards[1].value }}
+      </h3>
+      <p
+        class="text-xs mt-1"
+        [class]="cards[1].trendColor"
+        *ngIf="cards[1].trend"
+      >
+        <fa-icon [icon]="cards[1].trendIcon"></fa-icon> {{ cards[1].trend }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Carte 3 -->
+
+  <div class="bg-white rounded-lg shadow-sm px-5 py-4 flex flex-col gap-5">
+    <div class="flex justify-between items-center w-full">
+      <p class="text-lg text-gray-500">
+        {{ "CLIENTS.VIP_CLIENTS" | translate }}
+      </p>
+      <div class="rounded-full">
+        <fa-icon [icon]="cards[2].icon" [class]="cards[2].iconColor"></fa-icon>
+      </div>
+    </div>
+    <div class="flex justify-between items-center w-full">
+      <h3 class="text-2xl font-bold text-gray-800 mt-1">
+        {{ cards[2].value }}
+      </h3>
+      <p
+        class="text-xs mt-1"
+        [class]="cards[2].trendColor"
+        *ngIf="cards[2].trend"
+      >
+        <fa-icon [icon]="cards[2].trendIcon"></fa-icon> {{ cards[2].trend }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Carte 4 -->
+
+  <div class="bg-white rounded-lg shadow-sm px-5 py-4 flex flex-col gap-5">
+    <div class="flex justify-between items-center w-full">
+      <p class="text-lg text-gray-500">
+        {{ "CLIENTS.TOTAL_REVENUE" | translate }}
+      </p>
+      <div class="rounded-full">
+        <fa-icon [icon]="cards[3].icon" [class]="cards[3].iconColor"></fa-icon>
+      </div>
+    </div>
+    <div class="flex justify-between items-center w-full">
+      <h3 class="text-2xl font-bold text-gray-800 mt-1">
+        {{ cards[3].value }}
+      </h3>
+      <p
+        class="text-xs mt-1"
+        [class]="cards[3].trendColor"
+        *ngIf="cards[3].trend"
+      >
+        <fa-icon [icon]="cards[3].trendIcon"></fa-icon> {{ cards[3].trend }}
+      </p>
+    </div>
+  </div>
+</div>
