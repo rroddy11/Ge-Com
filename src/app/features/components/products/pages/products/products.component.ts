@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Component, signal, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { Product } from '../../../../core/models/product';
-import { ProductService } from '../../../../core/services/product.service';
+import { Product } from '../../../../../core/models/product';
+import { ProductService } from '../../../../../core/services/product.service';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ActionSelectorComponent } from '../../../../shared/components/action-selector/action-selector.component';
+import { ActionSelectorComponent } from '../../../../../shared/components/action-selector/action-selector.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -45,7 +45,7 @@ export class ProductsComponent implements OnInit {
   constructor(
     private readonly productService: ProductService,
     public translate: TranslateService,
-    private router: Router
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
@@ -182,11 +182,6 @@ export class ProductsComponent implements OnInit {
     return this.currentPage === pageIndex
       ? `${baseClasses} bg-indigo-50 border-indigo-500 text-indigo-600`
       : `${baseClasses} bg-white border-gray-300 text-gray-500 hover:bg-gray-50`;
-  }
-
-  onViewDetails(product: Product): void {
-    console.log('Voir détails:', product);
-    this.router.navigate(['/products', product.id, 'details']);
   }
 
   // Gérer l'édition

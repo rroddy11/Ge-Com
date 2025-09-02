@@ -1,0 +1,335 @@
+<div class="w-full" *ngIf="product">
+  <!-- En-tête avec bouton retour -->
+  <div
+    class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 gap-4"
+  >
+    <div>
+      <h1 class="text-4xl font-bold text-tertiary">
+        {{ "PRODUCT_DETAIL.TITLE" | translate }}: {{ product.name }}
+      </h1>
+      <div class="flex items-center mt-2 flex-wrap gap-2">
+        <span class="text-white bg-secondary px-3 py-1 rounded-full text-sm">
+          {{ product.category }}
+        </span>
+        <span
+          *ngIf="product.isOrganic"
+          class="text-white bg-primary px-3 py-1 rounded-full text-sm"
+        >
+          <fa-icon [icon]="faLeaf" class="mr-1"></fa-icon>
+          {{ "PRODUCT_DETAIL.BIO" | translate }}
+        </span>
+        <span
+          *ngIf="product.isLocal"
+          class="text-white bg-tertiary px-3 py-1 rounded-full text-sm"
+        >
+          <fa-icon [icon]="faCertificate" class="mr-1"></fa-icon>
+          {{ "PRODUCT_DETAIL.LOCAL_PRODUCT" | translate }}
+        </span>
+      </div>
+    </div>
+    <a
+      routerLink="/admin/dashboard/product"
+      class="flex items-center text-secondary hover:text-primary transition-colors"
+    >
+      <fa-icon [icon]="faArrowLeft" class="mr-2"></fa-icon>
+      {{ "PRODUCT_DETAIL.BACK_TO_LIST" | translate }}
+    </a>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6">
+      <!-- Colonne 1: Image et informations de base -->
+      <div class="lg:col-span-1">
+        <div class="relative mb-6">
+          <img
+            [src]="product.imageUrl || '/assets/images/placeholder-product.png'"
+            [alt]="product.name"
+            class="w-full h-64 object-cover rounded-lg shadow-md"
+          />
+        </div>
+
+        <!-- Informations de base -->
+        <div class="bg-tertiary/10 p-4 rounded-lg mb-6">
+          <h3
+            class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
+          >
+            <fa-icon [icon]="faIdCard" class="text-tertiary mr-2"></fa-icon>
+            {{ "PRODUCT_DETAIL.BASIC_INFO" | translate }}
+          </h3>
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <span class="text-gray-600"
+                >{{ "PRODUCT_DETAIL.PRODUCT_ID" | translate }}:</span
+              >
+              <span class="font-medium">#{{ product.id }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600"
+                >{{ "PRODUCT_DETAIL.PRODUCT_NAME" | translate }}:</span
+              >
+              <span class="font-medium">{{ product.name }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600"
+                >{{ "PRODUCT_DETAIL.CATEGORY" | translate }}:</span
+              >
+              <span class="font-medium">{{ product.category }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600"
+                >{{ "PRODUCT_DETAIL.UNIT" | translate }}:</span
+              >
+              <span class="font-medium">{{ product.unit }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colonne 2: Détails du produit -->
+      <div class="lg:col-span-2">
+        <!-- Statistiques financières -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-tertiary/10 p-4 rounded-lg">
+            <div class="flex items-center mb-2">
+              <fa-icon
+                [icon]="faEuroSign"
+                class="text-secondary mr-2"
+              ></fa-icon>
+              <span class="text-secondary font-semibold">{{
+                "PRODUCT_DETAIL.PURCHASE_PRICE" | translate
+              }}</span>
+            </div>
+            <div class="text-2xl font-bold text-secondary">
+              {{ product.purchasePrice }}
+            </div>
+          </div>
+
+          <div class="bg-primary/10 p-4 rounded-lg">
+            <div class="flex items-center mb-2">
+              <fa-icon [icon]="faTags" class="text-tertiary mr-2"></fa-icon>
+              <span class="text-tertiary font-semibold">{{
+                "PRODUCT_DETAIL.SALE_PRICE" | translate
+              }}</span>
+            </div>
+            <div class="text-2xl font-bold text-tertiary">
+              {{ product.salePrice }}
+            </div>
+          </div>
+
+          <div class="bg-secondary/10 p-4 rounded-lg">
+            <div class="flex items-center mb-2">
+              <fa-icon [icon]="faChartLine" class="text-primary mr-2"></fa-icon>
+              <span class="text-primary font-semibold">{{
+                "PRODUCT_DETAIL.MARGIN" | translate
+              }}</span>
+            </div>
+            <div class="text-2xl font-bold text-primary">
+              {{
+                calculateProfitMargin(product.purchasePrice, product.salePrice)
+                  | number : "1.0-0"
+              }}%
+            </div>
+            <div class="text-sm text-primary">
+              +{{
+                calculateProfit(product.purchasePrice, product.salePrice)
+                  | number : "1.2-2"
+              }}€/{{ "PRODUCT_DETAIL.PER_UNIT" | translate }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Stock et statut -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3
+              class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
+            >
+              <fa-icon [icon]="faBox" class="text-gray-500 mr-2"></fa-icon>
+              {{ "PRODUCT_DETAIL.STOCK_STATUS" | translate }}
+            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-gray-600"
+                >{{ "PRODUCT_DETAIL.QUANTITY_AVAILABLE" | translate }}:</span
+              >
+              <span
+                class="font-bold text-primary"
+                [class.text-green-600]="product.stock > 10"
+                [class.text-amber-600]="
+                  product.stock <= 10 && product.stock > 0
+                "
+                [class.text-red-600]="product.stock === 0"
+              >
+                {{ product.stock }} {{ "PRODUCT_DETAIL.UNITS" | translate }}
+              </span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div
+                class="h-2.5 rounded-full text-primary"
+                [class.bg-green-500]="product.stock > 20"
+                [class.bg-amber-500]="product.stock <= 20 && product.stock > 5"
+                [class.bg-red-500]="product.stock <= 5"
+                [style.width]="(product.stock / 200) * 100 + '%'"
+              ></div>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              {{ "PRODUCT_DETAIL.STOCK_LEVEL" | translate }}:
+              {{
+                product.stock > 20
+                  ? ("PRODUCT_DETAIL.HIGH" | translate)
+                  : product.stock > 5
+                  ? ("PRODUCT_DETAIL.MEDIUM" | translate)
+                  : ("PRODUCT_DETAIL.CRITICAL" | translate)
+              }}
+            </div>
+          </div>
+
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3
+              class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
+            >
+              <fa-icon [icon]="faHistory" class="text-gray-500 mr-2"></fa-icon>
+              {{ "PRODUCT_DETAIL.STATUS" | translate }}
+            </h3>
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span class="text-gray-600"
+                  >{{ "PRODUCT_DETAIL.AVAILABILITY" | translate }}:</span
+                >
+                <span
+                  class="font-medium text-secondary"
+                  [class.text-green-600]="product.stock > 0"
+                  [class.text-red-600]="product.stock === 0"
+                >
+                  {{
+                    product.stock > 0
+                      ? ("PRODUCT_DETAIL.IN_STOCK" | translate)
+                      : ("PRODUCT_DETAIL.OUT_OF_STOCK" | translate)
+                  }}
+                </span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600"
+                  >{{ "PRODUCT_DETAIL.DELIVERY_TIME" | translate }}:</span
+                >
+                <span class="font-medium">{{ product.deliveryTime }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600"
+                  >{{ "PRODUCT_DETAIL.CUSTOMER_RATING" | translate }}:</span
+                >
+                <div class="flex items-center">
+                  <fa-icon
+                    *ngFor="let star of getStars(product.rating)"
+                    [icon]="star"
+                    class="text-primary text-sm"
+                  ></fa-icon>
+                  <span class="text-gray-600 text-sm ml-1"
+                    >({{ product.rating }})</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description et caractéristiques -->
+        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-3">
+            {{ "PRODUCT_DETAIL.DESCRIPTION" | translate }}
+          </h3>
+          <p class="text-gray-600">{{ product.description }}</p>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-3">
+            {{ "PRODUCT_DETAIL.FEATURES" | translate }}
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div
+              *ngFor="let feature of product.features"
+              class="flex items-center text-gray-700"
+            >
+              <fa-icon
+                [icon]="faCheckCircle"
+                class="text-secondary mr-2"
+              ></fa-icon>
+              {{ feature }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Informations fournisseur -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3
+            class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
+          >
+            <fa-icon [icon]="faStore" class="text-gray-500 mr-2"></fa-icon>
+            {{ "PRODUCT_DETAIL.SUPPLIER_INFO" | translate }}
+          </h3>
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <span class="text-gray-600"
+                >{{ "PRODUCT_DETAIL.PRODUCER" | translate }}:</span
+              >
+              <span class="font-medium">{{ product.producer }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600"
+                >{{ "PRODUCT_DETAIL.ORIGIN" | translate }}:</span
+              >
+              <span class="font-medium">{{ product.origin }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600"
+                >{{ "PRODUCT_DETAIL.ORGANIC_CERT" | translate }}:</span
+              >
+              <span class="font-medium">{{
+                product.isOrganic
+                  ? ("PRODUCT_DETAIL.YES" | translate)
+                  : ("PRODUCT_DETAIL.NO" | translate)
+              }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600"
+                >{{ "PRODUCT_DETAIL.LOCAL_PRODUCT" | translate }}:</span
+              >
+              <span class="font-medium">{{
+                product.isLocal
+                  ? ("PRODUCT_DETAIL.YES" | translate)
+                  : ("PRODUCT_DETAIL.NO" | translate)
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions admin -->
+        <div class="flex gap-4 mt-6">
+          <button
+            class="bg-secondary hover:bg-tertiary text-white px-6 py-2 rounded-lg font-semibold flex items-center transition-colors"
+          >
+            <fa-icon [icon]="faEdit" class="mr-2"></fa-icon>
+            {{ "PRODUCT_DETAIL.EDIT" | translate }}
+          </button>
+          <button
+            class="bg-primary hover:bg-tertiary text-white px-6 py-2 rounded-lg font-semibold flex items-center transition-colors"
+          >
+            <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
+            {{ "PRODUCT_DETAIL.DELETE" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!product" class="container mx-auto px-4 py-8 text-center">
+  <p class="text-gray-600">
+    {{ "PRODUCT_DETAIL.PRODUCT_NOT_FOUND" | translate }}
+  </p>
+  <a
+    routerLink="/admin/dashboard/product"
+    class="text-blue-600 hover:text-blue-800 mt-4 inline-block"
+  >
+    {{ "PRODUCT_DETAIL.BACK_TO_LIST" | translate }}
+  </a>
+</div>
