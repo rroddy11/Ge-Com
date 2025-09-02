@@ -4,7 +4,6 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { DashboardComponent } from './features/components/dashboard/dashboard.component';
 import { ProductsComponent } from './features/components/products/pages/products/products.component';
-import { ClientsAndFornisseursComponent } from './features/components/clientAndFournisseurs/pages/clients-and-fornisseurs/clients-and-fornisseurs.component';
 import { VentessAndAchatsComponent } from './features/components/ventesAndAchats/pages/ventess-and-achats/ventess-and-achats.component';
 import { InventairesComponent } from './features/components/inventaires/pages/inventaires/inventaires.component';
 import { RapportsComponent } from './features/components/rapports/pages/rapports/rapports.component';
