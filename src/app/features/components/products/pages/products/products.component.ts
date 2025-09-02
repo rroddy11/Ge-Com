@@ -1,4 +1,3 @@
-// src/app/features/products/pages/products/products.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, signal, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -9,6 +8,9 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ActionSelectorComponent } from '../../../../../shared/components/action-selector/action-selector.component';
 import { Router } from '@angular/router';
+import { ProductKpisComponent } from '../../../../../shared/components/product-kpis/product-kpis.component';
+import { ProductChartsComponent } from '../../../../../shared/components/product-charts/product-charts.component';
+
 
 @Component({
   selector: 'app-products',
@@ -19,6 +21,9 @@ import { Router } from '@angular/router';
     FormsModule,
     TranslateModule,
     ActionSelectorComponent,
+    ProductKpisComponent,
+    ProductChartsComponent,
+
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',

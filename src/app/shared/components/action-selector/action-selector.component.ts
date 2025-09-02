@@ -19,6 +19,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Product } from '../../../core/models/product';
 import { Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
+import { Client } from '../../../core/models/client.model';
+import { Supplier } from '../../../core/models/supplier.model';
+
 
 @Component({
   selector: 'app-actions-dropdown',
@@ -41,11 +44,22 @@ export class ActionSelectorComponent {
 
   // Input pour les données du produit
   @Input() product!: Product;
+  @Input() client!: Client;
+  @Input() fournisseur!: Supplier;
 
   // Output events
   @Output() edit = new EventEmitter<Product>();
   @Output() delete = new EventEmitter<Product>();
   @Output() viewHistory = new EventEmitter<Product>();
+
+
+  @Output() editCli = new EventEmitter<Client>();
+  @Output() deleteCli = new EventEmitter<Client>();
+  @Output() viewHistoryCli = new EventEmitter<Client>();
+
+  @Output() editFou = new EventEmitter<Supplier>();
+  @Output() deleteFou = new EventEmitter<Supplier>();
+  @Output() viewHistoryFou = new EventEmitter<Supplier>();
 
   constructor(
     private readonly translate: TranslateService,

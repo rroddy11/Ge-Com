@@ -1,4 +1,3 @@
-<!-- products.component.html -->
 <div class="product-page mt-0">
   <div class="flex justify-between items-center">
     <div class="flex">
@@ -8,13 +7,21 @@
     </div>
     <div class="flex">
       <button
-        class="flex text-lg text-text-black gap-5 bg-primary border border-primary px-5 py-2 rounded-lg hover:bg-tertiary hover:text-white transition-all duration-300"
+
+        class="flex text-lg text-white gap-5 bg-primary border border-primary px-5 py-2 rounded-lg hover:bg-tertiary hover:text-white transition-all duration-300"
       >
         <fa-icon [icon]="faPlus"></fa-icon>
         <span>{{ "PRODUCTS.ADD_BUTTON" | translate }}</span>
       </button>
     </div>
   </div>
+
+  <!-- KPI Cards -->
+  <app-product-kpis></app-product-kpis>
+
+  <!-- Charts -->
+  <app-product-charts></app-product-charts>
+
   <div class="w-full mt-10 mx-auto bg-white rounded-lg shadow-md p-6">
     <div class="flex gap-10 w-1/2 px-0">
       <!-- Barre de recherche -->

@@ -1,0 +1,65 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 mt-8">
+  <div class="bg-white rounded-lg shadow-sm px-5 py-3">
+    <div class="flex justify-between items-start">
+      <div class="flex flex-col gap-4">
+        <p class="text-lg text-gray-500">
+          {{ "PRODUCTS.TOTAL_PRODUCTS" | translate }}
+        </p>
+        <h3 class="text-3xl font-bold text-gray-500">
+          {{ totalProducts }}
+        </h3>
+      </div>
+      <div class="bg-primary/30 p-3 rounded-full">
+        <i class="fas fa-boxes text-primary text-lg"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm px-5 py-3">
+    <div class="flex justify-between items-start">
+      <div class="flex flex-col gap-4">
+        <p class="text-lg text-gray-500">
+          {{ "PRODUCTS.STOCK_VALUE" | translate }}
+        </p>
+        <h3 class="text-3xl font-bold text-gray-500 mt-1">
+          {{ stockValue }} €
+        </h3>
+      </div>
+      <div class="bg-secondary/30 p-3 rounded-full">
+        <i class="fas fa-coins text-secondary text-lg"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm px-5 py-3">
+    <div class="flex justify-between items-start">
+      <div class="flex flex-col gap-4">
+        <p class="text-lg text-gray-500">
+          {{ "PRODUCTS.LOW_STOCK_PRODUCTS" | translate }}
+        </p>
+        <h3 class="text-3xl font-bold text-gray-500 mt-1">
+          {{ lowStockProducts }}
+        </h3>
+      </div>
+      <div class="bg-gray-200 p-3 rounded-full">
+        <i class="fas fa-exclamation-triangle text-warning text-lg"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm px-5 py-3">
+    <div class="flex justify-between items-start">
+      <div class="flex flex-col gap-4">
+        <p class="text-lg text-gray-500">
+          {{ "PRODUCTS.AVERAGE_MARGIN" | translate }}
+        </p>
+        <h3 class="text-3xl font-bold text-gray-500 mt-1">
+          {{ averageMargin }}%
+        </h3>
+      </div>
+      <div class="bg-tertiary/30 p-3 rounded-full">
+        <i class="fas fa-chart-line text-tertiary text-lg"></i>
+      </div>
+    </div>
+  </div>
+</div>
