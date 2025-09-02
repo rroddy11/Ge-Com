@@ -1,4 +1,4 @@
-// clients-suppliers.component.ts
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,4 +23,5 @@ export class ClientsAndSuppliersComponent {
   getTabClass(tab: string): string {
     return this.activeTab === tab ? 'tab-active' : 'tab-inactive';
   }
+
 }

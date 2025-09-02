@@ -22,6 +22,7 @@ import { ProductService } from '../../../core/services/product.service';
 import { Client } from '../../../core/models/client.model';
 import { Supplier } from '../../../core/models/supplier.model';
 
+
 @Component({
   selector: 'app-actions-dropdown',
   standalone: true,
@@ -50,6 +51,7 @@ export class ActionSelectorComponent {
   @Output() edit = new EventEmitter<Product>();
   @Output() delete = new EventEmitter<Product>();
   @Output() viewHistory = new EventEmitter<Product>();
+
 
   @Output() editCli = new EventEmitter<Client>();
   @Output() deleteCli = new EventEmitter<Client>();
