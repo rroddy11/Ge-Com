@@ -1,4 +1,3 @@
-// suppliers.component.ts
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +18,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ClientKpiCardsComponent } from '../../../shared/components/client-kpi-cards/client-kpi-cards.component';
 import { Supplier } from '../../../core/models/supplier.model';
 import { SupplierService } from '../../../core/services/supplier.service';
-import { ClientSupplierChartComponent } from '../../../shared/components/client-supplier-chart/client-supplier-chart.component';
 import { ActionSelectorComponent } from '../../../shared/components/action-selector/action-selector.component';
 import { Router } from '@angular/router';
 
@@ -54,6 +52,8 @@ export class SuppliersComponent implements OnInit {
   suppliers: Supplier[] = [];
   filteredSuppliers = signal<Supplier[]>([]);
   kpiCards: any[] = [];
+  statusFilter: string = '';
+  ratingFilter: string = '';
 
   // Filtres et tri
   searchText = '';
@@ -172,7 +172,7 @@ export class SuppliersComponent implements OnInit {
 
   loadSuppliers(): void {
     this.suppliers = this.supplierService.getSuppliers();
-    this.filteredSuppliers.set([...this.suppliers]);
+    this.applyFilters();
   }
 
   setupKpiCards(): void {
@@ -227,22 +227,63 @@ export class SuppliersComponent implements OnInit {
   }
 
   onSearchChange(): void {
-    if (!this.searchText) {
-      this.filteredSuppliers.set([...this.suppliers]);
-      return;
+    this.currentPage = 0;
+    this.applyFilters();
+  }
+
+  onFilterChange(): void {
+    this.currentPage = 0;
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    let filtered = [...this.suppliers];
+
+    // Filtre de recherche
+    if (this.searchText) {
+      const searchLower = this.searchText.toLowerCase();
+      filtered = filtered.filter(
+        (supplier) =>
+          supplier.name.toLowerCase().includes(searchLower) ||
+          supplier.contactPerson.toLowerCase().includes(searchLower) ||
+          supplier.email.toLowerCase().includes(searchLower) ||
+          supplier.city.toLowerCase().includes(searchLower)
+      );
     }
 
-    const searchLower = this.searchText.toLowerCase();
-    const filtered = this.suppliers.filter(
-      (supplier) =>
-        supplier.name.toLowerCase().includes(searchLower) ||
-        supplier.contactPerson.toLowerCase().includes(searchLower) ||
-        supplier.email.toLowerCase().includes(searchLower) ||
-        supplier.city.toLowerCase().includes(searchLower)
-    );
+    // Filtre de statut
+    if (this.statusFilter) {
+      filtered = filtered.filter(
+        (supplier) => supplier.status === this.statusFilter
+      );
+    }
+
+    // Filtre de note
+    if (this.ratingFilter) {
+      filtered = filtered.filter((supplier) => {
+        if (this.ratingFilter === '5') return supplier.rating >= 4.8;
+        if (this.ratingFilter === '4') return supplier.rating >= 4.0;
+        if (this.ratingFilter === '3') return supplier.rating >= 3.0;
+        return true;
+      });
+    }
+
+    // Tri
+    filtered.sort((a, b) => {
+      const valueA = a[this.sortField];
+      const valueB = b[this.sortField];
+
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return this.sortDirection === 'asc'
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
+      } else if (typeof valueA === 'number' && typeof valueB === 'number') {
+        return this.sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
+      }
+      return 0;
+    });
 
     this.filteredSuppliers.set(filtered);
-    this.currentPage = 0;
   }
 
   sort(field: keyof Supplier): void {
@@ -252,24 +293,7 @@ export class SuppliersComponent implements OnInit {
       this.sortField = field;
       this.sortDirection = 'asc';
     }
-
-    this.filteredSuppliers.set([
-      ...this.filteredSuppliers().sort((a, b) => {
-        const valueA = a[field];
-        const valueB = b[field];
-
-        if (typeof valueA === 'string' && typeof valueB === 'string') {
-          return this.sortDirection === 'asc'
-            ? valueA.localeCompare(valueB)
-            : valueB.localeCompare(valueA);
-        } else if (typeof valueA === 'number' && typeof valueB === 'number') {
-          return this.sortDirection === 'asc'
-            ? valueA - valueB
-            : valueB - valueA;
-        }
-        return 0;
-      }),
-    ]);
+    this.applyFilters();
   }
 
   get paginatedSuppliers(): Supplier[] {
@@ -304,44 +328,34 @@ export class SuppliersComponent implements OnInit {
     return Array.from({ length: this.totalPages }, (_, i) => i);
   }
 
-  onView(supplier: Supplier): void {
-    console.log('Voir fournisseur:', supplier);
-    // Navigation vers la page de détail
+  onEdit(supplier: Supplier): void {
+    this.router.navigate(['/suppliers', supplier.id, 'edit']);
+  }
+
+  onDelete(supplier: Supplier): void {
+    if (confirm(this.translate.instant('SUPPLIERS.CONFIRM_DELETE'))) {
+      this.supplierService.deleteSupplier(supplier.id);
+      this.loadSuppliers();
+    }
+  }
+
+  onViewHistory(supplier: Supplier): void {
+    this.router.navigate(['/suppliers', supplier.id, 'history']);
   }
 
   getRatingStars(rating: number): string {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5 ? 1 : 0;
     const emptyStars = 5 - fullStars - halfStar;
-
     return (
       '★'.repeat(fullStars) + '½'.repeat(halfStar) + '☆'.repeat(emptyStars)
     );
   }
+
   performanceMetrics = [
     { label: 'Taux de livraison à temps', value: '98%', trend: 'up' },
     { label: 'Satisfaction moyenne', value: '4.7/5', trend: 'up' },
     { label: 'Retours produits', value: '2.1%', trend: 'down' },
     { label: 'Délai moyen de livraison', value: '2.3 jours', trend: 'down' },
   ];
-
-  // Gérer l'édition
-  onEdit(supplier: Supplier): void {
-    console.log('Modifier:', supplier);
-    this.router.navigate(['/supplier', supplier.id, 'edit']);
-  }
-
-  // Gérer la suppression
-  onDelete(supplier: Supplier): void {
-    console.log('Supprimer:', supplier);
-    if (confirm(this.translate.instant('PRODUCTS.CONFIRM_DELETE'))) {
-      console.log('Supprimer');
-    }
-  }
-
-  // Gérer l'historique
-  onViewHistory(supplier: Supplier): void {
-    console.log('Voir historique:', supplier);
-    this.router.navigate(['/supplier', supplier.id, 'history']);
-  }
 }

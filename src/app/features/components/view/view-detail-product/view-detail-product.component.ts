@@ -26,9 +26,9 @@ import {
   faIdCard,
   faRegistered,
 } from '@fortawesome/free-solid-svg-icons';
-import { Product } from '../../../core/models/product';
-import { ProductService } from '../../../core/services/product.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Product } from '../../../../core/models/product';
+import { ProductService } from '../../../../core/services/product.service';
 
 @Component({
   selector: 'app-view-detail-product',

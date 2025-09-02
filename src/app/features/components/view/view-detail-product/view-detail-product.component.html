@@ -40,7 +40,9 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6">
       <!-- Colonne 1: Image et informations de base -->
       <div class="lg:col-span-1">
-        <div class="relative mb-6">
+        <div
+          class="relative mb-6 hover:shadow-lg hover:scale-105 transition-all duration-300"
+        >
           <img
             [src]="product.imageUrl || '/assets/images/placeholder-product.png'"
             [alt]="product.name"
@@ -49,7 +51,9 @@
         </div>
 
         <!-- Informations de base -->
-        <div class="bg-tertiary/10 p-4 rounded-lg mb-6">
+        <div
+          class="bg-tertiary/10 p-4 rounded-lg mb-6 hover:shadow-lg hover:scale-105 transition-all duration-300"
+        >
           <h3
             class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
           >
@@ -89,7 +93,9 @@
       <div class="lg:col-span-2">
         <!-- Statistiques financières -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div class="bg-tertiary/10 p-4 rounded-lg">
+          <div
+            class="bg-tertiary/10 p-4 rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+          >
             <div class="flex items-center mb-2">
               <fa-icon
                 [icon]="faEuroSign"
@@ -104,7 +110,9 @@
             </div>
           </div>
 
-          <div class="bg-primary/10 p-4 rounded-lg">
+          <div
+            class="bg-primary/10 p-4 rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+          >
             <div class="flex items-center mb-2">
               <fa-icon [icon]="faTags" class="text-tertiary mr-2"></fa-icon>
               <span class="text-tertiary font-semibold">{{
@@ -116,7 +124,9 @@
             </div>
           </div>
 
-          <div class="bg-secondary/10 p-4 rounded-lg">
+          <div
+            class="bg-secondary/10 p-4 rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+          >
             <div class="flex items-center mb-2">
               <fa-icon [icon]="faChartLine" class="text-primary mr-2"></fa-icon>
               <span class="text-primary font-semibold">{{
@@ -140,7 +150,9 @@
 
         <!-- Stock et statut -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div class="bg-gray-50 p-4 rounded-lg">
+          <div
+            class="bg-gray-50 p-4 rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+          >
             <h3
               class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
             >
@@ -183,7 +195,9 @@
             </div>
           </div>
 
-          <div class="bg-gray-50 p-4 rounded-lg">
+          <div
+            class="bg-gray-50 p-4 rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+          >
             <h3
               class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
             >
@@ -233,14 +247,18 @@
         </div>
 
         <!-- Description et caractéristiques -->
-        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+        <div
+          class="bg-gray-50 p-4 rounded-lg mb-6 hover:shadow-lg hover:scale-105 transition-all duration-300"
+        >
           <h3 class="text-lg font-semibold text-gray-800 mb-3">
             {{ "PRODUCT_DETAIL.DESCRIPTION" | translate }}
           </h3>
           <p class="text-gray-600">{{ product.description }}</p>
         </div>
 
-        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+        <div
+          class="bg-gray-50 p-4 rounded-lg mb-6 hover:shadow-lg hover:scale-105 transition-all duration-300"
+        >
           <h3 class="text-lg font-semibold text-gray-800 mb-3">
             {{ "PRODUCT_DETAIL.FEATURES" | translate }}
           </h3>
@@ -259,7 +277,9 @@
         </div>
 
         <!-- Informations fournisseur -->
-        <div class="bg-gray-50 p-4 rounded-lg">
+        <div
+          class="bg-gray-50 p-4 rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+        >
           <h3
             class="text-lg font-semibold text-gray-800 mb-3 flex items-center"
           >

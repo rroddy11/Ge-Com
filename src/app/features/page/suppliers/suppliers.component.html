@@ -9,7 +9,8 @@
       </h1>
     </div>
     <button
-      class="bg-primary hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg flex items-center transition-colors"
+      class="bg-primary hover:bg-secondary text-white font-medium py-2 px-4 rounded-lg flex items-center transition-colors"
+      (click)="router.navigate(['/suppliers/add'])"
     >
       <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
       {{ "SUPPLIERS.ADD_BUTTON" | translate }}
@@ -40,6 +41,8 @@
       </div>
 
       <select
+        [(ngModel)]="statusFilter"
+        (change)="onFilterChange()"
         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
       >
         <option value="">{{ "SUPPLIERS.ALL_STATUS" | translate }}</option>
@@ -48,6 +51,8 @@
       </select>
 
       <select
+        [(ngModel)]="ratingFilter"
+        (change)="onFilterChange()"
         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
       >
         <option value="">{{ "SUPPLIERS.ALL_RATINGS" | translate }}</option>
@@ -66,7 +71,7 @@
   </div>
 
   <!-- Tableau des fournisseurs -->
-  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+  <div class="bg-white rounded-xl shadow-sm p-7">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -179,7 +184,7 @@
               {{ supplier.lastDeliveryDate | date }}
             </div>
           </td>
-          <td class="px-6- py-4 whitespace-nowrap">
+          <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm font-medium text-gray-900">
               {{ supplier.rating }}
               <span class="text-yellow-500 ml-1">{{
@@ -208,6 +213,10 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <app-actions-dropdown
               [fournisseur]="supplier"
+              [entity]="supplier"
+              [entityType]="'fournisseur'"
+              [showEdit]="true"
+              [showDelete]="true"
               (editFou)="onEdit($event)"
               (deleteFou)="onDelete($event)"
               (viewHistoryFou)="onViewHistory($event)"

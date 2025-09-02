@@ -156,7 +156,18 @@
     "REVENUE_CHART": "Évolution du Revenu Mensuel",
     "REVENUE_TREND": "Tendance des Revenus",
     "TOP_CLIENTS_CHART": "Top 5 Clients par Chiffre d'Affaires",
-    "RECENT_ACTIVITY": "Activité Récente"
+    "RECENT_ACTIVITY": "Activité Récente",
+    "CONTACT_INFO": "Coordonnées",
+    "STATISTICS": "Statistiques",
+    "TOTAL_ORDERS": "Commandes totales",
+    "MEMBER_SINCE": "Membre depuis",
+    "NOTES": "Notes",
+    "DATE": "Date",
+    "ACTIVITY": "Activité",
+    "AMOUNT": "Montant",
+    "NO_ORDERS": "Aucune commande",
+    "NOT_FOUND": "Client non trouvé",
+    "CLIENT_NOT_FOUND": "Le client que vous recherchez n'existe pas ou a été supprimé."
   },
   "COMMON": {
     "PREVIOUS": "Précédent",
@@ -164,7 +175,11 @@
     "SHOWING": "Affichage de",
     "TO": "à",
     "OF": "sur",
-    "RESULTS": "résultats"
+    "RESULTS": "résultats",
+    "BACK": "Retour",
+    "EDIT": "Modifier",
+    "LOADING": "Chargement...",
+    "BACK_TO_CLIENTS": "Retour aux clients"
   },
   "SUPPLIERS": {
     "TITLE": "Gestion des Fournisseurs",

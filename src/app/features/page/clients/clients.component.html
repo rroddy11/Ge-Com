@@ -1,5 +1,5 @@
 <div class="">
-  <!-- En-tête -->
+  <!-- Header -->
   <div
     class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8"
   >
@@ -16,10 +16,10 @@
     </button>
   </div>
 
-  <!-- Cartes KPI -->
+  <!-- KPI Cards -->
   <app-kpi-cards [cards]="kpiCards"></app-kpi-cards>
 
-  <!-- Barre de recherche et filtres -->
+  <!-- Search and Filters -->
   <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
     <div class="flex flex-col md:flex-row gap-4">
       <div class="flex-1">
@@ -38,7 +38,6 @@
           />
         </div>
       </div>
-
       <select
         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
       >
@@ -46,7 +45,6 @@
         <option value="active">{{ "CLIENTS.ACTIVE" | translate }}</option>
         <option value="inactive">{{ "CLIENTS.INACTIVE" | translate }}</option>
       </select>
-
       <select
         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
       >
@@ -56,7 +54,6 @@
         <option value="vip">{{ "CLIENTS.VIP" | translate }}</option>
       </select>
     </div>
-
     <div class="flex items-center justify-between mt-4">
       <div class="text-sm text-gray-600">
         {{ filteredClients().length }} {{ "CLIENTS.RESULTS_FOUND" | translate }}
@@ -64,8 +61,8 @@
     </div>
   </div>
 
-  <!-- Tableau des clients -->
-  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+  <!-- Clients Table -->
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden p-7">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -203,7 +200,8 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <app-actions-dropdown
-              [client]="client"
+              [entity]="client"
+              entityType="client"
               (editCli)="onEdit($event)"
               (deleteCli)="onDelete($event)"
               (viewHistoryCli)="onViewHistory($event)"

@@ -1,30 +1,22 @@
-// clients.component.ts
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
-  faPlus,
+  faPlusCircle,
   faSearch,
-  faEdit,
-  faTrash,
-  faEye,
   faSort,
   faSortUp,
   faSortDown,
-  faUserPlus,
   faUsers,
   faUserTie,
   faStar,
   faEuroSign,
-  faChartBar,
-  faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ClientKpiCardsComponent } from '../../../shared/components/client-kpi-cards/client-kpi-cards.component';
 import { Client } from '../../../core/models/client.model';
 import { ClientService } from '../../../core/services/client.service';
-import { ClientSupplierChartComponent } from '../../../shared/components/client-supplier-chart/client-supplier-chart.component';
 import { ActionSelectorComponent } from '../../../shared/components/action-selector/action-selector.component';
 import { Router } from '@angular/router';
 
@@ -44,24 +36,23 @@ import { Router } from '@angular/router';
 })
 export class ClientsComponent implements OnInit {
   public Math = Math;
-  // Icônes
+  // Icons
   faPlus = faPlusCircle;
   faSearch = faSearch;
-  faEdit = faEdit;
-  faTrash = faTrash;
-  faEye = faEye;
   faSort = faSort;
   faSortUp = faSortUp;
   faSortDown = faSortDown;
-  faUserPlus = faUserPlus;
-  faChartBar = faChartBar;
+  faUsers = faUsers;
+  faUserTie = faUserTie;
+  faStar = faStar;
+  faEuroSign = faEuroSign;
 
-  // Données
+  // Data
   clients: Client[] = [];
   filteredClients = signal<Client[]>([]);
   kpiCards: any[] = [];
 
-  // Filtres et tri
+  // Filters and sorting
   searchText = '';
   sortField: keyof Client = 'lastName';
   sortDirection: 'asc' | 'desc' = 'asc';
@@ -130,7 +121,6 @@ export class ClientsComponent implements OnInit {
   }
 
   private setupRevenueTrendChart(): void {
-    // Données simulées pour la tendance des revenus
     const months = [
       'Jan',
       'Fév',
@@ -321,54 +311,18 @@ export class ClientsComponent implements OnInit {
     return Array.from({ length: this.totalPages }, (_, i) => i);
   }
 
-  onView(client: Client): void {
-    console.log('Voir client:', client);
-    // Navigation vers la page de détail
-  }
-  recentActivities = [
-    {
-      title: 'Nouvelle commande',
-      description: 'Marie Dupont a passé une commande de 450€',
-      time: 'Il y a 2 heures',
-    },
-    {
-      title: 'Mise à jour du profil',
-      description: 'Pierre Martin a mis à jour ses informations',
-      time: 'Il y a 5 heures',
-    },
-    {
-      title: 'Commande annulée',
-      description: 'Sophie Leroy a annulé une commande',
-      time: 'Hier',
-    },
-  ];
-
-  // Dans suppliers.component.ts (ajouter dans la classe)
-  performanceMetrics = [
-    { label: 'Taux de livraison à temps', value: '98%', trend: 'up' },
-    { label: 'Satisfaction moyenne', value: '4.7/5', trend: 'up' },
-    { label: 'Retours produits', value: '2.1%', trend: 'down' },
-    { label: 'Délai moyen de livraison', value: '2.3 jours', trend: 'down' },
-  ];
-
-  // Gérer l'édition
-  onEdit(client: Client): void {
-    console.log('Modifier:', client);
-    this.router.navigate(['/client', client.id, 'edit']);
+  onEdit(entity: Client): void {
+    this.router.navigate(['/clients', entity.id, 'edit']);
   }
 
-  // Gérer la suppression
-  onDelete(client: Client): void {
-    console.log('Supprimer:', client);
-    if (confirm(this.translate.instant('PRODUCTS.CONFIRM_DELETE'))) {
-      // Logique de suppression ici
-      this.clientService.deleteClient(client.id);
+  onDelete(entity: Client): void {
+    if (confirm(this.translate.instant('CLIENTS.CONFIRM_DELETE'))) {
+      this.clientService.deleteClient(entity.id);
+      this.loadClients();
     }
   }
 
-  // Gérer l'historique
-  onViewHistory(client: Client): void {
-    console.log('Voir historique:', client);
-    this.router.navigate(['/products', client.id, 'history']);
+  onViewHistory(entity: Client): void {
+    this.router.navigate(['/clients', entity.id, 'history']);
   }
 }
