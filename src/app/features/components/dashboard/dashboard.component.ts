@@ -2,12 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
-import { SalesStatus } from '../../../../core/models/dashboard-view-card';
-import { DashboardViewCard } from '../../../../core/services/dashboard-view-card.service';
-import { RevenueChartComponent } from '../../../../shared/components/revenus-chart/revenus-chart.component';
-import { TopProductsChartComponent } from '../../../../shared/components/top-products-chart/top-products-chart.component';
-import { RecentActivity } from '../../../../core/models/activity-recentely';
-import { RecentActivityService } from '../../../../core/services/activity-recently.service';
+import { SalesStatus } from '../../../core/models/dashboard-view-card';
+import { DashboardViewCard } from '../../../core/services/dashboard-view-card.service';
+import { RevenueChartComponent } from '../../../shared/components/revenus-chart/revenus-chart.component';
+import { TopProductsChartComponent } from '../../../shared/components/top-products-chart/top-products-chart.component';
+import { RecentActivity } from '../../../core/models/activity-recentely';
+import { RecentActivityService } from '../../../core/services/activity-recently.service';
 
 @Component({
   selector: 'app-dashboard',

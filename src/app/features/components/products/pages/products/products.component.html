@@ -54,8 +54,8 @@
     </div>
 
     <!-- Tableau des produits -->
-    <div class="overflow-x-auto mt-6">
-      <table class="min-w-full divide-y divide-gray-200">
+    <div class="mt-6 rounded-md">
+      <table class="min-w-full h-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
             <th
@@ -178,7 +178,6 @@
             >
               <app-actions-dropdown
                 [product]="product"
-                (viewDetails)="onViewDetails($event)"
                 (edit)="onEdit($event)"
                 (delete)="onDelete($event)"
                 (viewHistory)="onViewHistory($event)"

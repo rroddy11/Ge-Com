@@ -1,14 +1,15 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './features/auth/pages/login/login.component';
+import { LoginComponent } from './features/components/auth/pages/login/login.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { DashboardComponent } from './features/dashboard/pages/dashboard/dashboard.component';
-import { ProductsComponent } from './features/products/pages/products/products.component';
-import { ClientsAndFornisseursComponent } from './features/clientAndFournisseurs/pages/clients-and-fornisseurs/clients-and-fornisseurs.component';
-import { VentessAndAchatsComponent } from './features/ventesAndAchats/pages/ventess-and-achats/ventess-and-achats.component';
-import { InventairesComponent } from './features/inventaires/pages/inventaires/inventaires.component';
-import { RapportsComponent } from './features/rapports/pages/rapports/rapports.component';
-import { ParamettresComponent } from './features/paramettres/pages/paramettres/paramettres.component';
+import { DashboardComponent } from './features/components/dashboard/dashboard.component';
+import { ProductsComponent } from './features/components/products/pages/products/products.component';
+import { ClientsAndFornisseursComponent } from './features/components/clientAndFournisseurs/pages/clients-and-fornisseurs/clients-and-fornisseurs.component';
+import { VentessAndAchatsComponent } from './features/components/ventesAndAchats/pages/ventess-and-achats/ventess-and-achats.component';
+import { InventairesComponent } from './features/components/inventaires/pages/inventaires/inventaires.component';
+import { RapportsComponent } from './features/components/rapports/pages/rapports/rapports.component';
+import { ParamettresComponent } from './features/components/paramettres/pages/paramettres/paramettres.component';
+import { ViewDetailProductComponent } from './features/components/view-detail-product/view-detail-product.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,6 +31,10 @@ export const routes: Routes = [
           { path: 'inventaire', component: InventairesComponent },
           { path: 'rapport', component: RapportsComponent },
           { path: 'parametre', component: ParamettresComponent },
+          {
+            path: 'product-details/:id',
+            component: ViewDetailProductComponent,
+          },
           { path: '', redirectTo: 'accueil', pathMatch: 'full' },
         ],
       },
