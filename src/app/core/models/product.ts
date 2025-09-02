@@ -6,4 +6,13 @@ export interface Product {
   salePrice: string;
   stock: number;
   imageUrl?: string;
+  description: string;
+  features: string[];
+  producer: string;
+  origin: string;
+  deliveryTime: string;
+  unit: string;
+  isOrganic: boolean;
+  isLocal: boolean;
+  rating: number;
 }

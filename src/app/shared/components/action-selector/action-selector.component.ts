@@ -17,6 +17,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Product } from '../../../core/models/product';
+import { Router } from '@angular/router';
+import { ProductService } from '../../../core/services/product.service';
 
 @Component({
   selector: 'app-actions-dropdown',
@@ -32,6 +34,7 @@ export class ActionSelectorComponent {
   faEdit = faEdit;
   faTrash = faTrash;
   faFileAlt = faFileAlt;
+  products: Product[] = [];
 
   // État du dropdown
   isDropdownOpen = false;
@@ -40,12 +43,19 @@ export class ActionSelectorComponent {
   @Input() product!: Product;
 
   // Output events
-  @Output() viewDetails = new EventEmitter<Product>();
   @Output() edit = new EventEmitter<Product>();
   @Output() delete = new EventEmitter<Product>();
   @Output() viewHistory = new EventEmitter<Product>();
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private readonly translate: TranslateService,
+    private readonly productService: ProductService,
+    private readonly router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.products = this.productService.getProducts();
+  }
 
   // Ouvrir/fermer le dropdown
   toggleDropdown(event: Event): void {
@@ -58,10 +68,8 @@ export class ActionSelectorComponent {
     this.isDropdownOpen = false;
   }
 
-  // Émettre l'événement de visualisation
-  onViewDetails(): void {
-    this.viewDetails.emit(this.product);
-    this.closeDropdown();
+  viewProductDetails(productId: number): void {
+    this.router.navigate(['/admin/dashboard/product-details', productId]);
   }
 
   // Émettre l'événement d'édition
