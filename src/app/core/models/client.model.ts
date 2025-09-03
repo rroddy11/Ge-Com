@@ -17,4 +17,5 @@ export interface Client {
   segment: 'regular' | 'premium' | 'vip';
   notes?: string;
   createdAt: string;
+  image: string;
 }

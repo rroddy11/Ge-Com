@@ -5,15 +5,15 @@
   >
     <div class="mb-4 md:mb-0">
       <h1 class="text-4xl font-bold text-tertiary">
-        {{ "CLIENTS.TITLE" | translate }}
+        {{ "SUPPLIERS.TITLE" | translate }}
       </h1>
     </div>
     <button
-      class="bg-primary hover:bg-secondary text-white font-medium py-2 px-6 rounded-lg flex items-center transition-colors"
-
+      class="bg-primary hover:bg-secondary text-white font-medium py-2 px-4 rounded-lg flex items-center transition-colors"
+      (click)="router.navigate(['/suppliers/add'])"
     >
       <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
-      {{ "CLIENTS.ADD_BUTTON" | translate }}
+      {{ "SUPPLIERS.ADD_BUTTON" | translate }}
     </button>
   </div>
 
@@ -35,50 +35,55 @@
             [(ngModel)]="searchText"
             (input)="onSearchChange()"
             class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-            [placeholder]="'CLIENTS.SEARCH_PLACEHOLDER' | translate"
+            [placeholder]="'SUPPLIERS.SEARCH_PLACEHOLDER' | translate"
           />
         </div>
       </div>
 
       <select
+        [(ngModel)]="statusFilter"
+        (change)="onFilterChange()"
         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
       >
-        <option value="">{{ "CLIENTS.ALL_STATUS" | translate }}</option>
-        <option value="active">{{ "CLIENTS.ACTIVE" | translate }}</option>
-        <option value="inactive">{{ "CLIENTS.INACTIVE" | translate }}</option>
+        <option value="">{{ "SUPPLIERS.ALL_STATUS" | translate }}</option>
+        <option value="active">{{ "SUPPLIERS.ACTIVE" | translate }}</option>
+        <option value="inactive">{{ "SUPPLIERS.INACTIVE" | translate }}</option>
       </select>
 
       <select
+        [(ngModel)]="ratingFilter"
+        (change)="onFilterChange()"
         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
       >
-        <option value="">{{ "CLIENTS.ALL_SEGMENTS" | translate }}</option>
-        <option value="regular">{{ "CLIENTS.REGULAR" | translate }}</option>
-        <option value="premium">{{ "CLIENTS.PREMIUM" | translate }}</option>
-        <option value="vip">{{ "CLIENTS.VIP" | translate }}</option>
+        <option value="">{{ "SUPPLIERS.ALL_RATINGS" | translate }}</option>
+        <option value="5">5 ★</option>
+        <option value="4">4 ★+</option>
+        <option value="3">3 ★+</option>
       </select>
     </div>
 
     <div class="flex items-center justify-between mt-4">
       <div class="text-sm text-gray-600">
-        {{ filteredClients().length }} {{ "CLIENTS.RESULTS_FOUND" | translate }}
+        {{ filteredSuppliers().length }}
+        {{ "SUPPLIERS.RESULTS_FOUND" | translate }}
       </div>
     </div>
   </div>
 
-  <!-- Tableau des clients -->
-  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+  <!-- Tableau des fournisseurs -->
+  <div class="bg-white rounded-xl shadow-sm p-7">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-            (click)="sort('lastName')"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+            (click)="sort('name')"
           >
-            {{ "CLIENTS.NAME" | translate }}
+            {{ "SUPPLIERS.NAME" | translate }}
             <fa-icon
               [icon]="
-                sortField === 'lastName'
+                sortField === 'name'
                   ? sortDirection === 'asc'
                     ? faSortUp
                     : faSortDown
@@ -91,17 +96,17 @@
             scope="col"
             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            {{ "CLIENTS.CONTACT" | translate }}
+            {{ "SUPPLIERS.CONTACT" | translate }}
           </th>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-            (click)="sort('totalOrders')"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+            (click)="sort('productsSupplied')"
           >
-            {{ "CLIENTS.ORDERS" | translate }}
+            {{ "SUPPLIERS.PRODUCTS" | translate }}
             <fa-icon
               [icon]="
-                sortField === 'totalOrders'
+                sortField === 'productsSupplied'
                   ? sortDirection === 'asc'
                     ? faSortUp
                     : faSortDown
@@ -112,13 +117,13 @@
           </th>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-            (click)="sort('totalSpent')"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+            (click)="sort('rating')"
           >
-            {{ "CLIENTS.TOTAL_SPENT" | translate }}
+            {{ "SUPPLIERS.RATING" | translate }}
             <fa-icon
               [icon]="
-                sortField === 'totalSpent'
+                sortField === 'rating'
                   ? sortDirection === 'asc'
                     ? faSortUp
                     : faSortDown
@@ -129,91 +134,98 @@
           </th>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            {{ "CLIENTS.STATUS" | translate }}
+            {{ "SUPPLIERS.STATUS" | translate }}
           </th>
           <th
             scope="col"
-            class="px-6 py-3 text-left text-[16px] font-medium text-gray-500 uppercase tracking-wider"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
-            {{ "CLIENTS.ACTIONS" | translate }}
+            {{ "SUPPLIERS.ACTIONS" | translate }}
           </th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
         <tr
-          *ngFor="let client of paginatedClients"
+          *ngFor="let supplier of paginatedSuppliers"
           class="hover:bg-gray-50 transition-colors"
         >
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="flex items-center">
-              <div class="flex items-center">
-                <img
-                  src="/assets/images/img/product/lfl.png"
-                  class="h-12 w-12 rounded-full object-cover border-2 border-gray-200 shadow-sm"
-                  alt=""
-                />
+              <div
+                class="flex-shrink-0 h-10 w-10 bg-orange-100 rounded-full flex items-center justify-center"
+              >
+                <fa-icon [icon]="faTruck" class="text-orange-600"></fa-icon>
               </div>
               <div class="ml-4">
                 <div class="text-sm font-medium text-gray-900">
-                  {{ client.firstName }} {{ client.lastName }}
+                  {{ supplier.name }}
                 </div>
-                <div class="text-sm text-gray-500" *ngIf="client.company">
-                  {{ client.company }}
+                <div class="text-sm text-gray-500">
+                  {{ supplier.contactPerson }}
                 </div>
               </div>
             </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">{{ client.email }}</div>
-            <div class="text-sm text-gray-500">{{ client.phone }}</div>
+            <div class="text-sm text-gray-900">{{ supplier.email }}</div>
+            <div class="text-sm text-gray-500">{{ supplier.phone }}</div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">{{ client.totalOrders }}</div>
-            <div class="text-xs text-gray-500" *ngIf="client.lastOrderDate">
-              {{ "CLIENTS.LAST_ORDER" | translate }}:
-              {{ client.lastOrderDate | date }}
+            <div class="text-sm text-gray-900">
+              {{ supplier.productsSupplied }}
+            </div>
+            <div
+              class="text-xs text-gray-500"
+              *ngIf="supplier.lastDeliveryDate"
+            >
+              {{ "SUPPLIERS.LAST_DELIVERY" | translate }}:
+              {{ supplier.lastDeliveryDate | date }}
             </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm font-medium text-gray-900">
-              {{ client.totalSpent }} €
+              {{ supplier.rating }}
+              <span class="text-yellow-500 ml-1">{{
+                getRatingStars(supplier.rating)
+              }}</span>
+            </div>
+            <div class="text-xs text-gray-500">
+              {{ supplier.paymentTerms }}
             </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <span
               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-              [class.bg-green-100]="client.status === 'active'"
-              [class.text-green-800]="client.status === 'active'"
-              [class.bg-red-100]="client.status === 'inactive'"
-              [class.text-red-800]="client.status === 'inactive'"
+              [class.bg-green-100]="supplier.status === 'active'"
+              [class.text-green-800]="supplier.status === 'active'"
+              [class.bg-red-100]="supplier.status === 'inactive'"
+              [class.text-red-800]="supplier.status === 'inactive'"
             >
               {{
-                client.status === "active"
-                  ? ("CLIENTS.ACTIVE" | translate)
-                  : ("CLIENTS.INACTIVE" | translate)
+                supplier.status === "active"
+                  ? ("SUPPLIERS.ACTIVE" | translate)
+                  : ("SUPPLIERS.INACTIVE" | translate)
               }}
-            </span>
-            <span
-              class="ml-1 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800"
-              *ngIf="client.segment === 'vip'"
-            >
-              {{ "CLIENTS.VIP" | translate }}
             </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <app-actions-dropdown
-              [client]="client"
-              (editCli)="onEdit($event)"
-              (deleteCli)="onDelete($event)"
-              (viewHistoryCli)="onViewHistory($event)"
+              [fournisseur]="supplier"
+              [entity]="supplier"
+              [entityType]="'fournisseur'"
+              [showEdit]="true"
+              [showDelete]="true"
+              (editFou)="onEdit($event)"
+              (deleteFou)="onDelete($event)"
+              (viewHistoryFou)="onViewHistory($event)"
             ></app-actions-dropdown>
           </td>
         </tr>
-        <tr *ngIf="filteredClients().length === 0">
+        <tr *ngIf="filteredSuppliers().length === 0">
           <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
-            {{ "CLIENTS.NO_CLIENTS" | translate }}
+            {{ "SUPPLIERS.NO_SUPPLIERS" | translate }}
           </td>
         </tr>
       </tbody>
@@ -250,11 +262,11 @@
             <span class="font-medium">{{
               Math.min(
                 (currentPage + 1) * itemsPerPage,
-                filteredClients().length
+                filteredSuppliers().length
               )
             }}</span>
             {{ "COMMON.OF" | translate }}
-            <span class="font-medium">{{ filteredClients().length }}</span>
+            <span class="font-medium">{{ filteredSuppliers().length }}</span>
             {{ "COMMON.RESULTS" | translate }}
           </p>
         </div>
