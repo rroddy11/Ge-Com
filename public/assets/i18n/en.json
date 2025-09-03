@@ -199,5 +199,85 @@
   "CLIENTS_SUPPLIERS": {
     "CLIENTS": "Clients",
     "SUPPLIERS": "Suppliers"
+  },
+  "DASHBOARD": {
+    "TITLE": "Sales and Purchases Management",
+    "SALES": {
+      "TITLE": "Total Sales (month)",
+      "CHANGE": "this month"
+    },
+    "PURCHASES": {
+      "TITLE": "Total Purchases (month)",
+      "CHANGE": "this month"
+    },
+    "MARGIN": {
+      "TITLE": "Gross Margin (month)",
+      "CHANGE": "this month"
+    },
+    "TRANSACTIONS": {
+      "TITLE": "Number of Transactions",
+      "CHANGE": "this month"
+    },
+    "MONTHLY_CHART": {
+      "TITLE": "Monthly Sales & Purchases",
+      "DESCRIPTION": "Evolution of sales and purchases over the last 6 months."
+    },
+    "PAYMENT_INTEGRATIONS": {
+      "TITLE": "Payment Integrations",
+      "DESCRIPTION": "Status of your payment gateways."
+    },
+    "DOCUMENT_MANAGEMENT": {
+      "TITLE": "Commercial Document Management",
+      "DESCRIPTION": "Manage your quotes, orders, delivery notes and invoices.",
+      "NEW_SALE": "Create New Sale",
+      "NEW_PURCHASE": "Create New Purchase"
+    },
+    "RECENT_TRANSACTIONS": {
+      "TITLE": "Recent Transactions",
+      "DESCRIPTION": "List of recent sales and purchases.",
+      "ID": "ID",
+      "TYPE": "Type",
+      "DATE": "Date",
+      "CLIENT_SUPPLIER": "Client/Supplier",
+      "PRODUCT": "Product",
+      "QUANTITY": "Quantity",
+      "TOTAL": "Total",
+      "STATUS": "Status",
+      "ACTIONS": "Actions",
+      "SALE": "Sale",
+      "PURCHASE": "Purchase",
+      "COMPLETED": "Completed",
+      "IN_PROGRESS": "In Progress",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "PAYMENT_METHODS": {
+    "STRIPE": "Stripe",
+    "PAYPAL": "PayPal",
+    "BANK_TRANSFER": "Bank Transfer",
+    "CASH": "Cash Payment",
+    "ACTIVE": "Active"
+  },
+  "PAYMENT_INTEGRATIONS": {
+    "2_HOURS_AGO": "2 hours ago",
+    "5_HOURS_AGO": "5 hours ago",
+    "1_DAY_AGO": "1 day ago",
+    "30_MINUTES_AGO": "30 minutes ago"
+  },
+  "DOCUMENT_TYPES": {
+    "TRANSACTIONS": "Transactions",
+    "QUOTES": "Quotes",
+    "ORDERS": "Orders",
+    "INVOICES": "Invoices"
+  },
+  "NO_DATA": {
+    "QUOTES": "No quotes at the moment",
+    "ORDERS": "No orders at the moment",
+    "INVOICES": "No invoices at the moment"
+  },
+  "CREATE_BUTTON": {
+    "QUOTE": "Create a quote",
+    "ORDER": "Create an order",
+    "INVOICE": "Create an invoice"
   }
 }

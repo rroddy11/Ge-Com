@@ -1,8 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ClientService } from '../../../../core/services/client.service';
-import { Client } from '../../../../core/models/client.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faArrowLeft,
@@ -21,6 +24,8 @@ import {
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ClientService } from '../../../../core/services/client.service';
+import { Client } from '../../../../core/models/client.model';
 
 @Component({
   selector: 'app-client-detail',
@@ -28,17 +33,17 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   imports: [CommonModule, FontAwesomeModule, TranslateModule],
   templateUrl: './view-detail-client.component.html',
   styleUrl: './view-detail-client.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewDetailClientComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private clientService = inject(ClientService);
-  private translate = inject(TranslateService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly clientService = inject(ClientService);
+  private readonly translate = inject(TranslateService);
 
   client: Client | null = null;
   isLoading = true;
 
-  // Icônes
   faArrowLeft = faArrowLeft;
   faEdit = faEdit;
   faEnvelope = faEnvelope;
@@ -55,14 +60,14 @@ export class ViewDetailClientComponent implements OnInit {
   faTimesCircle = faTimesCircle;
 
   ngOnInit(): void {
+    console.time('ViewDetailClientComponent.ngOnInit');
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const client = this.clientService.getClientById(id);
-    this.client = client ?? null; // Convert undefined to null
+    this.client = this.clientService.getClientById(id) ?? null;
     this.isLoading = false;
-
     if (!this.client) {
       this.router.navigate(['/clients']);
     }
+    console.timeEnd('ViewDetailClientComponent.ngOnInit');
   }
 
   goBack(): void {
@@ -76,7 +81,9 @@ export class ViewDetailClientComponent implements OnInit {
   }
 
   getStatusIcon(): any {
-    return this.client?.status === 'active' ? faCheckCircle : faTimesCircle;
+    return this.client?.status === 'active'
+      ? this.faCheckCircle
+      : this.faTimesCircle;
   }
 
   getStatusColor(): string {
@@ -108,8 +115,6 @@ export class ViewDetailClientComponent implements OnInit {
 
   getRecentActivities(): any[] {
     if (!this.client) return [];
-
-    // Données simulées pour l'historique
     return [
       {
         date: '15/03/2024',

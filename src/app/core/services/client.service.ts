@@ -111,7 +111,10 @@ export class ClientService {
   }
 
   getClientById(id: number): Client | undefined {
-    return this.clients.find((client) => client.id === id);
+    console.time('getClientById');
+    const client = this.clients.find((client) => client.id === id);
+    console.timeEnd('getClientById');
+    return client;
   }
 
   addClient(client: Client): void {

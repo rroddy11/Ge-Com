@@ -214,5 +214,85 @@
   "CLIENTS_SUPPLIERS": {
     "CLIENTS": "Clients",
     "SUPPLIERS": "Fournisseurs"
+  },
+  "DASHBOARD": {
+    "TITLE": "Gestion des Ventes et Achats",
+    "SALES": {
+      "TITLE": "Ventes Totales (mois)",
+      "CHANGE": "ce mois"
+    },
+    "PURCHASES": {
+      "TITLE": "Achats Totaux (mois)",
+      "CHANGE": "ce mois"
+    },
+    "MARGIN": {
+      "TITLE": "Marge Brute (mois)",
+      "CHANGE": "ce mois"
+    },
+    "TRANSACTIONS": {
+      "TITLE": "Nombre de Transactions",
+      "CHANGE": "ce mois"
+    },
+    "MONTHLY_CHART": {
+      "TITLE": "Ventes & Achats Mensuels",
+      "DESCRIPTION": "Évolution des ventes et achats sur les 6 derniers mois."
+    },
+    "PAYMENT_INTEGRATIONS": {
+      "TITLE": "Intégrations de Paiement",
+      "DESCRIPTION": "Statut de vos passerelles de paiement."
+    },
+    "DOCUMENT_MANAGEMENT": {
+      "TITLE": "Gestion des Documents Commerciaux",
+      "DESCRIPTION": "Gérez vos devis, commandes, bons de livraison et factures.",
+      "NEW_SALE": "Créer une Nouvelle Vente",
+      "NEW_PURCHASE": "Créer un Nouvel Achat"
+    },
+    "RECENT_TRANSACTIONS": {
+      "TITLE": "Transactions Récentes",
+      "DESCRIPTION": "Liste des dernières ventes et achats.",
+      "ID": "ID",
+      "TYPE": "Type",
+      "DATE": "Date",
+      "CLIENT_SUPPLIER": "Client/Fournisseur",
+      "PRODUCT": "Produit",
+      "QUANTITY": "Quantité",
+      "TOTAL": "Total",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions",
+      "SALE": "Vente",
+      "PURCHASE": "Achat",
+      "COMPLETED": "Terminé",
+      "IN_PROGRESS": "En Cours",
+      "CANCELLED": "Annulé"
+    }
+  },
+  "PAYMENT_METHODS": {
+    "STRIPE": "Stripe",
+    "PAYPAL": "PayPal",
+    "BANK_TRANSFER": "Virement Bancaire",
+    "CASH": "Paiement en espèces",
+    "ACTIVE": "Active"
+  },
+  "PAYMENT_INTEGRATIONS": {
+    "2_HOURS_AGO": "Il y a 2 heures",
+    "5_HOURS_AGO": "Il y a 5 heures",
+    "1_DAY_AGO": "Il y a 1 jour",
+    "30_MINUTES_AGO": "Il y a 30 minutes"
+  },
+  "DOCUMENT_TYPES": {
+    "TRANSACTIONS": "Transactions",
+    "QUOTES": "Devis",
+    "ORDERS": "Commandes",
+    "INVOICES": "Factures"
+  },
+  "NO_DATA": {
+    "QUOTES": "Aucun devis pour le moment",
+    "ORDERS": "Aucune commande pour le moment",
+    "INVOICES": "Aucune facture pour le moment"
+  },
+  "CREATE_BUTTON": {
+    "QUOTE": "Créer un devis",
+    "ORDER": "Créer un bon de commande",
+    "INVOICE": "Créer une facture"
   }
 }

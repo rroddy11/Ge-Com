@@ -4,6 +4,7 @@ import {
   HostListener,
   Input,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -27,28 +28,25 @@ import { ProductService } from '../../../core/services/product.service';
   imports: [CommonModule, FontAwesomeModule, TranslateModule],
   templateUrl: './action-selector.component.html',
   styleUrl: './action-selector.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush, // Optimize change detection
 })
 export class ActionSelectorComponent {
-  // Icônes FontAwesome
   faEllipsisVertical = faEllipsisVertical;
   faEye = faEye;
   faEdit = faEdit;
   faTrash = faTrash;
   faFileAlt = faFileAlt;
 
-  // État du dropdown
   isDropdownOpen = false;
 
-  // Inputs pour les entités
   @Input() product?: Product;
   @Input() client?: Client;
   @Input() fournisseur?: Supplier;
-  @Input() entity!: { id: number }; // Required input for the entity
-  @Input() entityType!: 'product' | 'client' | 'fournisseur'; // Updated to include 'fournisseur'
+  @Input() entity!: { id: number };
+  @Input() entityType!: 'product' | 'client' | 'fournisseur';
   @Input() showEdit: boolean = false;
   @Input() showDelete: boolean = false;
 
-  // Output events
   @Output() edit = new EventEmitter<Product>();
   @Output() delete = new EventEmitter<Product>();
   @Output() viewHistory = new EventEmitter<Product>();
@@ -66,24 +64,20 @@ export class ActionSelectorComponent {
   ) {}
 
   ngOnInit(): void {
-    // Validate inputs
     if (!this.entity || !this.entityType) {
       console.error('entity and entityType are required inputs');
     }
   }
 
-  // Ouvrir/fermer le dropdown
   toggleDropdown(event: Event): void {
     event.stopPropagation();
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  // Fermer le dropdown
   closeDropdown(): void {
     this.isDropdownOpen = false;
   }
 
-  // Émettre l'événement d'édition
   onEdit(): void {
     if (this.entityType === 'product' && this.product) {
       this.edit.emit(this.product);
@@ -95,7 +89,6 @@ export class ActionSelectorComponent {
     this.closeDropdown();
   }
 
-  // Émettre l'événement de suppression
   onDelete(): void {
     if (this.entityType === 'product' && this.product) {
       this.delete.emit(this.product);
@@ -107,7 +100,6 @@ export class ActionSelectorComponent {
     this.closeDropdown();
   }
 
-  // Émettre l'événement d'historique
   onViewHistory(): void {
     if (this.entityType === 'product' && this.product) {
       this.viewHistory.emit(this.product);
@@ -119,23 +111,26 @@ export class ActionSelectorComponent {
     this.closeDropdown();
   }
 
-  // Navigation vers les détails
   viewDetails(): void {
     const routeMap: { [key in 'product' | 'client' | 'fournisseur']: string } =
       {
         product: '/admin/dashboard/product-details',
         client: '/admin/dashboard/clients-details',
-        fournisseur: '/admin/dashboard/supplier-details', // Updated to match app.routes.ts
+        fournisseur: '/admin/dashboard/supplier-details',
       };
     if (this.entity && this.entityType) {
-      this.router.navigate([routeMap[this.entityType], this.entity.id]);
-      this.closeDropdown();
+      console.time('navigateToDetails');
+      this.router
+        .navigate([routeMap[this.entityType], this.entity.id])
+        .then(() => {
+          console.timeEnd('navigateToDetails');
+          this.closeDropdown();
+        });
     } else {
       console.error('Cannot navigate: entity or entityType is missing');
     }
   }
 
-  // Fermer quand on clique en dehors
   @HostListener('document:click')
   onDocumentClick(): void {
     if (this.isDropdownOpen) {

@@ -116,7 +116,10 @@ export class SupplierService {
   }
 
   getSupplierById(id: number): Supplier | undefined {
-    return this.suppliers.find((supplier) => supplier.id === id);
+    console.time('getSupplierById');
+    const supplier = this.suppliers.find((supplier) => supplier.id === id);
+    console.timeEnd('getSupplierById');
+    return supplier;
   }
 
   addSupplier(supplier: Supplier): void {

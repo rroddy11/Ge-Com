@@ -1,1 +1,387 @@
-<p>ventess-and-achats works!</p>
+<div class="">
+  <!-- Sélecteur de langue -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-4xl text-tertiary font-bold">
+      {{ "DASHBOARD.TITLE" | translate }}
+    </h1>
+  </div>
+
+  <!-- Cartes statistiques -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Ventes Totales -->
+    <div
+      class="bg-white rounded-lg shadow p-6 hover:scale-105 transition-all duration-300"
+    >
+      <h3 class="text-gray-600 text-sm font-medium mb-2">
+        {{ "DASHBOARD.SALES.TITLE" | translate }}
+      </h3>
+      <p class="text-2xl font-bold">{{ totalSales | currency : "EUR" }}</p>
+      <div
+        class="flex items-center mt-2"
+        [ngClass]="getSalesChange() >= 0 ? 'text-secondary' : 'text-primary'"
+      >
+        <fa-icon
+          [icon]="getSalesChange() >= 0 ? faArrowUp : faArrowDown"
+          class="mr-1"
+        ></fa-icon>
+        <span
+          >{{ getSalesChange() }}%
+          {{ "DASHBOARD.SALES.CHANGE" | translate }}</span
+        >
+      </div>
+    </div>
+
+    <!-- Achats Totaux -->
+    <div
+      class="bg-white rounded-lg shadow p-6 hover:scale-105 transition-all duration-300"
+    >
+      <h3 class="text-gray-600 text-sm font-medium mb-2">
+        {{ "DASHBOARD.PURCHASES.TITLE" | translate }}
+      </h3>
+      <p class="text-2xl font-bold">{{ totalPurchases | currency : "EUR" }}</p>
+      <div
+        class="flex items-center mt-2"
+        [ngClass]="
+          getPurchasesChange() >= 0 ? 'text-secondary' : 'text-primary'
+        "
+      >
+        <fa-icon
+          [icon]="getPurchasesChange() >= 0 ? faArrowUp : faArrowDown"
+          class="mr-1"
+        ></fa-icon>
+        <span
+          >{{ getPurchasesChange() }}%
+          {{ "DASHBOARD.PURCHASES.CHANGE" | translate }}</span
+        >
+      </div>
+    </div>
+
+    <!-- Marge Brute -->
+    <div
+      class="bg-white rounded-lg shadow p-6 hover:scale-105 transition-all duration-300"
+    >
+      <h3 class="text-gray-600 text-sm font-medium mb-2">
+        {{ "DASHBOARD.MARGIN.TITLE" | translate }}
+      </h3>
+      <p class="text-2xl font-bold">{{ grossMargin | currency : "EUR" }}</p>
+      <div
+        class="flex items-center mt-2"
+        [ngClass]="getMarginChange() >= 0 ? 'text-secondary' : 'text-primary'"
+      >
+        <fa-icon
+          [icon]="getMarginChange() >= 0 ? faArrowUp : faArrowDown"
+          class="mr-1"
+        ></fa-icon>
+        <span
+          >{{ getMarginChange() }}%
+          {{ "DASHBOARD.MARGIN.CHANGE" | translate }}</span
+        >
+      </div>
+    </div>
+
+    <!-- Nombre de Transactions -->
+    <div
+      class="bg-white rounded-lg shadow p-6 hover:scale-105 transition-all duration-300"
+    >
+      <h3 class="text-gray-600 text-sm font-medium mb-2">
+        {{ "DASHBOARD.TRANSACTIONS.TITLE" | translate }}
+      </h3>
+      <p class="text-2xl font-bold">{{ transactionCount }}</p>
+      <div class="flex items-center mt-2 text-secondary">
+        <fa-icon [icon]="faArrowUp" class="mr-1"></fa-icon>
+        <span
+          >{{ getTransactionChange() }}%
+          {{ "DASHBOARD.TRANSACTIONS.CHANGE" | translate }}</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    <!-- Graphique Ventes & Achats Mensuels -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">
+        {{ "DASHBOARD.MONTHLY_CHART.TITLE" | translate }}
+      </h2>
+      <p class="text-gray-600 text-sm mb-6">
+        {{ "DASHBOARD.MONTHLY_CHART.DESCRIPTION" | translate }}
+      </p>
+
+      <!-- Container pour le graphique -->
+      <div class="h-64 relative">
+        <!-- Ligne horizontale pour l'axe -->
+        <div
+          class="absolute left-0 right-0 bottom-8 border-t border-gray-300"
+        ></div>
+
+        <!-- Barres du graphique -->
+        <div
+          class="flex h-48 items-end justify-between space-x-2 absolute bottom-8 left-0 right-0"
+        >
+          <div
+            *ngFor="let data of monthlyData"
+            class="flex-1 flex flex-col items-center h-full"
+          >
+            <div class="flex items-end justify-center space-x-1 h-full w-full">
+              <!-- Barre des ventes -->
+              <div
+                class="w-1/2 bg-secondary rounded-t transition-all duration-300 hover:bg-tertiary"
+                [style.height]="(data.sales / getMaxValue()) * 100 + '%'"
+                [title]="'Ventes: ' + (data.sales | currency : 'EUR')"
+              ></div>
+              <!-- Barre des achats -->
+              <div
+                class="w-1/2 bg-primary rounded-t transition-all duration-300 hover:bg-tertiary"
+                [style.height]="(data.purchases / getMaxValue()) * 100 + '%'"
+                [title]="'Achats: ' + (data.purchases | currency : 'EUR')"
+              ></div>
+            </div>
+            <span class="text-xs text-gray-600 mt-2">{{ data.month }}</span>
+          </div>
+        </div>
+
+        <!-- Échelle verticale -->
+        <div
+          class="absolute left-0 top-0 bottom-8 w-12 flex flex-col justify-between text-xs text-gray-600"
+        >
+          <span>{{
+            getMaxValue() | currency : "EUR" : "symbol" : "1.0-0"
+          }}</span>
+          <span>{{
+            getMaxValue() / 2 | currency : "EUR" : "symbol" : "1.0-0"
+          }}</span>
+          <span>0</span>
+        </div>
+      </div>
+
+      <!-- Légende -->
+      <div class="flex justify-center space-x-4 mt-4">
+        <div class="flex items-center">
+          <div class="w-4 h-4 bg-secondary rounded mr-2"></div>
+          <span class="text-sm">Ventes</span>
+        </div>
+        <div class="flex items-center">
+          <div class="w-4 h-4 bg-primary rounded mr-2"></div>
+          <span class="text-sm">Achats</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intégrations de Paiement -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">
+        {{ "DASHBOARD.PAYMENT_INTEGRATIONS.TITLE" | translate }}
+      </h2>
+      <p class="text-gray-600 text-sm mb-6">
+        {{ "DASHBOARD.PAYMENT_INTEGRATIONS.DESCRIPTION" | translate }}
+      </p>
+
+      <div class="space-y-4">
+        <div
+          *ngFor="let integration of paymentIntegrations"
+          class="flex items-center justify-between p-3 bg-gray-50 rounded"
+        >
+          <div class="flex items-center">
+            <fa-icon
+              [icon]="faCheckCircle"
+              class="text-secondary mr-3"
+            ></fa-icon>
+            <span>{{ "PAYMENT_METHODS." + integration.name | translate }}</span>
+          </div>
+          <div class="text-right">
+            <span class="text-secondary text-sm font-medium">{{
+              "PAYMENT_METHODS." + integration.status | translate
+            }}</span>
+            <p class="text-gray-500 text-xs">
+              {{ integration.lastUpdate | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gestion des Documents Commerciaux -->
+  <div class="bg-white rounded-lg shadow p-6 mb-8">
+    <h2 class="text-xl font-semibold mb-4">
+      {{ "DASHBOARD.DOCUMENT_MANAGEMENT.TITLE" | translate }}
+    </h2>
+    <p class="text-gray-600 text-sm mb-6">
+      {{ "DASHBOARD.DOCUMENT_MANAGEMENT.DESCRIPTION" | translate }}
+    </p>
+
+    <div class="flex space-x-4">
+      <button
+        class="flex items-center px-4 py-2 bg-tertiary text-white rounded hover:bg-primary"
+      >
+        <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
+        {{ "DASHBOARD.DOCUMENT_MANAGEMENT.NEW_SALE" | translate }}
+      </button>
+      <button
+        class="flex items-center px-4 py-2 bg-secondary text-white rounded hover:bg-primary"
+      >
+        <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
+        {{ "DASHBOARD.DOCUMENT_MANAGEMENT.NEW_PURCHASE" | translate }}
+      </button>
+    </div>
+  </div>
+  <!-- Filtre de type de document -->
+  <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="flex flex-wrap gap-4">
+      <div
+        *ngFor="let docType of documentTypes"
+        class="flex items-center px-4 py-2 rounded-lg border cursor-pointer transition-all"
+        [class.bg-secondary]="selectedDocumentType === docType.value"
+        [class.border-secondary]="selectedDocumentType === docType.value"
+        [class.text-white]="selectedDocumentType === docType.value"
+        [class.bg-white]="selectedDocumentType !== docType.value"
+        [class.border-gray-300]="selectedDocumentType !== docType.value"
+        (click)="selectedDocumentType = docType.value"
+      >
+        <fa-icon [icon]="docType.icon" class="mr-2"></fa-icon>
+        <span>{{ docType.label }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section pour les autres types de documents -->
+
+  <!-- Transactions Récentes -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <div class="" *ngIf="selectedDocumentType !== 'transactions'">
+      <h2 class="text-xl font-semibold mb-4">
+        {{
+          selectedDocumentType === "quotes"
+            ? "Devis"
+            : selectedDocumentType === "orders"
+            ? "Commandes"
+            : "Factures"
+        }}
+      </h2>
+      <p class="text-gray-500 text-sm mb-6">
+        Aucun
+        {{
+          selectedDocumentType === "quotes"
+            ? "devis"
+            : selectedDocumentType === "orders"
+            ? "commande"
+            : "facture"
+        }}
+        pour le moment.
+      </p>
+      <button
+        class="px-4 py-2 bg-tertiary text-white rounded hover:bg-primary mb-5"
+      >
+        <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
+        Créer un
+        {{
+          selectedDocumentType === "quotes"
+            ? "devis"
+            : selectedDocumentType === "orders"
+            ? "bon de commande"
+            : "facture"
+        }}
+      </button>
+    </div>
+    <h2 class="text-xl font-semibold mb-4">
+      {{ "DASHBOARD.RECENT_TRANSACTIONS.TITLE" | translate }}
+    </h2>
+    <p class="text-gray-600 text-sm mb-6">
+      {{ "DASHBOARD.RECENT_TRANSACTIONS.DESCRIPTION" | translate }}
+    </p>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "DASHBOARD.RECENT_TRANSACTIONS.ID" | translate }}
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "DASHBOARD.RECENT_TRANSACTIONS.TYPE" | translate }}
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "DASHBOARD.RECENT_TRANSACTIONS.DATE" | translate }}
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "DASHBOARD.RECENT_TRANSACTIONS.CLIENT_SUPPLIER" | translate }}
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "DASHBOARD.RECENT_TRANSACTIONS.PRODUCT" | translate }}
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "DASHBOARD.RECENT_TRANSACTIONS.QUANTITY" | translate }}
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "DASHBOARD.RECENT_TRANSACTIONS.TOTAL" | translate }}
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "DASHBOARD.RECENT_TRANSACTIONS.STATUS" | translate }}
+            </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {{ "DASHBOARD.RECENT_TRANSACTIONS.ACTIONS" | translate }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let transaction of recentTransactions">
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            >
+              {{ transaction.id }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ getTypeTranslationKey(transaction.type) | translate }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ transaction.date | date : "yyyy-MM-dd" }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ transaction.clientOrSupplier }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ transaction.product }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ transaction.quantity }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ transaction.total | currency : "EUR" }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span
+                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                [ngClass]="getStatusClass(transaction.status)"
+              >
+                {{ getStatusTranslationKey(transaction.status) | translate }}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <button class="text-blue-600 hover:text-blue-900">
+                <fa-icon [icon]="faEye"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
