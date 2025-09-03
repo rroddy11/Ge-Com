@@ -17,4 +17,5 @@ export interface Supplier {
   rating: number;
   notes?: string;
   createdAt: string;
+  image: string;
 }

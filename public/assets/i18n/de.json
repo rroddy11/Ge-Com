@@ -199,5 +199,85 @@
   "CLIENTS_SUPPLIERS": {
     "CLIENTS": "Kunden",
     "SUPPLIERS": "Lieferanten"
+  },
+  "DASHBOARD": {
+    "TITLE": "Verwaltung von Verkäufen und Einkäufen",
+    "SALES": {
+      "TITLE": "Gesamtverkäufe (Monat)",
+      "CHANGE": "diesen Monat"
+    },
+    "PURCHASES": {
+      "TITLE": "Gesamteinkäufe (Monat)",
+      "CHANGE": "diesen Monat"
+    },
+    "MARGIN": {
+      "TITLE": "Bruttomarge (Monat)",
+      "CHANGE": "diesen Monat"
+    },
+    "TRANSACTIONS": {
+      "TITLE": "Anzahl der Transaktionen",
+      "CHANGE": "diesen Monat"
+    },
+    "MONTHLY_CHART": {
+      "TITLE": "Monatliche Verkäufe & Einkäufe",
+      "DESCRIPTION": "Entwicklung der Verkäufe und Einkäufe in den letzten 6 Monaten."
+    },
+    "PAYMENT_INTEGRATIONS": {
+      "TITLE": "Zahlungsintegrationen",
+      "DESCRIPTION": "Status Ihrer Zahlungsgateways."
+    },
+    "DOCUMENT_MANAGEMENT": {
+      "TITLE": "Handelsdokumentenverwaltung",
+      "DESCRIPTION": "Verwalten Sie Ihre Angebote, Bestellungen, Lieferscheine und Rechnungen.",
+      "NEW_SALE": "Neuen Verkauf erstellen",
+      "NEW_PURCHASE": "Neuen Einkauf erstellen"
+    },
+    "RECENT_TRANSACTIONS": {
+      "TITLE": "Aktuelle Transaktionen",
+      "DESCRIPTION": "Liste der letzten Verkäufe und Einkäufe.",
+      "ID": "ID",
+      "TYPE": "Typ",
+      "DATE": "Datum",
+      "CLIENT_SUPPLIER": "Kunde/Lieferant",
+      "PRODUCT": "Produkt",
+      "QUANTITY": "Menge",
+      "TOTAL": "Gesamt",
+      "STATUS": "Status",
+      "ACTIONS": "Aktionen",
+      "SALE": "Verkauf",
+      "PURCHASE": "Einkauf",
+      "COMPLETED": "Abgeschlossen",
+      "IN_PROGRESS": "In Bearbeitung",
+      "CANCELLED": "Abgebrochen"
+    }
+  },
+  "PAYMENT_METHODS": {
+    "STRIPE": "Stripe",
+    "PAYPAL": "PayPal",
+    "BANK_TRANSFER": "Banküberweisung",
+    "CASH": "Barzahlung",
+    "ACTIVE": "Aktiv"
+  },
+  "PAYMENT_INTEGRATIONS": {
+    "2_HOURS_AGO": "Vor 2 Stunden",
+    "5_HOURS_AGO": "Vor 5 Stunden",
+    "1_DAY_AGO": "Vor 1 Tag",
+    "30_MINUTES_AGO": "Vor 30 Minuten"
+  },
+  "DOCUMENT_TYPES": {
+    "TRANSACTIONS": "Transaktionen",
+    "QUOTES": "Angebote",
+    "ORDERS": "Bestellungen",
+    "INVOICES": "Rechnungen"
+  },
+  "NO_DATA": {
+    "QUOTES": "Keine Angebote im Moment",
+    "ORDERS": "Keine Bestellungen im Moment",
+    "INVOICES": "Keine Rechnungen im Moment"
+  },
+  "CREATE_BUTTON": {
+    "QUOTE": "Angebot erstellen",
+    "ORDER": "Bestellung erstellen",
+    "INVOICE": "Rechnung erstellen"
   }
 }

@@ -156,7 +156,18 @@
     "REVENUE_CHART": "Évolution du Revenu Mensuel",
     "REVENUE_TREND": "Tendance des Revenus",
     "TOP_CLIENTS_CHART": "Top 5 Clients par Chiffre d'Affaires",
-    "RECENT_ACTIVITY": "Activité Récente"
+    "RECENT_ACTIVITY": "Activité Récente",
+    "CONTACT_INFO": "Coordonnées",
+    "STATISTICS": "Statistiques",
+    "TOTAL_ORDERS": "Commandes totales",
+    "MEMBER_SINCE": "Membre depuis",
+    "NOTES": "Notes",
+    "DATE": "Date",
+    "ACTIVITY": "Activité",
+    "AMOUNT": "Montant",
+    "NO_ORDERS": "Aucune commande",
+    "NOT_FOUND": "Client non trouvé",
+    "CLIENT_NOT_FOUND": "Le client que vous recherchez n'existe pas ou a été supprimé."
   },
   "COMMON": {
     "PREVIOUS": "Précédent",
@@ -164,7 +175,11 @@
     "SHOWING": "Affichage de",
     "TO": "à",
     "OF": "sur",
-    "RESULTS": "résultats"
+    "RESULTS": "résultats",
+    "BACK": "Retour",
+    "EDIT": "Modifier",
+    "LOADING": "Chargement...",
+    "BACK_TO_CLIENTS": "Retour aux clients"
   },
   "SUPPLIERS": {
     "TITLE": "Gestion des Fournisseurs",
@@ -199,5 +214,118 @@
   "CLIENTS_SUPPLIERS": {
     "CLIENTS": "Clients",
     "SUPPLIERS": "Fournisseurs"
+  },
+  "DASHBOARD": {
+    "TITLE": "Gestion des Ventes et Achats",
+    "SALES": {
+      "TITLE": "Ventes Totales (mois)",
+      "CHANGE": "ce mois"
+    },
+    "PURCHASES": {
+      "TITLE": "Achats Totaux (mois)",
+      "CHANGE": "ce mois"
+    },
+    "MARGIN": {
+      "TITLE": "Marge Brute (mois)",
+      "CHANGE": "ce mois"
+    },
+    "TRANSACTIONS": {
+      "TITLE": "Nombre de Transactions",
+      "CHANGE": "ce mois"
+    },
+    "MONTHLY_CHART": {
+      "TITLE": "Ventes & Achats Mensuels",
+      "DESCRIPTION": "Évolution des ventes et achats sur les 6 derniers mois."
+    },
+    "PAYMENT_INTEGRATIONS": {
+      "TITLE": "Intégrations de Paiement",
+      "DESCRIPTION": "Statut de vos passerelles de paiement."
+    },
+    "DOCUMENT_MANAGEMENT": {
+      "TITLE": "Gestion des Documents Commerciaux",
+      "DESCRIPTION": "Gérez vos devis, commandes, bons de livraison et factures.",
+      "NEW_SALE": "Créer une Nouvelle Vente",
+      "NEW_PURCHASE": "Créer un Nouvel Achat"
+    },
+    "RECENT_TRANSACTIONS": {
+      "TITLE": "Transactions Récentes",
+      "DESCRIPTION": "Liste des dernières ventes et achats.",
+      "ID": "ID",
+      "TYPE": "Type",
+      "DATE": "Date",
+      "CLIENT_SUPPLIER": "Client/Fournisseur",
+      "PRODUCT": "Produit",
+      "QUANTITY": "Quantité",
+      "TOTAL": "Total",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions",
+      "SALE": "Vente",
+      "PURCHASE": "Achat",
+      "COMPLETED": "Terminé",
+      "IN_PROGRESS": "En Cours",
+      "CANCELLED": "Annulé"
+    }
+  },
+  "PAYMENT_METHODS": {
+    "STRIPE": "Stripe",
+    "PAYPAL": "PayPal",
+    "BANK_TRANSFER": "Virement Bancaire",
+    "CASH": "Paiement en espèces",
+    "ACTIVE": "Active"
+  },
+  "PAYMENT_INTEGRATIONS": {
+    "2_HOURS_AGO": "Il y a 2 heures",
+    "5_HOURS_AGO": "Il y a 5 heures",
+    "1_DAY_AGO": "Il y a 1 jour",
+    "30_MINUTES_AGO": "Il y a 30 minutes"
+  },
+  "DOCUMENT_TYPES": {
+    "TRANSACTIONS": "Transactions",
+    "QUOTES": "Devis",
+    "ORDERS": "Commandes",
+    "INVOICES": "Factures"
+  },
+  "NO_DATA": {
+    "QUOTES": "Aucun devis pour le moment",
+    "ORDERS": "Aucune commande pour le moment",
+    "INVOICES": "Aucune facture pour le moment"
+  },
+  "CREATE_BUTTON": {
+    "QUOTE": "Créer un devis",
+    "ORDER": "Créer un bon de commande",
+    "INVOICE": "Créer une facture"
+  },
+  "INVENTORY": {
+    "TITLE": "Gestion des Articles",
+    "SUBTITLE": "Gérer et suivre tous les produits en stock",
+    "TOTAL_ITEMS": "Articles Totaux",
+    "UNIQUE_PRODUCTS": "Produits uniques",
+    "IN_STOCK": "En Stock",
+    "AVAILABLE_ITEMS": "Articles disponibles",
+    "LOW_STOCK": "Faible Stock",
+    "NEEDS_REORDER": "Nécessite réapprovisionnement",
+    "OUT_OF_STOCK": "Rupture de Stock",
+    "PENDING_ORDERS": "Commandes en attente",
+    "VIEW_DETAILS": "Voir les détails",
+    "INVENTORY_ITEMS": "Articles en Inventaire",
+    "SEARCH_PLACEHOLDER": "Rechercher un article...",
+    "PRODUCT_NAME": "Nom du Produit",
+    "SKU": "SKU",
+    "CATEGORY": "Catégorie",
+    "CURRENT_STOCK": "Stock Actuel",
+    "UNIT": "Unité",
+    "STATUS": "Statut",
+    "PREVIOUS": "Précédent",
+    "NEXT": "Suivant",
+    "RECENT_MOVEMENTS": "Mouvements Récents",
+    "VIEW_ALL": "Voir tout",
+    "INVENTORY_TOOLS": "Outils d'Inventaire",
+    "INVENTORY_ACTIONS": "Actions d'Inventaire",
+    "GENERATE_INVENTORY": "Générer un inventaire périodique",
+    "EXPORT_PDF": "Exporter en PDF",
+    "EXPORT_EXCEL": "Exporter en Excel",
+    "En Stock": "En Stock",
+    "Faible": "Faible",
+    "Rupture": "Rupture"
   }
 }
