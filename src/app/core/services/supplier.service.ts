@@ -25,6 +25,7 @@ export class SupplierService {
       rating: 4.8,
       notes: 'Excellents produits bio, livraison ponctuelle',
       createdAt: '2023-05-10',
+      image: '/assets/images/img/product/lfl.png',
     },
     {
       id: 2,
@@ -44,6 +45,7 @@ export class SupplierService {
       status: 'active',
       rating: 4.5,
       createdAt: '2023-08-15',
+      image: '/assets/images/img/product/lfl.png',
     },
     {
       id: 3,
@@ -64,6 +66,7 @@ export class SupplierService {
       rating: 4.9,
       notes: 'Meilleur pain de la région',
       createdAt: '2023-03-22',
+      image: '/assets/images/img/product/lfl.png',
     },
     {
       id: 4,
@@ -83,6 +86,7 @@ export class SupplierService {
       status: 'inactive',
       rating: 3.8,
       createdAt: '2024-01-30',
+      image: '/assets/images/img/product/lfl.png',
     },
     {
       id: 5,
@@ -103,6 +107,7 @@ export class SupplierService {
       rating: 4.7,
       notes: 'Fruits et légumes de saison',
       createdAt: '2023-07-18',
+      image: '/assets/images/img/product/lfl.png',
     },
   ];
 
@@ -111,7 +116,10 @@ export class SupplierService {
   }
 
   getSupplierById(id: number): Supplier | undefined {
-    return this.suppliers.find((supplier) => supplier.id === id);
+    console.time('getSupplierById');
+    const supplier = this.suppliers.find((supplier) => supplier.id === id);
+    console.timeEnd('getSupplierById');
+    return supplier;
   }
 
   addSupplier(supplier: Supplier): void {
@@ -150,7 +158,7 @@ export class SupplierService {
       totalSuppliers,
       activeSuppliers,
       highRatedSuppliers,
-      totalProducts,
+      totalProducts: parseFloat(totalProducts.toFixed(2)),
     };
   }
 }

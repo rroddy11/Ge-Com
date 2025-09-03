@@ -25,6 +25,7 @@ export class ClientService {
       segment: 'premium',
       notes: 'Client fidèle, préfère les produits bio',
       createdAt: '2024-01-15',
+      image: '/assets/images/img/product/lfl.png',
     },
     {
       id: 2,
@@ -42,6 +43,7 @@ export class ClientService {
       status: 'active',
       segment: 'regular',
       createdAt: '2024-03-10',
+      image: '/assets/images/img/product/lfl.png',
     },
     {
       id: 3,
@@ -62,6 +64,7 @@ export class ClientService {
       segment: 'vip',
       notes: 'Commande tous les jeudis',
       createdAt: '2023-11-05',
+      image: '/assets/images/img/product/lfl.png',
     },
     {
       id: 4,
@@ -79,6 +82,7 @@ export class ClientService {
       status: 'inactive',
       segment: 'regular',
       createdAt: '2024-06-20',
+      image: '/assets/images/img/product/lfl.png',
     },
     {
       id: 5,
@@ -98,6 +102,7 @@ export class ClientService {
       status: 'active',
       segment: 'premium',
       createdAt: '2024-02-14',
+      image: '/assets/images/img/product/lfl.png',
     },
   ];
 
@@ -106,7 +111,10 @@ export class ClientService {
   }
 
   getClientById(id: number): Client | undefined {
-    return this.clients.find((client) => client.id === id);
+    console.time('getClientById');
+    const client = this.clients.find((client) => client.id === id);
+    console.timeEnd('getClientById');
+    return client;
   }
 
   addClient(client: Client): void {
