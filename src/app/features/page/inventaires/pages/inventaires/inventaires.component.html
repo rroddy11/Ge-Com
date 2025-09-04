@@ -1,1 +1,345 @@
-<p>inventaires works!</p>
+<!-- inventory.component.html -->
+<div class="container mx-auto p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2" translate>
+      INVENTORY.TITLE
+    </h1>
+    <p class="text-gray-600" translate>INVENTORY.SUBTITLE</p>
+  </div>
+
+  <!-- Aperçu Global -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Articles Totaux -->
+    <div
+      class="bg-white rounded-lg shadow px-5 py-3 hover:shadow-lg hover:scale-105 transition-all duration-300"
+    >
+      <h3 class="text-lg font-semibold text-gray-700 mb-2" translate>
+        INVENTORY.TOTAL_ITEMS
+      </h3>
+      <p class="text-3xl font-bold text-primary">{{ overview.totalItems }}</p>
+      <p class="text-sm text-gray-500 mt-1" translate>
+        INVENTORY.UNIQUE_PRODUCTS
+      </p>
+      <button class="text-secondary text-sm mt-2 flex items-center">
+        <fa-icon [icon]="faEye" class="mr-1"></fa-icon>
+        <span translate>INVENTORY.VIEW_DETAILS</span>
+      </button>
+    </div>
+
+    <!-- En Stock -->
+    <div
+      class="bg-white rounded-lg shadow px-5 py-3 hover:shadow-lg hover:scale-105 transition-all duration-300"
+    >
+      <h3 class="text-lg font-semibold text-gray-700 mb-2" translate>
+        INVENTORY.IN_STOCK
+      </h3>
+      <p class="text-3xl font-bold text-secondary">{{ overview.inStock }}</p>
+      <p class="text-sm text-gray-500 mt-1" translate>
+        INVENTORY.AVAILABLE_ITEMS
+      </p>
+      <button class="text-secondary text-sm mt-2 flex items-center">
+        <fa-icon [icon]="faEye" class="mr-1"></fa-icon>
+        <span translate>INVENTORY.VIEW_DETAILS</span>
+      </button>
+    </div>
+
+    <!-- Faible Stock -->
+    <div
+      class="bg-white rounded-lg shadow px-5 py-3 hover:shadow-lg hover:scale-105 transition-all duration-300"
+    >
+      <h3 class="text-lg font-semibold text-gray-700 mb-2" translate>
+        INVENTORY.LOW_STOCK
+      </h3>
+      <p class="text-3xl font-bold text-tertiary">{{ overview.lowStock }}</p>
+      <p class="text-sm text-gray-500 mt-1" translate>
+        INVENTORY.NEEDS_REORDER
+      </p>
+      <button class="text-secondary text-sm mt-2 flex items-center">
+        <fa-icon [icon]="faEye" class="mr-1"></fa-icon>
+        <span translate>INVENTORY.VIEW_DETAILS</span>
+      </button>
+    </div>
+
+    <!-- Rupture de Stock -->
+    <div
+      class="bg-white rounded-lg shadow px-5 py-3 hover:shadow-lg hover:scale-105 transition-all duration-300"
+    >
+      <h3 class="text-lg font-semibold text-gray-700 mb-2" translate>
+        INVENTORY.OUT_OF_STOCK
+      </h3>
+      <p class="text-3xl font-bold text-gray-400">{{ overview.outOfStock }}</p>
+      <p class="text-sm text-gray-500 mt-1" translate>
+        INVENTORY.PENDING_ORDERS
+      </p>
+      <button class="text-secondary text-sm mt-2 flex items-center">
+        <fa-icon [icon]="faEye" class="mr-1"></fa-icon>
+        <span translate>INVENTORY.VIEW_DETAILS</span>
+      </button>
+    </div>
+  </div>
+  <!-- Détails de l'inventaire - Chart -->
+  <div class="bg-white rounded-lg shadow mb-8">
+    <div class="p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4" translate>
+        INVENTORY.INVENTORY_DETAILS
+      </h2>
+
+      <h3 class="text-lg font-medium text-gray-700 mb-4" translate>
+        INVENTORY.STATUS_DISTRIBUTION
+      </h3>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Chart -->
+        <div class="flex justify-center">
+          <canvas
+            #statusChart
+            class="max-w-xs"
+            style="max-height: 300px"
+          ></canvas>
+        </div>
+
+        <!-- Légende détaillée -->
+        <div class="space-y-4">
+          <div
+            *ngFor="let label of getChartData().labels; let i = index"
+            class="flex items-center justify-between p-3 rounded-lg"
+            [style.background]="getChartData().colors[i] + '20'"
+          >
+            <div class="flex items-center">
+              <div
+                class="w-4 h-4 rounded-full mr-3"
+                [style.background]="getChartData().colors[i]"
+              ></div>
+              <span class="font-medium">{{ label | translate }}</span>
+            </div>
+            <span class="font-bold">
+              {{ getChartData().data[i] }}
+              ({{ getPercentage(getChartData().data[i]) }})
+            </span>
+          </div>
+
+          <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+            <p class="text-sm text-gray-600" translate>
+              INVENTORY.DISTRIBUTION_DESCRIPTION
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Articles en Inventaire -->
+  <div class="bg-white rounded-lg shadow mb-8">
+    <div class="p-6 border-b">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4" translate>
+        INVENTORY.INVENTORY_ITEMS
+      </h2>
+
+      <!-- Barre de recherche -->
+      <div class="relative mb-4">
+        <fa-icon
+          [icon]="faSearch"
+          class="absolute left-3 top-3 text-gray-400"
+        ></fa-icon>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          placeholder="{{ 'INVENTORY.SEARCH_PLACEHOLDER' | translate }}"
+          class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Tableau -->
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="bg-gray-50">
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                translate
+              >
+                INVENTORY.PRODUCT_NAME
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                translate
+              >
+                INVENTORY.SKU
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                translate
+              >
+                INVENTORY.CATEGORY
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                translate
+              >
+                INVENTORY.CURRENT_STOCK
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                translate
+              >
+                INVENTORY.UNIT
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                translate
+              >
+                INVENTORY.STATUS
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let item of paginatedItems" class="hover:bg-gray-50">
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+              >
+                {{ item.productName }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ item.sku }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ item.category }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ item.currentStock }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ item.unit }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  *ngIf="item.status"
+                  class="px-2 py-1 text-xs font-medium rounded-full"
+                  [ngClass]="getStatusClass(item.status)"
+                >
+                  {{ item.status | translate }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div
+        class="px-6 py-4 flex items-center justify-between border-t border-gray-200"
+      >
+        <button
+          (click)="goToPage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+          translate
+        >
+          INVENTORY.PREVIOUS
+        </button>
+
+        <div class="hidden md:flex space-x-2">
+          <button
+            *ngFor="let page of pages"
+            (click)="goToPage(page)"
+            [class.bg-blue-600]="page === currentPage"
+            [class.text-white]="page === currentPage"
+            [class.text-gray-700]="page !== currentPage"
+            class="px-3 py-1 text-sm font-medium rounded-md"
+          >
+            {{ page }}
+          </button>
+        </div>
+
+        <button
+          (click)="goToPage(currentPage + 1)"
+          [disabled]="currentPage === totalPages"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+          translate
+        >
+          INVENTORY.NEXT
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outils d'Inventaire -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Mouvements Récents -->
+    <div class="bg-white rounded-lg shadow">
+      <div class="p-6 border-b">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold text-gray-800" translate>
+            INVENTORY.RECENT_MOVEMENTS
+          </h2>
+          <button class="text-tertiary text-sm font-medium" translate>
+            INVENTORY.VIEW_ALL
+          </button>
+        </div>
+
+        <div class="space-y-4">
+          <div
+            *ngFor="let movement of recentMovements"
+            class="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+          >
+            <div>
+              <p class="font-medium text-gray-900">
+                {{ movement.productName }}
+              </p>
+              <p class="text-sm text-gray-500">
+                {{ movement.date | date : "yyyy-MM-dd" }}
+              </p>
+            </div>
+            <span
+              [class.text-green-600]="movement.quantity > 0"
+              [class.text-red-600]="movement.quantity < 0"
+              class="font-semibold"
+            >
+              {{ movement.quantity > 0 ? "+" : "" }}{{ movement.quantity }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions d'Inventaire -->
+    <div class="bg-white rounded-lg shadow">
+      <div class="p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4" translate>
+          INVENTORY.INVENTORY_TOOLS
+        </h2>
+
+        <h3 class="text-lg font-medium text-gray-700 mb-3" translate>
+          INVENTORY.INVENTORY_ACTIONS
+        </h3>
+
+        <div class="space-y-3">
+          <button
+            (click)="generatePeriodicInventory()"
+            class="w-full flex items-center justify-between p-4 bg-blue-50 text-tertiary rounded-lg hover:bg-blue-100 transition-colors"
+          >
+            <span translate>INVENTORY.GENERATE_INVENTORY</span>
+            <fa-icon [icon]="faFilePdf"></fa-icon>
+          </button>
+
+          <button
+            (click)="exportToPDF()"
+            class="w-full flex items-center justify-between p-4 bg-red-50 text-primary rounded-lg hover:bg-red-100 transition-colors"
+          >
+            <span translate>INVENTORY.EXPORT_PDF</span>
+            <fa-icon [icon]="faFilePdf"></fa-icon>
+          </button>
+
+          <button
+            (click)="exportToExcel()"
+            class="w-full flex items-center justify-between p-4 bg-green-50 text-secondary rounded-lg hover:bg-green-100 transition-colors"
+          >
+            <span translate>INVENTORY.EXPORT_EXCEL</span>
+            <fa-icon [icon]="faFileExcel"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
