@@ -1,1 +1,307 @@
-<p>paramettres works!</p>
+<div class="">
+  <h1 class="text-4xl font-bold mb-8 text-[#7C614F]">Paramètres</h1>
+
+  <!-- Message de confirmation -->
+  <div
+    *ngIf="saveMessage"
+    class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6"
+  >
+    {{ saveMessage }}
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Colonne gauche -->
+    <div class="space-y-12">
+      <!-- Gestion des Utilisateurs et Rôles -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">
+          Gestion des Utilisateurs et Rôles
+        </h2>
+
+        <!-- Utilisateurs -->
+        <div class="mb-6">
+          <h3 class="text-lg font-medium mb-3 text-[#8EA223]">Utilisateurs</h3>
+          <p class="text-gray-600 mb-4">
+            Gérer les comptes utilisateurs, leurs informations et activités.
+          </p>
+
+          <div class="flex items-center mb-2">
+            <input
+              type="checkbox"
+              id="add-user"
+              class="mr-2 h-5 w-5 text-[#FAB615]"
+            />
+            <label for="add-user" class="text-gray-700"
+              >Ajouter un utilisateur</label
+            >
+          </div>
+
+          <button
+            class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium"
+          >
+            Gérer
+          </button>
+        </div>
+
+        <!-- Rôles et Permissions -->
+        <div>
+          <h3 class="text-lg font-medium mb-3 text-[#8EA223]">
+            Rôles et Permissions
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Définir et attribuer les rôles, permissions et niveaux d'accès.
+          </p>
+
+          <button
+            class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium mb-2 mr-2"
+          >
+            Configurer les rôles
+          </button>
+
+          <button
+            class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium"
+          >
+            Gérer
+          </button>
+        </div>
+      </div>
+
+      <!-- Sécurité du Compte -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Sécurité du Compte</h2>
+
+        <!-- Authentification à Deux Facteurs (2FA) -->
+        <div class="mb-6">
+          <h3 class="text-lg font-medium mb-3 text-[#8EA223]">
+            Authentification à Deux Facteurs (2FA)
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Renforcer la sécurité de votre compte avec 2FA.
+          </p>
+
+          <button
+            class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium mb-4"
+            (click)="toggleTwoFactor()"
+          >
+            {{ settings.twoFactorEnabled ? "Désactiver" : "Activer" }} la 2FA
+          </button>
+
+          <div class="flex items-center mb-2">
+            <input
+              type="checkbox"
+              id="configure-2fa"
+              [(ngModel)]="settings.twoFactorEnabled"
+              class="mr-2 h-5 w-5 text-[#FAB615]"
+            />
+            <label for="configure-2fa" class="text-gray-700"
+              >Configurer la 2FA</label
+            >
+          </div>
+        </div>
+
+        <!-- Politique de Mot de Passe -->
+        <div>
+          <div class="flex items-center mb-3">
+            <input
+              type="checkbox"
+              id="password-policy"
+              [(ngModel)]="settings.passwordPolicy"
+              class="mr-2 h-5 w-5 text-[#FAB615]"
+            />
+            <label for="password-policy" class="text-gray-700 font-medium"
+              >Politique de Mot de Passe</label
+            >
+          </div>
+          <p class="text-gray-600 mb-4">
+            Définir les exigences de complexité des mots de passe.
+          </p>
+
+          <div class="mb-4">
+            <h4 class="font-medium mb-2 text-[#8EA223]">Exigence</h4>
+            <p class="text-gray-600">{{ settings.passwordRequirements }}</p>
+          </div>
+
+          <button
+            class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium"
+            (click)="saveSettings()"
+          >
+            Sauvegarder la politique
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne droite -->
+    <div class="space-y-6">
+      <!-- Paramètres Généraux de l'Application -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">
+          Paramètres Généraux de l'Application
+        </h2>
+
+        <!-- Informations sur l'Application -->
+        <div class="mb-6">
+          <h3 class="text-lg font-medium mb-3 text-[#8EA223]">
+            Informations sur l'Application
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Mettre à jour le nom et le logo de l'application.
+          </p>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 mb-2 font-medium"
+              >Nom de l'application</label
+            >
+            <input
+              type="text"
+              [(ngModel)]="settings.appName"
+              class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FAB615]"
+            />
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-gray-700 mb-2 font-medium"
+              >Logo de l'application</label
+            >
+            <div class="flex items-center">
+              <div
+                class="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center mr-4"
+              >
+                <i class="fas fa-image text-gray-400 text-2xl"></i>
+              </div>
+              <button
+                class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium"
+              >
+                Changer le logo
+              </button>
+            </div>
+          </div>
+
+          <button
+            class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium"
+            (click)="saveSettings()"
+            [disabled]="isSaving"
+          >
+            {{
+              isSaving ? "Enregistrement..." : "Enregistrer les modifications"
+            }}
+          </button>
+        </div>
+
+        <!-- Sauvegarde et Restauration des Données -->
+        <div class="mb-6">
+          <h3 class="text-lg font-medium mb-3 text-[#8EA223]">
+            Sauvegarde et Restauration des Données
+          </h3>
+
+          <div class="flex items-start mb-4">
+            <input
+              type="checkbox"
+              id="auto-backup"
+              [(ngModel)]="settings.autoBackup"
+              class="mr-2 h-5 w-5 mt-1 text-[#FAB615]"
+            />
+            <div>
+              <label for="auto-backup" class="text-gray-700 font-medium"
+                >Sauvegarde Automatique</label
+              >
+              <p class="text-gray-600 text-sm">
+                Configurer les sauvegardes automatiques de vos données.
+              </p>
+            </div>
+          </div>
+
+          <div class="ml-7 mb-4" *ngIf="settings.autoBackup">
+            <div class="flex items-center mb-2">
+              <input
+                type="checkbox"
+                id="enable-backup"
+                [(ngModel)]="settings.backupEnabled"
+                class="mr-2 h-5 w-5 text-[#FAB615]"
+              />
+              <label for="enable-backup" class="text-gray-700"
+                >Activer la sauvegarde automatique</label
+              >
+            </div>
+
+            <div class="mb-3">
+              <label class="block text-gray-700 mb-2"
+                >Fréquence de sauvegarde</label
+              >
+              <select
+                [(ngModel)]="settings.backupFrequency"
+                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FAB615]"
+              >
+                <option>Quotidien</option>
+                <option>Hebdomadaire</option>
+                <option>Mensuel</option>
+              </select>
+            </div>
+
+            <button
+              class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium"
+              (click)="saveSettings()"
+            >
+              Enregistrer la fréquence
+            </button>
+          </div>
+        </div>
+
+        <!-- Langue et Région -->
+        <div class="mb-6">
+          <h3 class="text-lg font-medium mb-3 text-[#8EA223]">
+            Langue et Région
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Configurez la langue de l'interface et les préférences régionales.
+          </p>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 mb-2 font-medium">Langue</label>
+            <select
+              [(ngModel)]="settings.language"
+              class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FAB615]"
+            >
+              <option>Français</option>
+              <option>Anglais</option>
+              <option>Espagnol</option>
+            </select>
+          </div>
+
+          <button
+            class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium"
+            (click)="applyLanguage()"
+          >
+            Appliquer la langue
+          </button>
+        </div>
+
+        <!-- Sauvegarde Manuelle & Restauration -->
+        <div>
+          <h3 class="text-lg font-medium mb-3 text-[#8EA223]">
+            Sauvegarde Manuelle & Restauration
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Créer une sauvegarde immédiate ou restaurer des données existantes.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button
+              class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium flex items-center justify-center"
+              (click)="performBackup()"
+            >
+              <i class="fas fa-save mr-2"></i> Sauvegarder maintenant
+            </button>
+
+            <button
+              class="bg-[#7C614F] hover:bg-[#6a5343] text-white px-4 py-2 rounded-md text-sm font-medium flex items-center justify-center"
+              (click)="performRestore()"
+            >
+              <i class="fas fa-undo mr-2"></i> Restaurer une sauvegarde
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
