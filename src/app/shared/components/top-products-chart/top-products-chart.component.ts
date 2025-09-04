@@ -56,10 +56,11 @@ export class TopProductsChartComponent implements OnInit {
       {
         data: [],
         backgroundColor: '#8EA223',
-        borderColor: 'rgb(54, 162, 235)',
+        borderColor: '#8EA223',
         borderWidth: 1,
         borderRadius: 5,
-        hoverBackgroundColor: 'rgba(54, 162, 235, 1)',
+        hoverBackgroundColor: '#7C614F',
+        hoverBorderColor: '#7C614F',
       },
     ],
   };

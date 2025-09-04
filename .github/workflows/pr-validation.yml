@@ -22,14 +22,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm" # ✅ AJOUTER LE CACHE
+          cache: "npm"
 
       - name: Clean npm cache
-        run: npm cache clean --force # ✅ NETTOYER LE CACHE
+        run: npm cache clean --force
 
       - name: Install dependencies with npm mirror
         run: |
-          # Utiliser le registry mirror Chinois (très fiable)
           npm config set registry https://registry.npmmirror.com
           npm install --legacy-peer-deps --prefer-offline
 
@@ -38,3 +37,9 @@ jobs:
 
       - name: Build Angular app
         run: npm run build -- --configuration production
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
