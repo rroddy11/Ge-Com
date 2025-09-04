@@ -1,45 +1,60 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { LoginRequest } from '../models/login-request';
+import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment.staging';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly mockUsers = [
-    { username: 'testuser@example.com', password: 'password123' },
-    { username: 'admin@example.com', password: 'admin123' },
-  ];
+  private readonly apiUrl = environment.apiBaseUrl;
+  private readonly currentUserSubject = new BehaviorSubject<any>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
+
+  constructor(
+    private readonly http: HttpClient,
+    private readonly router: Router
+  ) {}
 
   login(data: LoginRequest): Observable<any> {
-    console.log('AuthService: Vérification des identifiants', data);
-    const user = this.mockUsers.find(
-      (u) => u.username === data.username && u.password === data.password
+    return this.http.post(`${this.apiUrl}/login`, data).pipe(
+      tap((res: any) => {
+        localStorage.setItem('authToken', res.token);
+        this.getMe().subscribe();
+      })
     );
-
-    if (user) {
-      const fakeToken = `fake-jwt-token-${data.username}-${Date.now()}`;
-      console.log('AuthService: Token généré', fakeToken);
-      return of({ token: fakeToken, user: { username: data.username } });
-    } else {
-      console.log('AuthService: Identifiants incorrects');
-      return of({ error: 'Identifiants incorrects' });
-    }
   }
 
-  storeToken(token: string): void {
-    console.log('AuthService: Stockage du token', token);
-    localStorage.setItem('authToken', token);
+  register(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/signup`, data);
+  }
+
+  getMe(): Observable<any> {
+    const token = localStorage.getItem('authToken') || '';
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http
+      .get(`${this.apiUrl}/me`, { headers })
+      .pipe(tap((user: any) => this.currentUserSubject.next(user)));
+  }
+
+  logout() {
+    localStorage.removeItem('authToken');
+    this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
-    const isAuth = !!localStorage.getItem('authToken');
-    console.log('AuthService: isAuthenticated', isAuth);
-    return isAuth;
+    return !!localStorage.getItem('authToken');
   }
 
-  logout(): void {
-    console.log('AuthService: Déconnexion');
-    localStorage.removeItem('authToken');
+  isAdmin(): boolean {
+    return this.currentUserSubject.value?.role === 'admin';
+  }
+
+  isClient(): boolean {
+    return this.currentUserSubject.value?.role === 'client';
   }
 }

@@ -1,7 +1,7 @@
 // user-dropdown.component.ts
 import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faUser,
@@ -18,6 +18,7 @@ import {
   faSun,
 } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-user-selector',
@@ -45,7 +46,11 @@ export class UserSelectorComponent {
   isDropdownOpen = signal(false);
   isDarkTheme = signal(false);
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private readonly translate: TranslateService,
+    private readonly router: Router,
+    private readonly authService: AuthService
+  ) {
     // Vérifier le thème sauvegardé
     const savedTheme = localStorage.getItem('theme');
     this.isDarkTheme.set(savedTheme === 'dark');
@@ -83,10 +88,8 @@ export class UserSelectorComponent {
   }
 
   logout() {
-    // Logique de déconnexion
-    console.log('Déconnexion...');
+    this.authService.logout();
     this.closeDropdown();
-    // Redirection vers la page de login
-    // this.router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 }

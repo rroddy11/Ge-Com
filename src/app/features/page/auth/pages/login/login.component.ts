@@ -27,11 +27,10 @@ export class LoginComponent {
       next: (res) => {
         console.log('Réponse du service AuthService :', res); // Log pour débogage
         if (res.token) {
-          console.log('Connexion réussie, stockage du token...');
-          this.authService.storeToken(res.token);
+          console.log('Connexion réussie, token déjà stocké par AuthService.');
           console.log('Redirection vers /admin/dashboard...');
           this.router.navigate(['/admin/dashboard/accueil']).then((success) => {
-            console.log('Navigation réussie ?', success); // Vérifie si la navigation a fonctionné
+            console.log('Navigation réussie ?', success);
           });
         } else {
           this.errorMessage = res.error || 'Erreur de connexion';
