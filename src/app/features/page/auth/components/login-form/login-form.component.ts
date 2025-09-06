@@ -28,7 +28,7 @@ export class LoginFormComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      twoFactorAuth: [false], // Ajout du champ 2FA
+      twoFactorAuth: [false],
     });
   }
 
