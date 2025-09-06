@@ -20,6 +20,7 @@ export class AuthService {
   ) {}
 
   login(data: LoginRequest): Observable<any> {
+    console.log('✅ Données AVANT envoi au backend:', data);
     return this.http.post(`${this.apiUrl}/login`, data).pipe(
       tap((res: any) => {
         localStorage.setItem('authToken', res.token);
