@@ -26,7 +26,7 @@ export class LoginFormComponent {
 
   constructor(private readonly fb: FormBuilder) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       twoFactorAuth: [false], // Ajout du champ 2FA
     });

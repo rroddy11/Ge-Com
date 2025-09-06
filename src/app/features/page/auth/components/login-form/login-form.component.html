@@ -34,22 +34,21 @@
       <div class="login-container">
         <!-- Email -->
         <div class="textbox">
-          <label for="username" class="label">Email</label>
+          <label for="email" class="label">Email</label>
           <input
-            id="username"
+            id="email"
             type="email"
-            formControlName="username"
+            formControlName="email"
             placeholder="Entrez votre email"
             class="input-field"
             [class.border-red-500]="
-              loginForm.get('username')?.invalid &&
-              loginForm.get('username')?.touched
+              loginForm.get('email')?.invalid && loginForm.get('email')?.touched
             "
           />
           <div
             *ngIf="
-              loginForm.get('username')?.hasError('required') &&
-              loginForm.get('username')?.touched
+              loginForm.get('email')?.hasError('required') &&
+              loginForm.get('email')?.touched
             "
             class="text-red-500 text-sm"
           >
@@ -57,8 +56,8 @@
           </div>
           <div
             *ngIf="
-              loginForm.get('username')?.hasError('email') &&
-              loginForm.get('username')?.touched
+              loginForm.get('email')?.hasError('email') &&
+              loginForm.get('email')?.touched
             "
             class="text-red-500 text-sm"
           >

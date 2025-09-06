@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://preprod.mondomaine.com/api', // backend préprod
+  apiBaseUrl: 'https://gecom-userservice.onrender.com/api/users', // backend préprod
   debug: true,
 };
