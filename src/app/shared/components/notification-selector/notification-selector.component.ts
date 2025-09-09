@@ -14,11 +14,12 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Notification } from '../../../core/models/notification.model';
 import { NotificationService } from '../../../core/services/notification.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-notifications-dropdown',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, TranslateModule],
+  imports: [CommonModule, FontAwesomeModule, TranslateModule, FormsModule],
   templateUrl: './notification-selector.component.html',
   styleUrl: './notification-selector.component.scss',
 })
