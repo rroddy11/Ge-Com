@@ -19,6 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../core/services/auth.service';
+import { ToastNotificationService } from '../../../core/services/toast-notification.service';
 
 @Component({
   selector: 'app-user-selector',
@@ -49,7 +50,8 @@ export class UserSelectorComponent {
   constructor(
     private readonly translate: TranslateService,
     private readonly router: Router,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly toastNotificationService: ToastNotificationService
   ) {
     // Vérifier le thème sauvegardé
     const savedTheme = localStorage.getItem('theme');
@@ -88,8 +90,25 @@ export class UserSelectorComponent {
   }
 
   logout() {
-    this.authService.logout();
-    this.closeDropdown();
-    this.router.navigate(['/login']);
+    try {
+      this.authService.logout();
+
+      // Notification de succès
+      this.toastNotificationService.success(
+        'Déconnexion réussie',
+        'Vous avez été déconnecté avec succès. À bientôt!',
+        3000
+      );
+
+      this.closeDropdown();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      // Notification d'erreur en cas de problème
+      this.toastNotificationService.error(
+        'Erreur de déconnexion',
+        "Une erreur s'est produite lors de la déconnexion. Veuillez réessayer."
+      );
+      console.error('Erreur lors de la déconnexion:', error);
+    }
   }
 }
