@@ -11,10 +11,17 @@ import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { FormsModule } from '@angular/forms';
+import { ToastComponent } from './shared/components/toast/toast.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, LoaderComponent, FormsModule],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    LoaderComponent,
+    FormsModule,
+    ToastComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
