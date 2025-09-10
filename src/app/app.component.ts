@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  NavigationCancel,
-  NavigationEnd,
-  NavigationError,
-  NavigationStart,
   Router,
+  NavigationStart,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError,
   RouterOutlet,
 } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { FormsModule } from '@angular/forms';
 import { ToastComponent } from './shared/components/toast/toast.component';
+import { LoadingService } from './core/services/loading.service';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -31,27 +33,30 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly loadingService: LoadingService
   ) {
+    // Gestion du loader sur navigation
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.isLoading = true;
-        console.log('=================this.isLoading', this.isLoading);
+        this.loadingService.show();
       } else if (
         event instanceof NavigationEnd ||
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       ) {
-        this.isLoading = false;
+        this.loadingService.hide();
       }
     });
-  }
-  ngOnInit(): void {
-    console.log('AppComponent initialized');
-    // Configuration de la langue
-    this.translate.setDefaultLang('fr');
 
-    // Récupérer la langue sauvegardée ou utiliser le français par défaut
+    // On écoute l’état global du loader
+    this.loadingService.loading$.subscribe((state) => {
+      this.isLoading = state;
+    });
+  }
+
+  ngOnInit(): void {
+    this.translate.setDefaultLang('fr');
     const savedLang = localStorage.getItem('preferredLanguage');
     if (savedLang && ['fr', 'en', 'de'].includes(savedLang)) {
       this.translate.use(savedLang);

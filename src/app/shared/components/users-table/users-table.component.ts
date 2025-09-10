@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { LoaderComponent } from '../loader/loader.component';
 
 interface User {
   _id: string;
@@ -18,7 +19,13 @@ interface User {
 
 @Component({
   selector: 'app-users-table',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    LoaderComponent,
+  ],
   templateUrl: './users-table.component.html',
   styleUrl: './users-table.component.scss',
 })
