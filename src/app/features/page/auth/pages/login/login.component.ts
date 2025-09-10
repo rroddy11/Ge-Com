@@ -39,6 +39,7 @@ export class LoginComponent {
           this.router.navigate(['/admin/dashboard/accueil']);
         } else {
           this.errorMessage = 'Erreur de connexion';
+          console.log('Erreur :', this.errorMessage);
           this.toastNotificationService.error(
             'Échec de connexion',
             this.errorMessage ?? 'Erreur inconnue'
