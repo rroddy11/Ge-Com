@@ -29,6 +29,7 @@
             <input
               type="checkbox"
               id="add-user"
+              [(ngModel)]="showAddUserOption"
               class="mr-2 h-5 w-5 text-[#FAB615]"
             />
             <label for="add-user" class="text-gray-700"
@@ -37,33 +38,21 @@
           </div>
 
           <button
+            (click)="openUserModal()"
             class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium"
           >
             Gérer
           </button>
         </div>
 
-        <!-- Rôles et Permissions -->
-        <div>
-          <h3 class="text-lg font-medium mb-3 text-[#8EA223]">
-            Rôles et Permissions
-          </h3>
-          <p class="text-gray-600 mb-4">
-            Définir et attribuer les rôles, permissions et niveaux d'accès.
-          </p>
+        <!-- Modal d'ajout d'utilisateur -->
+        <app-add-user-modal
+          *ngIf="isUserModalOpen"
+          (userCreated)="onUserCreated($event)"
+          (modalClosed)="closeUserModal()"
+        ></app-add-user-modal>
 
-          <button
-            class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium mb-2 mr-2"
-          >
-            Configurer les rôles
-          </button>
-
-          <button
-            class="bg-[#8EA223] hover:bg-[#7a8d1e] text-white px-4 py-2 rounded-md text-sm font-medium"
-          >
-            Gérer
-          </button>
-        </div>
+        <app-users-table></app-users-table>
       </div>
 
       <!-- Sécurité du Compte -->

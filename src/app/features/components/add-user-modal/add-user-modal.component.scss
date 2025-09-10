@@ -1,0 +1,30 @@
+/* Styles pour le modal */
+.sticky {
+  position: sticky;
+}
+
+.max-h-\[90vh\] {
+  max-height: 90vh;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+/* Animation pour le bouton de l'œil */
+button:focus {
+  outline: none;
+  ring: 2px;
+}
+
+/* Style pour l'input file personnalisé */
+input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

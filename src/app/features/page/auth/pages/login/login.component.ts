@@ -43,7 +43,7 @@ export class LoginComponent {
             console.log('Navigation réussie ?', success);
           });
         } else {
-          this.errorMessage = res.error || 'Erreur de connexion';
+          this.errorMessage = 'Erreur de connexion';
           console.log('Erreur :', this.errorMessage);
 
           // Utilisation de l'opérateur de coalescence pour gérer le cas null
