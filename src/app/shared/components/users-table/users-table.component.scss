@@ -1,0 +1,22 @@
+:host {
+  display: block;
+}
+
+/* Style pour les images qui échouent au chargement */
+img {
+  object-fit: cover;
+}
+
+/* Animation pour les lignes du tableau */
+tr {
+  transition: background-color 0.2s ease;
+}
+
+/* Style pour la pagination active */
+.bg {
+  background-color: #8ea223;
+}
+
+.bg:hover {
+  background-color: #7a8d1e;
+}

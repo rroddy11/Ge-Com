@@ -5,8 +5,8 @@
     (click)="toggleDropdown($event)"
   >
     <img
-      src="/assets/images/img/nv/possin.png"
-      class="h-12 w-12 rounded-full object-cover p-1 border-[1px] border-solid border-gray-300 hover:border-indigo-400 transition-colors"
+      [src]="getProfileImage()"
+      class="h-12 w-12 rounded-full object-cover border-[1px] border-solid border-gray-300 hover:border-indigo-400 transition-colors"
       alt="Photo de profil"
       [attr.aria-expanded]="isDropdownOpen()"
       aria-haspopup="true"
@@ -17,13 +17,17 @@
   <div
     *ngIf="isDropdownOpen()"
     class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50 divide-y divide-gray-100"
-    (click)="$event.stopPropagation()"
+    (click)="onDropdownClick($event)"
   >
     <!-- En-tête avec infos utilisateur -->
-    <div class="px-4 py-3">
-      <div class="text-sm font-medium text-gray-900">Marie Possin</div>
-      <div class="text-sm text-gray-500">marie.possin@example.com</div>
-      <div class="text-xs text-indigo-600 font-medium mt-1">Administrateur</div>
+    <div class="px-4 py-3" *ngIf="currentUser">
+      <div class="text-sm font-medium text-gray-900">
+        {{ currentUser.firstName }} {{ currentUser.lastName }}
+      </div>
+      <div class="text-sm text-gray-500">{{ currentUser.email }}</div>
+      <div class="text-xs text-indigo-600 font-medium mt-1">
+        {{ getFormattedRole() }}
+      </div>
     </div>
 
     <!-- Section Profil -->
@@ -129,9 +133,4 @@
   </div>
 </div>
 
-<!-- Overlay pour fermer le dropdown -->
-<div
-  *ngIf="isDropdownOpen()"
-  class="fixed inset-0 z-40"
-  (click)="closeDropdown()"
-></div>
+<!-- Suppression de l'overlay car le HostListener gère déjà les clics extérieurs -->

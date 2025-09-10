@@ -1,0 +1,218 @@
+<div class="bg-white rounded-lg shadow overflow-hidden">
+  <!-- En-tête avec recherche -->
+  <div class="px-6 py-4 border-b border-gray-200">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4 sm:mb-0">
+        Gestion des Utilisateurs
+      </h2>
+
+      <div
+        class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4"
+      >
+        <!-- Barre de recherche -->
+        <div class="relative">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            placeholder="Rechercher un utilisateur..."
+            class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8EA223] focus:border-transparent w-full sm:w-64"
+          />
+          <i
+            class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tableau -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Utilisateur
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Email
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Rôle
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Date de création
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <!-- État de chargement -->
+        <tr *ngIf="isLoading">
+          <td colspan="5" class="px-6 py-8 text-center">
+            <div class="flex justify-center items-center">
+              <i
+                class="fas fa-spinner fa-spin text-2xl text-[#8EA223] mr-3"
+              ></i>
+              <span class="text-gray-600">Chargement des utilisateurs...</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Aucun résultat -->
+        <tr *ngIf="!isLoading && filteredUsers.length === 0">
+          <td colspan="5" class="px-6 py-8 text-center">
+            <div class="text-gray-500">
+              <i class="fas fa-users-slash text-3xl mb-2"></i>
+              <p>Aucun utilisateur trouvé</p>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Liste des utilisateurs -->
+        <tr *ngFor="let user of paginatedUsers" class="hover:bg-gray-50">
+          <!-- Photo et nom -->
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10">
+                <img
+                  [src]="
+                    getImageUrl(user.profileImage) ||
+                    '/assets/images/img/nv/possin.png'
+                  "
+                  class="h-10 w-10 rounded-full object-cover border-2 border-gray-200"
+                  onerror="this.src='https://via.placeholder.com/40x40?text=👤'"
+                />
+              </div>
+              <div class="ml-4">
+                <div class="text-sm font-medium text-gray-900">
+                  {{ user.username }}
+                </div>
+                <div class="text-sm text-gray-500">
+                  ID: {{ user._id | slice : 0 : 8 }}...
+                </div>
+              </div>
+            </div>
+          </td>
+
+          <!-- Email -->
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">{{ user.email }}</div>
+          </td>
+
+          <!-- Rôle -->
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span
+              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+              [class]="getRoleBadgeClass(user.role)"
+            >
+              {{ getRoleDisplayName(user.role) }}
+            </span>
+          </td>
+
+          <!-- Date de création -->
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            {{ formatDate(user.createdAt) }}
+          </td>
+
+          <!-- Actions -->
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <div class="flex space-x-2">
+              <!-- Modifier -->
+              <button
+                class="text-blue-600 hover:text-blue-900"
+                title="Modifier"
+              >
+                <fa-icon [icon]="faEdit"></fa-icon>
+              </button>
+
+              <!-- Supprimer -->
+              <button
+                (click)="deleteUser(user._id, user.username)"
+                class="text-red-600 hover:text-red-900 ml-2"
+                title="Supprimer"
+              >
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div
+    *ngIf="!isLoading && filteredUsers.length > 0"
+    class="px-6 py-4 border-t border-gray-200"
+  >
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+      <div class="text-sm text-gray-700 mb-4 sm:mb-0">
+        Affichage de
+        <span class="font-medium">{{
+          (currentPage - 1) * itemsPerPage + 1
+        }}</span>
+        à
+        <span class="font-medium">{{
+          Math.min(currentPage * itemsPerPage, filteredUsers.length)
+        }}</span>
+        sur
+        <span class="font-medium">{{ filteredUsers.length }}</span> utilisateurs
+      </div>
+
+      <div class="flex space-x-2">
+        <!-- Bouton précédent -->
+        <button
+          (click)="changePage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Précédent
+        </button>
+
+        <!-- Numéros de page -->
+        <div class="flex space-x-1">
+          <button
+            *ngFor="let page of [].constructor(totalPages); let i = index"
+            (click)="changePage(i + 1)"
+            [class]="
+              currentPage === i + 1
+                ? 'bg-[#8EA223] text-white'
+                : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+            "
+            class="px-3 py-1 rounded-md text-sm font-medium min-w-[2.5rem]"
+          >
+            {{ i + 1 }}
+          </button>
+        </div>
+
+        <!-- Bouton suivant -->
+        <button
+          (click)="changePage(currentPage + 1)"
+          [disabled]="currentPage === totalPages"
+          class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Suivant
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour créer/modifier un utilisateur -->
+<!-- <app-user-modal 
+  *ngIf="isUserModalOpen" 
+  (userCreated)="onUserCreated($event)"
+  (modalClosed)="closeUserModal()"
+></app-user-modal> -->
