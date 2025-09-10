@@ -1,4 +1,7 @@
+<app-loader *ngIf="isLoading"></app-loader>
+
 <div *ngIf="errorMessage" class="text-red-500 text-center">
   {{ errorMessage }}
 </div>
+
 <app-login-form (submitForm)="handleLogin($event)"></app-login-form>
