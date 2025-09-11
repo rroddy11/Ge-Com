@@ -151,7 +151,7 @@ export class UsersTableComponent implements OnInit {
             'Succès',
             'Utilisateur supprimé avec succès'
           );
-          this.loadUsers(); // Recharger la liste
+          this.loadUsers();
         },
         error: (error) => {
           this.toastNotificationService.error(

@@ -16,11 +16,11 @@ export class UserService {
   ) {}
 
   createUser(userData: any): Observable<any> {
-    const token = localStorage.getItem('authToken'); // récupère ton JWT
+    const token = localStorage.getItem('authToken');
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`, // 🔥 très important
-      'Content-Type': 'application/json', // en général requis
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     });
 
     return this.http.post(`${this.apiUrl}/register`, userData, { headers });
@@ -33,28 +33,24 @@ export class UserService {
       Authorization: `Bearer ${token}`,
     });
   }
-  // Récupérer tous les utilisateurs
   getUsers(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`, {
       headers: this.getHeaders(),
     });
   }
 
-  // Récupérer un utilisateur par ID
   getUserById(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`, {
       headers: this.getHeaders(),
     });
   }
 
-  // Mettre à jour un utilisateur
   updateUser(id: string, userData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, userData, {
       headers: this.getHeaders(),
     });
   }
 
-  // Supprimer un utilisateur
   deleteUser(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, {
       headers: this.getHeaders(),
