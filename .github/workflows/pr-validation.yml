@@ -3,7 +3,7 @@ name: SonarCloud + Build Angular
 on:
   push:
     branches:
-      - feature/CG-8-feat-deconexion-notification
+      - feature/CG-10-Feat-delete-user
   pull_request:
     types: [opened, synchronize, reopened]
 
