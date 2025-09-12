@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { LoaderComponent } from '../loader/loader.component';
+import { UserModalComponent } from '../../../features/components/user-modal/user-modal.component';
+import { UserEditModalComponent } from '../../../features/components/user-edit-modal/user-edit-modal.component';
 
 interface User {
   _id: string;
@@ -25,6 +27,8 @@ interface User {
     ReactiveFormsModule,
     FontAwesomeModule,
     LoaderComponent,
+    UserModalComponent,
+    UserEditModalComponent,
   ],
   templateUrl: './users-table.component.html',
   styleUrl: './users-table.component.scss',
@@ -38,6 +42,9 @@ export class UsersTableComponent implements OnInit {
   public Math = Math;
   faEdit = faEdit;
   faTrash = faTrash;
+
+  isEditModalOpen = false;
+  selectedUser: User | null = null;
 
   constructor(
     private readonly userService: UserService,
@@ -162,5 +169,24 @@ export class UsersTableComponent implements OnInit {
         },
       });
     }
+  }
+
+  openEditModal(user: User): void {
+    this.selectedUser = user;
+    this.isEditModalOpen = true;
+  }
+
+  closeEditModal(): void {
+    this.isEditModalOpen = false;
+    this.selectedUser = null;
+  }
+
+  onUserUpdated(updatedUser: any): void {
+    // Mettre à jour la liste des utilisateurs
+    const index = this.users.findIndex((u) => u._id === updatedUser.id);
+    if (index !== -1) {
+      this.users[index] = { ...this.users[index], ...updatedUser };
+    }
+    this.closeEditModal();
   }
 }

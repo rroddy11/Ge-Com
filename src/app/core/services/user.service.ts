@@ -46,9 +46,8 @@ export class UserService {
   }
 
   updateUser(id: string, userData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, userData, {
-      headers: this.getHeaders(),
-    });
+    const headers = this.getHeaders();
+    return this.http.put(`${this.apiUrl}/${id}`, userData, { headers });
   }
 
   deleteUser(id: string): Observable<any> {

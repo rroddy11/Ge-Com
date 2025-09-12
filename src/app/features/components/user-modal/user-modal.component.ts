@@ -32,13 +32,13 @@ function passwordMatchValidator(control: AbstractControl) {
 }
 
 @Component({
-  selector: 'app-add-user-modal',
+  selector: 'app-user-modal',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './add-user-modal.component.html',
-  styleUrl: './add-user-modal.component.scss',
+  templateUrl: './user-modal.component.html',
+  styleUrl: './user-modal.component.scss',
 })
-export class AddUserModalComponent {
+export class UserModalComponent {
   @Output() userCreated = new EventEmitter<any>();
   @Output() modalClosed = new EventEmitter<void>();
   @ViewChild('fileInput') fileInput!: ElementRef;

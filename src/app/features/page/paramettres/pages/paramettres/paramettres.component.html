@@ -46,11 +46,11 @@
         </div>
 
         <!-- Modal d'ajout d'utilisateur -->
-        <app-add-user-modal
+        <app-user-modal
           *ngIf="isUserModalOpen"
           (userCreated)="onUserCreated($event)"
           (modalClosed)="closeUserModal()"
-        ></app-add-user-modal>
+        ></app-user-modal>
 
         <app-users-table></app-users-table>
       </div>

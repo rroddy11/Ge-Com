@@ -129,6 +129,7 @@
               <button
                 class="text-blue-600 hover:text-blue-900"
                 title="Modifier"
+                (click)="openEditModal(user)"
               >
                 <fa-icon [icon]="faEdit"></fa-icon>
               </button>
@@ -202,8 +203,9 @@
 </div>
 
 <!-- Modal pour créer/modifier un utilisateur -->
-<!-- <app-user-modal 
-  *ngIf="isUserModalOpen" 
-  (userCreated)="onUserCreated($event)"
-  (modalClosed)="closeUserModal()"
-></app-user-modal> -->
+<app-user-edit-modal
+  *ngIf="isEditModalOpen && selectedUser"
+  [user]="selectedUser"
+  (userUpdated)="onUserUpdated($event)"
+  (modalClosed)="closeEditModal()"
+></app-user-edit-modal>
