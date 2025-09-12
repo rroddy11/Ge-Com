@@ -3,7 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastNotificationService } from '../../../../../core/services/toast-notification.service';
-import { AddUserModalComponent } from '../../../../components/add-user-modal/add-user-modal.component';
+import { UserModalComponent } from '../../../../components/user-modal/user-modal.component';
 import { UsersTableComponent } from '../../../../../shared/components/users-table/users-table.component';
 
 // Interface pour typer les paramètres
@@ -25,7 +25,7 @@ interface AppSettings {
     CommonModule,
     FontAwesomeModule,
     FormsModule,
-    AddUserModalComponent,
+    UserModalComponent,
     UsersTableComponent,
   ],
   templateUrl: './paramettres.component.html',
